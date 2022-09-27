@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="my.com.tbs.edriving.qti.app">
    <application
-        android:label="edriving_qti_app"
+        android:label="eDriving QTI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

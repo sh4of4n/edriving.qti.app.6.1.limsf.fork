@@ -36,7 +36,7 @@ void main() async {
       (options) {
         options.dsn = kDebugMode
             ? ''
-            : 'https://0419a02f7534475e9df605249fa18d55@o354605.ingest.sentry.io/6721341';
+            : 'https://f22e4d09f6bb417da45ababa664d1847@o354605.ingest.sentry.io/6770268';
       },
     );
 
@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'ePandu SPIM',
+      title: 'eDriving QTI',
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: ColorConstant.primaryColor,
