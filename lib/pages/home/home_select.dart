@@ -41,7 +41,7 @@ class _HomeSelectState extends State<HomeSelect> {
         await showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            title: Text('JPJ QTO APP'),
+            title: const Text('eDriving QTI App'),
             content: Text(AppLocalizations.of(context)!
                 .translate('vehicle_download_success')),
             actions: <Widget>[
@@ -88,10 +88,10 @@ class _HomeSelectState extends State<HomeSelect> {
             // ),
             IconButton(
               onPressed: () => context.router.push(
-                ProfileTab(),
+                const ProfileTab(),
                 // RuleRoute(),
               ),
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
             ),
           ],
         ),
@@ -100,7 +100,7 @@ class _HomeSelectState extends State<HomeSelect> {
             // height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Column(
                   children: [
                     HomeIcon(
@@ -109,7 +109,7 @@ class _HomeSelectState extends State<HomeSelect> {
                       name:
                           AppLocalizations.of(context)!.translate('checklist'),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                     Row(

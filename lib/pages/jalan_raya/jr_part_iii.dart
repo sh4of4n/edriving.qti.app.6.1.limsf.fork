@@ -166,7 +166,7 @@ class _JrPartIIIState extends State<JrPartIII> {
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('JPJ QTO APP'),
+            title: const Text('eDriving QTI App'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
@@ -235,7 +235,7 @@ class _JrPartIIIState extends State<JrPartIII> {
           barrierDismissible: true, // user must tap button!
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('JPJ QTO APP'),
+              title: const Text('eDriving QTI App'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: const <Widget>[

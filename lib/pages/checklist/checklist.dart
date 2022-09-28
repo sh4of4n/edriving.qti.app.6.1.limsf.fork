@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:jpj_qto/common_library/services/model/etesting_model.dart';
-import 'package:jpj_qto/common_library/services/repository/etesting_repository.dart';
-import 'package:jpj_qto/router.gr.dart';
+import 'package:edriving_qti_app/common_library/services/model/etesting_model.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
+import 'package:edriving_qti_app/router.gr.dart';
 
 import '../../common_library/services/model/checklist_model.dart';
 import '../../common_library/services/repository/checklist_repository.dart';
@@ -263,7 +263,7 @@ class _CheckListPageState extends State<CheckListPage> {
             barrierDismissible: true, // user must tap button!
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text('JPJ QTO APP'),
+                title: const Text('eDriving QTI App'),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
@@ -355,7 +355,7 @@ class _CheckListPageState extends State<CheckListPage> {
           barrierDismissible: true, // user must tap button!
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('JPJ QTO APP'),
+              title: const Text('eDriving QTI App'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -442,7 +442,7 @@ class _CheckListPageState extends State<CheckListPage> {
           barrierDismissible: true, // user must tap button!
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('JPJ QTO APP'),
+              title: const Text('eDriving QTI App'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[

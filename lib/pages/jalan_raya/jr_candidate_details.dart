@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_button.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
-import 'package:edriving_qti_app/common_library/utils/loading_model.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -70,9 +71,10 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   }
 
   getPart3AvailableToCallJpjTestList() async {
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
+    EasyLoading.show();
 
     String? vehNo = await localStorage.getPlateNo();
 
@@ -105,9 +107,10 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         },
       );
 
-      setState(() {
-        isLoading = false;
-      });
+      // setState(() {
+      //   isLoading = false;
+      // });
+      EasyLoading.dismiss();
       return;
     }
 
@@ -142,9 +145,10 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       }
     }
     if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
+      // setState(() {
+      //   isLoading = false;
+      // });
+      EasyLoading.dismiss();
     }
   }
 
@@ -297,9 +301,10 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     var groupId = selectedCandidate.groupId;
     // var testDate = selectedCandidate.testDate;
 
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
+    EasyLoading.show();
 
     vehNo = await localStorage.getPlateNo();
 
@@ -348,18 +353,20 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       );
     }
 
-    setState(() {
-      isLoading = false;
-    });
+    // setState(() {
+    //   isLoading = false;
+    // });
+    EasyLoading.dismiss();
   }
 
   Future<void> cancelCallPart3JpjTest({type}) async {
     var testCode = selectedCandidate.testCode;
     var groupId = selectedCandidate.groupId;
 
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
+    EasyLoading.show();
 
     var result = await epanduRepo.cancelCallPart3JpjTest(
       part3Type: 'JALAN RAYA',
@@ -396,11 +403,12 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       }
     }
 
-    if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    // if (mounted) {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // }
+    EasyLoading.dismiss();
   }
 
   @override
@@ -475,7 +483,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
 
                   qrController.resumeCamera();
                 },
-                child: Text('Ok'),
+                child: const Text('Ok'),
               ),
             ],
             type: DialogType.GENERAL,
@@ -557,7 +565,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Calling'),
+          title: const Text('Calling'),
           actions: [
             IconButton(
               onPressed: () {
@@ -568,313 +576,331 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                   type: DialogType.INFO,
                 );
               },
-              icon: Icon(Icons.info_outline),
+              icon: const Icon(Icons.info_outline),
               tooltip: AppLocalizations.of(context)!
                   .translate('select_queue_tooltip'),
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Column(
-                  children: [
-                    SizedBox(height: 50.h),
-                    Container(
-                      width: 1300.h,
-                      child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 50.w),
-                          labelText: 'Q-NO',
-                          labelStyle: TextStyle(
-                              // fontSize: 80.sp,
-                              ),
-                          // fillColor: Colors.grey.withOpacity(.25),
-                          // filled: true,
-                          // prefixIcon: Icon(Icons.edit),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: primaryColor),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        items: candidateList != null
-                            ? candidateList!
-                                .map<DropdownMenuItem<String>>((dynamic value) {
-                                return DropdownMenuItem<String>(
-                                  value: value.queueNo,
-                                  child: Center(
-                                      child: Text(
-                                    value.queueNo,
-                                    style: TextStyle(
-                                        // fontSize: 80.sp,
-                                        ),
-                                  )),
-                                );
-                              }).toList()
-                            : null,
-                        onTap: () {
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-                        },
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            qNo = newValue;
-                          });
-
-                          getSelectedCandidateInfo(newValue);
-                        },
-                      ),
-                    ),
-                    // Text(
-                    //   qNo.isNotEmpty ? qNo : 'Q-NO',
-                    //   style: TextStyle(
-                    //       fontWeight: FontWeight.bold, fontSize: 250.sp),
-                    // ),
-                    SizedBox(height: 50.h),
-
-                    icPhoto == '' ? SizedBox() : Image.network(icPhoto!),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 150.w,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'No. ID',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+        body: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 50.h),
+                      Container(
+                        width: 1300.h,
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 50.w),
+                            labelText: 'Q-NO',
+                            labelStyle: const TextStyle(
+                                // fontSize: 80.sp,
                                 ),
-                                Text(
-                                  nric!,
-                                  style: textStyle,
-                                ),
-                                Text(
-                                  'Nama',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  name!,
-                                  style: textStyle,
-                                ),
-                                Text(
-                                  'Kategori ID',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  kewarganegaraan ?? '',
-                                  style: textStyle,
-                                ),
-                                Text(
-                                  'Kelas',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  groupId!,
-                                  style: textStyle,
-                                ),
-                              ],
+                            // fillColor: Colors.grey.withOpacity(.25),
+                            // filled: true,
+                            // prefixIcon: Icon(Icons.edit),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                              borderRadius: BorderRadius.circular(30),
                             ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          items: candidateList != null
+                              ? candidateList!.map<DropdownMenuItem<String>>(
+                                  (dynamic value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value.queueNo,
+                                    child: Center(
+                                        child: Text(
+                                      value.queueNo,
+                                      style: const TextStyle(
+                                          // fontSize: 80.sp,
+                                          ),
+                                    )),
+                                  );
+                                }).toList()
+                              : null,
+                          onTap: () {
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
+
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                          },
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              qNo = newValue;
+                            });
+
+                            getSelectedCandidateInfo(newValue);
+                          },
+                        ),
+                      ),
+                      // Text(
+                      //   qNo.isNotEmpty ? qNo : 'Q-NO',
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.bold, fontSize: 250.sp),
+                      // ),
+                      SizedBox(height: 50.h),
+
+                      icPhoto == ''
+                          ? const SizedBox()
+                          : CachedNetworkImage(
+                              imageUrl: icPhoto,
+                              height: 200,
+                            ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 150.w,
+                          vertical: 8.0,
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'No. ID',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    nric!,
+                                    style: textStyle,
+                                  ),
+                                  const Text(
+                                    'Nama',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    name!,
+                                    style: textStyle,
+                                  ),
+                                  const Text(
+                                    'Kategori ID',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    kewarganegaraan ?? '',
+                                    style: textStyle,
+                                  ),
+                                  const Text(
+                                    'Kelas',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    groupId!,
+                                    style: textStyle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 150.w),
+                      //   child: Table(
+                      //     // border: TableBorder.all(),
+                      //     columnWidths: {0: FractionColumnWidth(.30)},
+                      //     children: [
+                      //       /* TableRow(
+                      //     children: [
+                      //       Padding(
+                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //         child: Text('Q-NO',
+                      //             textAlign: TextAlign.center, style: textStyle),
+                      //       ),
+                      //       Padding(
+                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //         child: Text(qNo, style: textStyle),
+                      //       ),
+                      //     ],
+                      //   ), */
+                      //       TableRow(children: [
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text('NRIC', style: textStyle),
+                      //         ),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text(nric!, style: textStyle),
+                      //         ),
+                      //       ]),
+                      //       TableRow(children: [
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text('NAMA', style: textStyle),
+                      //         ),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text(name!, style: textStyle),
+                      //         ),
+                      //       ]),
+                      //       TableRow(children: [
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text('KEWARGANEGARAAN',
+                      //               overflow: TextOverflow.ellipsis,
+                      //               style: textStyle),
+                      //         ),
+                      //         Padding(
+                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
+                      //           child: Text(kewarganegaraan!, style: textStyle),
+                      //         ),
+                      //       ]),
+                      //     ],
+                      //   ),
+                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            children: [
+                              CustomButton(
+                                onPressed: () {
+                                  if (selectedCandidate != null)
+                                    callPart3JpjTest(type: 'MANUAL');
+                                  else
+                                    customDialog.show(
+                                      context: context,
+                                      content: AppLocalizations.of(context)!
+                                          .translate('select_queue_no'),
+                                      type: DialogType.INFO,
+                                    );
+                                },
+                                buttonColor: const Color(0xffdd0e0e),
+                                title: AppLocalizations.of(context)!
+                                    .translate('call_btn'),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  customDialog.show(
+                                    context: context,
+                                    content: AppLocalizations.of(context)!
+                                        .translate('call_tooltip'),
+                                    type: DialogType.INFO,
+                                  );
+                                },
+                                icon: const Icon(Icons.info_outline),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              CustomButton(
+                                // onPressed: () =>
+                                //     cancelCallPart3JpjTest(type: 'MANUAL'),
+                                onPressed: () {
+                                  if (selectedCandidate != null) {
+                                    CustomDialog().show(
+                                      context: context,
+                                      title: Text(AppLocalizations.of(context)!
+                                          .translate('warning_title')),
+                                      content: AppLocalizations.of(context)!
+                                          .translate('confirm_cancel_desc'),
+                                      customActions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .translate('yes_lbl')),
+                                          onPressed: () {
+                                            context.router.pop();
+                                            cancelCallPart3JpjTest(
+                                                type: 'MANUAL');
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .translate('no_lbl')),
+                                          onPressed: () {
+                                            context.router.pop();
+                                          },
+                                        ),
+                                      ],
+                                      type: DialogType.GENERAL,
+                                    );
+                                  } else
+                                    customDialog.show(
+                                      context: context,
+                                      content: AppLocalizations.of(context)!
+                                          .translate('select_queue_no'),
+                                      type: DialogType.INFO,
+                                    );
+                                },
+                                buttonColor: const Color(0xffdd0e0e),
+                                title: AppLocalizations.of(context)!
+                                    .translate('cancel_btn'),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  customDialog.show(
+                                    context: context,
+                                    content: AppLocalizations.of(context)!
+                                        .translate('cancel_tooltip'),
+                                    type: DialogType.INFO,
+                                  );
+                                },
+                                icon: const Icon(Icons.info_outline),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ),
-
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 150.w),
-                    //   child: Table(
-                    //     // border: TableBorder.all(),
-                    //     columnWidths: {0: FractionColumnWidth(.30)},
-                    //     children: [
-                    //       /* TableRow(
-                    //     children: [
-                    //       Padding(
-                    //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //         child: Text('Q-NO',
-                    //             textAlign: TextAlign.center, style: textStyle),
-                    //       ),
-                    //       Padding(
-                    //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //         child: Text(qNo, style: textStyle),
-                    //       ),
-                    //     ],
-                    //   ), */
-                    //       TableRow(children: [
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text('NRIC', style: textStyle),
-                    //         ),
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text(nric!, style: textStyle),
-                    //         ),
-                    //       ]),
-                    //       TableRow(children: [
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text('NAMA', style: textStyle),
-                    //         ),
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text(name!, style: textStyle),
-                    //         ),
-                    //       ]),
-                    //       TableRow(children: [
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text('KEWARGANEGARAAN',
-                    //               overflow: TextOverflow.ellipsis,
-                    //               style: textStyle),
-                    //         ),
-                    //         Padding(
-                    //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                    //           child: Text(kewarganegaraan!, style: textStyle),
-                    //         ),
-                    //       ]),
-                    //     ],
-                    //   ),
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            CustomButton(
-                              onPressed: () {
-                                if (selectedCandidate != null)
-                                  callPart3JpjTest(type: 'MANUAL');
-                                else
-                                  customDialog.show(
-                                    context: context,
-                                    content: AppLocalizations.of(context)!
-                                        .translate('select_queue_no'),
-                                    type: DialogType.INFO,
-                                  );
-                              },
-                              buttonColor: Color(0xffdd0e0e),
-                              title: AppLocalizations.of(context)!
-                                  .translate('call_btn'),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                customDialog.show(
-                                  context: context,
-                                  content: AppLocalizations.of(context)!
-                                      .translate('call_tooltip'),
-                                  type: DialogType.INFO,
-                                );
-                              },
-                              icon: Icon(Icons.info_outline),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            CustomButton(
-                              // onPressed: () =>
-                              //     cancelCallPart3JpjTest(type: 'MANUAL'),
-                              onPressed: () {
-                                if (selectedCandidate != null) {
-                                  CustomDialog().show(
-                                    context: context,
-                                    title: Text(AppLocalizations.of(context)!
-                                        .translate('warning_title')),
-                                    content: AppLocalizations.of(context)!
-                                        .translate('confirm_cancel_desc'),
-                                    customActions: <Widget>[
-                                      TextButton(
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .translate('yes_lbl')),
-                                        onPressed: () {
-                                          context.router.pop();
-                                          cancelCallPart3JpjTest(
-                                              type: 'MANUAL');
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .translate('no_lbl')),
-                                        onPressed: () {
-                                          context.router.pop();
-                                        },
-                                      ),
-                                    ],
-                                    type: DialogType.GENERAL,
-                                  );
-                                } else
-                                  customDialog.show(
-                                    context: context,
-                                    content: AppLocalizations.of(context)!
-                                        .translate('select_queue_no'),
-                                    type: DialogType.INFO,
-                                  );
-                              },
-                              buttonColor: Color(0xffdd0e0e),
-                              title: AppLocalizations.of(context)!
-                                  .translate('cancel_btn'),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                customDialog.show(
-                                  context: context,
-                                  content: AppLocalizations.of(context)!
-                                      .translate('cancel_tooltip'),
-                                  type: DialogType.INFO,
-                                );
-                              },
-                              icon: Icon(Icons.info_outline),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Visibility(
+                    ],
+                  ),
+                  Visibility(
                     visible: isVisible,
-                    child: Expanded(child: _buildQrView(context))),
-                Visibility(
-                  visible: iconVisible,
-                  child: Expanded(
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isVisible = true;
-                          iconVisible = false;
-                        });
-                      },
-                      iconSize: 150,
-                      icon: Icon(Icons.camera_alt),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SizedBox(
+                        height: 500,
+                        child: _buildQrView(context),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            LoadingModel(
-              isVisible: isLoading,
-              color: ColorConstant.primaryColor,
+                  Visibility(
+                    visible: iconVisible,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        color: Colors.grey.shade200,
+                        width: double.infinity,
+                        height: 500,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isVisible = true;
+                              iconVisible = false;
+                            });
+                          },
+                          iconSize: 150,
+                          icon: const Icon(Icons.camera_alt),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
