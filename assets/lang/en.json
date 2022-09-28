@@ -655,6 +655,11 @@
   "login": "Login",
   "login_failed": "Login failed",
   "login_successful": "Login Successful",
+  "fail_skim": "Gagal, skim tidak tersedia untuk ujian dijalankan",
   "fail_litar": "Failed, Litar is not available for testing",
-  "fail_sistem": "Failed, the control room is not available for the test to run"
+  "fail_sistem": "Failed, the control room is not available for the test to run",
+  "vehicle_download_success": "Vehicle Data Downloaded Successfully",
+  "plate_no": "Plate No.",
+  "select_all": "Select All"
+
 }

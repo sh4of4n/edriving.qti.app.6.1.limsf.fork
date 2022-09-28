@@ -60,7 +60,7 @@ class Networking extends BaseRepo {
 
         response = await http
             .get(uri)
-            .timeout(Duration(milliseconds: milliseconds ?? 30000));
+            .timeout(Duration(milliseconds: milliseconds ?? 60000));
       }
 
       if (response.statusCode == 200) {

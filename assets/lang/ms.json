@@ -656,6 +656,10 @@
   "login": "Daftar Masuk",
   "login_failed": "Daftar Masuk tidak Berjaya",
   "login_successful": "Daftar Masuk Berjaya",
+  "fail_skim": "Gagal, skim tidak tersedia untuk ujian dijalankan",
   "fail_litar": "Gagal, litar tidak tersedia untuk ujian dijalankan",
-  "fail_sistem": "Gagal, bilik kawalan tidak tersedia untuk ujian dijalankan"
+  "fail_sistem": "Gagal, bilik kawalan tidak tersedia untuk ujian dijalankan",
+  "vehicle_download_success": "Data Kenderaan Berjaya Dimuat Turun",
+  "plate_no": "No. Kenderaan",
+  "select_all": "Pilih semua"
 }

@@ -78,7 +78,7 @@ class HomeModule extends StatelessWidget {
                   HomeIcon(
                     component: JrCandidateDetails(),
                     image: imageConstant.kppIcon,
-                    name: 'Jalan Raya',
+                    name: 'Bahagian III',
                   ),
                 ],
               ),

@@ -42,7 +42,7 @@ class Preference {
     return (await load())!.getDouble(key) ?? def;
   }
 
-  static Future<bool?> getBool(String key, {bool? def}) async {
+  static Future<bool> getBool(String key, {required bool def}) async {
     return (await load())!.getBool(key) ?? def;
   }
 

@@ -147,11 +147,60 @@ class _JrPartIIIState extends State<JrPartIII> {
     var a = {
       'Result': [{}]
     };
+    bool isUntickMandatory = false;
+
     for (var element in ruleList) {
+      if (element.mandatory == 'true' &&
+          (element.isCheck == null ||
+              element.isCheck == 'false' ||
+              !element.isCheck)) {
+        isUntickMandatory = true;
+      }
       a['Result']![0][element.ruleCode] =
           element.isCheck == null || element.isCheck == false ? 0 : '1';
     }
 
+    if (isUntickMandatory) {
+      bool canContinue = await showDialog(
+        context: context,
+        barrierDismissible: true, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('JPJ QTO APP'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('Calon Ini Telah Gagal Kerana Kesalahan Mandatori.'),
+                  Text('Adakah Anda Pasti?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.translate('cancel_btn'),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.translate('ok_btn'),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        },
+      );
+
+      if (!canContinue) {
+        return;
+      }
+    }
     print(jsonEncode(a));
 
     setState(() {
@@ -173,6 +222,42 @@ class _JrPartIIIState extends State<JrPartIII> {
       // success += 1;
 
       // if (success == 2) {
+      int score = 0;
+      for (var element in ruleList) {
+        if (element.mandatory == 'false' && element.isCheck) {
+          score += 1;
+        }
+      }
+
+    if (score < 64 || isUntickMandatory) {
+        await showDialog(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('JPJ QTO APP'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const <Widget>[
+                    Text('Calon ini telah gagal, ujian akan ditamatkan'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('ok_btn'),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
       customDialog.show(
         context: context,
         barrierDismissable: false,
@@ -797,6 +882,13 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 } else {
                                   ruleJson[code]![i].isCheck = false;
                                 }
+
+                                int checkCount = ruleJson[code]!
+                                    .where((i) => i.isCheck)
+                                    .toList()
+                                    .length;
+                                checkAllJson[code] =
+                                    checkCount == ruleJson[code]!.length;
                               });
                             },
                             child: Table(

@@ -75,6 +75,39 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
     String? vehNo = await localStorage.getPlateNo();
 
+    var vehicleResult =
+        await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
+    if (vehicleResult.data != 'True') {
+      await showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('JPJ QTP APP'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(vehicleResult.message ?? ''),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
     var result =
         await epanduRepo.getRpkAvailableToCallJpjTestList(vehNo: vehNo);
 
@@ -440,7 +473,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
   Future<bool> _onWillPop() async {
     if (success > 0) {
-      return CustomDialog().show(
+      CustomDialog().show(
         context: context,
         title: Text(AppLocalizations.of(context)!.translate('warning_title')),
         content: AppLocalizations.of(context)!.translate('confirm_exit_desc'),
@@ -460,6 +493,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
         ],
         type: DialogType.GENERAL,
       );
+      return false;
     }
     // context.router.pop();
     return true;

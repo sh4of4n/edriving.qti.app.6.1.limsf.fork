@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/utils/local_storage.dart';
 
 import '../../router.gr.dart';
 import '../rpk/list_part_iii.dart';
@@ -18,6 +21,42 @@ class _HomeSelectState extends State<HomeSelect> {
   final imageConstant = ImagesConstant();
   final primaryColor = ColorConstant.primaryColor;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final localStorage = LocalStorage();
+  final etestingRepo = EtestingRepo();
+
+  @override
+  void initState() {
+    super.initState();
+    checkMySikapVehicle();
+  }
+
+  Future<void> checkMySikapVehicle() async {
+    EasyLoading.show();
+    bool isCheck = await localStorage.getMySikapVehicle();
+    if (!isCheck) {
+      var result = await etestingRepo.getMySikapVehicleListByStatus(status: '');
+      EasyLoading.dismiss();
+      if (result.isSuccess && result.data != null) {
+        await localStorage.saveMySikapVehicle(true);
+        await showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text('JPJ QTO APP'),
+            content: Text(AppLocalizations.of(context)!
+                .translate('vehicle_download_success')),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } else {
+      EasyLoading.dismiss();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

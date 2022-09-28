@@ -1,18 +1,20 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:edriving_qti_app/router.gr.dart';
+import 'package:jpj_qto/common_library/services/model/etesting_model.dart';
+import 'package:jpj_qto/common_library/services/repository/etesting_repository.dart';
+import 'package:jpj_qto/router.gr.dart';
 
 import '../../common_library/services/model/checklist_model.dart';
 import '../../common_library/services/repository/checklist_repository.dart';
 import '../../common_library/utils/app_localizations.dart';
 import '../../common_library/utils/custom_dialog.dart';
-import '../../common_library/utils/uppercase_formatter.dart';
 import '../../utils/constants.dart';
 
 class CheckListPage extends StatefulWidget {
@@ -24,6 +26,7 @@ class CheckListPage extends StatefulWidget {
 
 class _CheckListPageState extends State<CheckListPage> {
   final checklistRepo = ChecklistRepo();
+  final etestingRepo = EtestingRepo();
   Future? _checklistFuture;
   var checklist = [];
   List<JpjCheckListJson> checklistSkimArr = [];
@@ -32,9 +35,14 @@ class _CheckListPageState extends State<CheckListPage> {
   bool skimCheck = false;
   bool litarCheck = false;
   bool sistemCheck = false;
+  bool skimCheckSelectAll = false;
+  bool litarCheckSelectAll = false;
+  bool sistemCheckSelectAll = false;
 
   final _formKey = GlobalKey<FormBuilderState>();
   final customDialog = CustomDialog();
+
+  List<MysikapVehicle> vehicleArr = [];
 
   ExpandableController expandableControllerSkim = ExpandableController();
 
@@ -49,6 +57,27 @@ class _CheckListPageState extends State<CheckListPage> {
   Future getCheclkListSystem() async {
     return await checklistRepo.getCheckList(checkType: 'SISTEM');
   }
+
+  Future getMySikapVehicleListByStatus() async {
+    var result = await etestingRepo.getMySikapVehicleListByStatus(status: '');
+    setState(() {
+      vehicleArr = result.data;
+    });
+
+    return result;
+  }
+
+  // Future<List<MysikapVehicle>> getMySikapVehicleListByStatus() async {
+  //   var result = await etestingRepo.getMySikapVehicleListByStatus(status: '');
+  //   if (result.isSuccess) {
+  //     List<MysikapVehicle> a = result.data
+  //         .map((item) => MySikapVehicleListResponse.fromJson(result.data))
+  //         .toList();
+
+  //     return a;
+  //   }
+  //   return [];
+  // }
 
   Future updateJpjCheckListSkim(requestSkim) async {
     var a = checklistRepo.updateJpjCheckListSkim(
@@ -185,17 +214,12 @@ class _CheckListPageState extends State<CheckListPage> {
   void updateJpjCheckListSkimA() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       checklistSkimArr = [];
+      bool isUntickMandatory = false;
 
       for (var element in checklist[0].data) {
         if (element.mandatory == 'true' &&
             (element.isCheck == null || element.isCheck == false)) {
-          customDialog.show(
-            context: context,
-            content: AppLocalizations.of(context)!
-                .translate('select_all_mandatory_field'),
-            type: DialogType.INFO,
-          );
-          return;
+          isUntickMandatory = true;
         }
         checklistSkimArr.add(JpjCheckListJson(
           checkCode: element.checkCode,
@@ -226,12 +250,43 @@ class _CheckListPageState extends State<CheckListPage> {
           return;
         }
 
-        await EasyLoading.dismiss();
+        EasyLoading.dismiss();
         if (mounted) {
           setState(() {
             skimCheck = true;
           });
         }
+
+        if (isUntickMandatory) {
+          await showDialog(
+            context: context,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('JPJ QTO APP'),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text(
+                          AppLocalizations.of(context)!.translate('fail_skim')),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate('ok_btn'),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+
         if (expandableControllerSkim.expanded) {
           expandableControllerSkim.toggle();
         }
@@ -254,16 +309,12 @@ class _CheckListPageState extends State<CheckListPage> {
 
   void updateJpjCheckListLitarA() async {
     checklistLitarArr = [];
+    bool isUntickMandatory = false;
 
     for (var element in checklist[1].data) {
       if (element.mandatory == 'true' &&
           (element.isCheck == null || element.isCheck == false)) {
-        customDialog.show(
-          context: context,
-          content: AppLocalizations.of(context)!.translate('fail_litar'),
-          type: DialogType.INFO,
-        );
-        return;
+        isUntickMandatory = true;
       }
       checklistLitarArr.add(JpjCheckListJson(
         checkCode: element.checkCode,
@@ -283,8 +334,8 @@ class _CheckListPageState extends State<CheckListPage> {
       var updateResult = await checklistRepo.updateJpjCheckListLitar(
         checkListJson: jsonEncode(requestLitar.toJson()),
       );
+      EasyLoading.dismiss();
       if (!updateResult.isSuccess) {
-        await EasyLoading.dismiss();
         const snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
           content: Text('Something went wrong'),
@@ -292,12 +343,41 @@ class _CheckListPageState extends State<CheckListPage> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         return;
       }
-      await EasyLoading.dismiss();
       if (mounted) {
         setState(() {
           litarCheck = true;
         });
       }
+
+      if (isUntickMandatory) {
+        await showDialog(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('JPJ QTO APP'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(AppLocalizations.of(context)!.translate('fail_litar')),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('ok_btn'),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
       customDialog.show(
           context: context,
           content: AppLocalizations.of(context)!
@@ -314,17 +394,12 @@ class _CheckListPageState extends State<CheckListPage> {
 
   void updateJpjCheckListSistemA() async {
     checklistSystemArr = [];
+    bool isUntickMandatory = false;
 
     for (var element in checklist[2].data) {
       if (element.mandatory == 'true' &&
           (element.isCheck == null || element.isCheck == false)) {
-        customDialog.show(
-          context: context,
-          content: AppLocalizations.of(context)!
-              .translate('fail_sistem'),
-          type: DialogType.INFO,
-        );
-        return;
+        isUntickMandatory = true;
       }
       checklistSystemArr.add(JpjCheckListJson(
         checkCode: element.checkCode,
@@ -354,12 +429,43 @@ class _CheckListPageState extends State<CheckListPage> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         return;
       }
-      await EasyLoading.dismiss();
+      EasyLoading.dismiss();
       if (mounted) {
         setState(() {
           sistemCheck = true;
         });
       }
+
+      if (isUntickMandatory) {
+        await showDialog(
+          context: context,
+          barrierDismissible: true, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('JPJ QTO APP'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(
+                        AppLocalizations.of(context)!.translate('fail_sistem')),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('ok_btn'),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
       customDialog.show(
           context: context,
           content: AppLocalizations.of(context)!
@@ -385,6 +491,7 @@ class _CheckListPageState extends State<CheckListPage> {
       getCheclkListSkim(),
       getCheclkListLitar(),
       getCheclkListSystem(),
+      getMySikapVehicleListByStatus(),
     ]);
     storeChecklist();
   }
@@ -483,7 +590,8 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         .translate('updated')),
                                                     style: ElevatedButton
                                                         .styleFrom(
-                                                      primary: Colors.green,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                     ),
                                                   )
                                                 : ElevatedButton(
@@ -512,21 +620,110 @@ class _CheckListPageState extends State<CheckListPage> {
                                         padding: const EdgeInsets.all(16.0),
                                         child: FormBuilder(
                                           key: _formKey,
-                                          child: FormBuilderTextField(
+                                          child: FormBuilderField(
                                             name: 'plateNo',
-                                            inputFormatters: [
-                                              UpperCaseTextFormatter()
-                                            ],
-                                            decoration: const InputDecoration(
-                                              labelText: 'Plate No.',
-                                              border: OutlineInputBorder(),
-                                            ),
+                                            builder: (field) {
+                                              return DropdownSearch<
+                                                  MysikapVehicle>(
+                                                // asyncItems: (filter) =>
+                                                //     getMySikapVehicleListByStatus(),
+                                                items: vehicleArr,
+                                                dropdownDecoratorProps:
+                                                    DropDownDecoratorProps(
+                                                  dropdownSearchDecoration:
+                                                      InputDecoration(
+                                                    labelText: AppLocalizations
+                                                            .of(context)!
+                                                        .translate('plate_no'),
+                                                    filled: true,
+                                                  ),
+                                                ),
+                                                validator: (MysikapVehicle? i) {
+                                                  if (i == null)
+                                                    return field.errorText;
+                                                  return null;
+                                                },
+
+                                                itemAsString:
+                                                    (MysikapVehicle u) =>
+                                                        u.plateNo!,
+                                                compareFn: (i, s) =>
+                                                    i.plateNo == s.plateNo,
+                                                onChanged: ((value) {
+                                                  field.didChange(
+                                                      value!.plateNo);
+                                                }),
+                                                popupProps:
+                                                    PopupPropsMultiSelection
+                                                        .modalBottomSheet(
+                                                  isFilterOnline: true,
+                                                  showSelectedItems: true,
+                                                  showSearchBox: true,
+                                                  itemBuilder: (context, item,
+                                                      isSelected) {
+                                                    return Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 8),
+                                                      decoration: !isSelected
+                                                          ? null
+                                                          : BoxDecoration(
+                                                              border: Border.all(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .primaryColor),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                      child: ListTile(
+                                                        selected: isSelected,
+                                                        title: Text(
+                                                            item.plateNo ?? ''),
+                                                        subtitle: Text(item
+                                                                .groupId
+                                                                ?.toString() ??
+                                                            ''),
+                                                        trailing: item
+                                                                    .checked ==
+                                                                'true'
+                                                            ? Icon(Icons.check)
+                                                            : SizedBox(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
                                             validator:
                                                 FormBuilderValidators.compose([
                                               FormBuilderValidators.required(),
                                             ]),
                                           ),
                                         ),
+                                      ),
+                                      CheckboxListTile(
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(AppLocalizations.of(context)!
+                                                .translate('select_all')),
+                                          ],
+                                        ),
+                                        value: skimCheckSelectAll,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            skimCheckSelectAll = value ?? false;
+                                            for (var element
+                                                in checklist[0].data) {
+                                              element.isCheck = value;
+                                            }
+                                          });
+                                        },
                                       ),
                                       Divider(
                                         height: 1,
@@ -566,6 +763,18 @@ class _CheckListPageState extends State<CheckListPage> {
                                                 checklist[0]
                                                     .data[index]
                                                     .isCheck = value;
+                                                int checkCount = checklist[0]
+                                                    .data
+                                                    .where((i) =>
+                                                        i.isCheck != null &&
+                                                        i.isCheck)
+                                                    .toList()
+                                                    .length;
+                                                skimCheckSelectAll =
+                                                    checkCount ==
+                                                        checklist[0]
+                                                            .data
+                                                            .length;
                                               });
                                             },
                                           );
@@ -652,7 +861,8 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         .translate('updated')),
                                                     style: ElevatedButton
                                                         .styleFrom(
-                                                      primary: Colors.green,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                     ),
                                                   )
                                                 : ElevatedButton(
@@ -677,6 +887,27 @@ class _CheckListPageState extends State<CheckListPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      CheckboxListTile(
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(AppLocalizations.of(context)!
+                                                .translate('select_all')),
+                                          ],
+                                        ),
+                                        value: litarCheckSelectAll,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            litarCheckSelectAll =
+                                                value ?? false;
+                                            for (var element
+                                                in checklist[1].data) {
+                                              element.isCheck = value;
+                                            }
+                                          });
+                                        },
+                                      ),
                                       ListView.separated(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
@@ -712,6 +943,19 @@ class _CheckListPageState extends State<CheckListPage> {
                                                 checklist[1]
                                                     .data[index]
                                                     .isCheck = value;
+
+                                                int checkCount = checklist[1]
+                                                    .data
+                                                    .where((i) =>
+                                                        i.isCheck != null &&
+                                                        i.isCheck)
+                                                    .toList()
+                                                    .length;
+                                                litarCheckSelectAll =
+                                                    checkCount ==
+                                                        checklist[1]
+                                                            .data
+                                                            .length;
                                               });
                                             },
                                           );
@@ -787,7 +1031,8 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         .translate('updated')),
                                                     style: ElevatedButton
                                                         .styleFrom(
-                                                      primary: Colors.green,
+                                                      backgroundColor:
+                                                          Colors.green,
                                                     ),
                                                   )
                                                 : ElevatedButton(
@@ -812,6 +1057,27 @@ class _CheckListPageState extends State<CheckListPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      CheckboxListTile(
+                                        title: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(AppLocalizations.of(context)!
+                                                .translate('select_all')),
+                                          ],
+                                        ),
+                                        value: sistemCheckSelectAll,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            sistemCheckSelectAll =
+                                                value ?? false;
+                                            for (var element
+                                                in checklist[2].data) {
+                                              element.isCheck = value;
+                                            }
+                                          });
+                                        },
+                                      ),
                                       ListView.separated(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
@@ -847,6 +1113,19 @@ class _CheckListPageState extends State<CheckListPage> {
                                                 checklist[2]
                                                     .data[index]
                                                     .isCheck = value;
+
+                                                int checkCount = checklist[2]
+                                                    .data
+                                                    .where((i) =>
+                                                        i.isCheck != null &&
+                                                        i.isCheck)
+                                                    .toList()
+                                                    .length;
+                                                sistemCheckSelectAll =
+                                                    checkCount ==
+                                                        checklist[2]
+                                                            .data
+                                                            .length;
                                               });
                                             },
                                           );

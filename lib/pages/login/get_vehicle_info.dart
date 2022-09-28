@@ -190,7 +190,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.close),
                           onPressed: () {
-                            WidgetsBinding.instance!.addPostFrameCallback(
+                            WidgetsBinding.instance.addPostFrameCallback(
                                 (_) => groupIdController.clear());
                           },
                         ),
@@ -215,7 +215,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.close),
                           onPressed: () {
-                            WidgetsBinding.instance!.addPostFrameCallback(
+                            WidgetsBinding.instance.addPostFrameCallback(
                                 (_) => carNoController.clear());
                           },
                         ),
@@ -240,7 +240,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.close),
                           onPressed: () {
-                            WidgetsBinding.instance!.addPostFrameCallback(
+                            WidgetsBinding.instance.addPostFrameCallback(
                                 (_) => plateNoController.clear());
                           },
                         ),
@@ -265,7 +265,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         suffixIcon: IconButton(
                           icon: Icon(Icons.close),
                           onPressed: () {
-                            WidgetsBinding.instance!.addPostFrameCallback(
+                            WidgetsBinding.instance.addPostFrameCallback(
                                 (_) => merchantNoController.clear());
                           },
                         ),

@@ -62,6 +62,8 @@ class LocalStorage {
   static const String DeductMarkG = 'DeductMarkG';
   static const String DeductMarkH = 'DeductMarkH';
 
+  static const String mysikapVehicle = 'MYSIKAP_VEHICLE';
+
   Future<bool> setPart2MarkB(int deductMarkB) {
     return Preference.setInt(DeductMarkB, deductMarkB);
   }
@@ -779,13 +781,20 @@ class LocalStorage {
     return Preference.setString(kMsgRef, msgRef);
   }
 
-  
   Future<String?> getType() async {
     return Preference.getString(kType, def: '');
   }
 
   Future<bool> saveType(String msgRef) async {
     return Preference.setString(kType, msgRef);
+  }
+
+  Future<bool> getMySikapVehicle() async {
+    return Preference.getBool(mysikapVehicle, def: false);
+  }
+
+  Future<bool> saveMySikapVehicle(bool check) async {
+    return Preference.setBool(mysikapVehicle, check);
   }
 
   Future<void> reset() async {
@@ -825,5 +834,6 @@ class LocalStorage {
     await Preference.remove(kMsgDoc);
     await Preference.remove(kMsgRef);
     await Preference.remove(kType);
+    await Preference.remove(mysikapVehicle);
   }
 }

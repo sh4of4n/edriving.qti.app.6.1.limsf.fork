@@ -76,6 +76,41 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
 
     String? vehNo = await localStorage.getPlateNo();
 
+    var vehicleResult =
+        await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
+
+    if (vehicleResult.data != 'True') {
+      await showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('JPJ QTP APP'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(vehicleResult.message ?? ''),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
     var result = await epanduRepo.getPart3AvailableToCallJpjTestList(
         part3Type: 'JALAN RAYA', vehNo: vehNo);
 
