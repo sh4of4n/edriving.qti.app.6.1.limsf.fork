@@ -82,6 +82,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
 
     if (vehicleResult.data != 'True') {
+      EasyLoading.dismiss();
       await showDialog(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -110,7 +111,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       // setState(() {
       //   isLoading = false;
       // });
-      EasyLoading.dismiss();
+
       return;
     }
 

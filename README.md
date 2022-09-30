@@ -1,3 +1,8 @@
+30/09/2022 V.0.0.6
+ePandu ws 6.1.148.0 
+- Fixed cannot scroll down page to mula ujian
+
+
 28/09/2022 V.0.0.5
 ePandu ws 6.1.147.0 
 - Enhance IC photo size

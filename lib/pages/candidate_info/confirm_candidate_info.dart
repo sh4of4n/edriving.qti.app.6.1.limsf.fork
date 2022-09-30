@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -240,72 +241,75 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 50.w),
-              child: Column(
-                children: [
-                  SizedBox(height: 30.h),
-                  Text('Q-NO', style: TextStyle(fontSize: 100.sp)),
-                  widget.icPhoto == ''
-                      ? SizedBox()
-                      : Image.network(
-                          widget.icPhoto,
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 50.w),
+                child: Column(
+                  children: [
+                    SizedBox(height: 30.h),
+                    Text('Q-NO', style: TextStyle(fontSize: 100.sp)),
+                    widget.icPhoto == ''
+                        ? const SizedBox()
+                        : CachedNetworkImage(
+                            imageUrl: widget.icPhoto,
+                            height: 200,
+                          ),
+                    Text(
+                      widget.qNo!,
+                      style: TextStyle(fontSize: 200.sp),
+                    ),
+                    Text(widget.nric!, style: TextStyle(fontSize: 80.sp)),
+                    SizedBox(height: 20.h),
+                    Text(widget.candidateName!,
+                        style: TextStyle(fontSize: 80.sp)),
+                    SizedBox(height: 30.h),
+                    Text(
+                      widget.groupId!,
+                      style: TextStyle(fontSize: 250.sp),
+                    ),
+                    SizedBox(height: 30.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(widget.testDate!.substring(0, 10),
+                            style: TextStyle(fontSize: 60.sp)),
+                        Text(widget.testDate!.substring(11, 16),
+                            style: TextStyle(fontSize: 60.sp)),
+                      ],
+                    ),
+                    SizedBox(height: 50.h),
+                    Text(widget.testCode!, style: TextStyle(fontSize: 80.sp)),
+                    SizedBox(height: 50.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomButton(
+                          onPressed: () {
+                            context.router.pop();
+                          },
+                          buttonColor: Color(0xffdd0e0e),
+                          title: AppLocalizations.of(context)!
+                              .translate('cancel_btn'),
                         ),
-                  Text(
-                    widget.qNo!,
-                    style: TextStyle(fontSize: 200.sp),
-                  ),
-                  Text(widget.nric!, style: TextStyle(fontSize: 80.sp)),
-                  SizedBox(height: 20.h),
-                  Text(widget.candidateName!,
-                      style: TextStyle(fontSize: 80.sp)),
-                  SizedBox(height: 30.h),
-                  Text(
-                    widget.groupId!,
-                    style: TextStyle(fontSize: 250.sp),
-                  ),
-                  SizedBox(height: 30.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(widget.testDate!.substring(0, 10),
-                          style: TextStyle(fontSize: 60.sp)),
-                      Text(widget.testDate!.substring(11, 16),
-                          style: TextStyle(fontSize: 60.sp)),
-                    ],
-                  ),
-                  SizedBox(height: 50.h),
-                  Text(widget.testCode!, style: TextStyle(fontSize: 80.sp)),
-                  SizedBox(height: 50.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomButton(
-                        onPressed: () {
-                          context.router.pop();
-                        },
-                        buttonColor: Color(0xffdd0e0e),
-                        title: AppLocalizations.of(context)!
-                            .translate('cancel_btn'),
-                      ),
-                      CustomButton(
-                        onPressed: startTest,
-                        buttonColor: Color(0xffdd0e0e),
-                        title: AppLocalizations.of(context)!
-                            .translate('start_test'),
-                      ),
-                    ],
-                  ),
-                ],
+                        CustomButton(
+                          onPressed: startTest,
+                          buttonColor: Color(0xffdd0e0e),
+                          title: AppLocalizations.of(context)!
+                              .translate('start_test'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            LoadingModel(
-              isVisible: isLoading,
-              color: ColorConstant.primaryColor,
-            ),
-          ],
+              LoadingModel(
+                isVisible: isLoading,
+                color: ColorConstant.primaryColor,
+              ),
+            ],
+          ),
         ),
       ),
     );
