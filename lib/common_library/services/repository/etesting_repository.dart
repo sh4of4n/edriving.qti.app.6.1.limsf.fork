@@ -151,4 +151,48 @@ class EtestingRepo {
 
     return Response(false, message: response.message, data: []);
   }
+
+  Future<Response> qtiUjianLoginBhg2({
+    required String licenseClass,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? appVersion = await localStorage.getAppVersion();
+    String? mySikapId = await localStorage.getMySikapId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&appVersion=$appVersion&mySikapId=$mySikapId&licenseClass=$licenseClass&permitCode=$diCode';
+
+    var response = await networking.getData(
+      path: 'QtiUjianLoginBhg2?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
+
+  Future<Response> qtiUjianLoginBhg3({
+    required String licenseClass,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? appVersion = await localStorage.getAppVersion();
+    String? mySikapId = await localStorage.getMySikapId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&appVersion=$appVersion&mySikapId=$mySikapId&licenseClass=$licenseClass&permitCode=$diCode';
+
+    var response = await networking.getData(
+      path: 'QtiUjianLoginBhg3?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
 }

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
@@ -33,6 +35,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
   final plateNoFocus = FocusNode();
   final carNoFocus = FocusNode();
   final merchantNoFocus = FocusNode();
+  final etestingRepo = EtestingRepo();
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? qrController;
@@ -138,7 +141,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
     merchantNoController.text = await localStorage.getMerchantDbCode() ?? '';
   }
 
-  _submit() {
+  _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       FocusScope.of(context).requestFocus(new FocusNode());
@@ -150,7 +153,12 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           .saveMerchantDbCode(merchantNoController.text.replaceAll(' ', ''));
       localStorage.saveType(widget.type);
       if (widget.type == "RPK") {
-        context.router.pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
+        Response result = await etestingRepo.qtiUjianLoginBhg2(
+            licenseClass: groupIdController.text);
+        if (result.isSuccess) {
+          context.router
+              .pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
+        } else {}
       } else if (widget.type == "Jalan Raya") {
         context.router.pushAndPopUntil(Home(), predicate: (r) => false);
       }

@@ -333,8 +333,8 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: Text(AppLocalizations.of(context)!.translate('login')),
-            content:
-                Text(AppLocalizations.of(context)!.translate('login_successful')),
+            content: Text(
+                AppLocalizations.of(context)!.translate('login_successful')),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'OK'),
@@ -349,8 +349,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: Text(AppLocalizations.of(context)!.translate('login')),
-            content:
-                Text(AppLocalizations.of(context)!.translate('login_failed')),
+            content: Text(result.message!),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'OK'),
