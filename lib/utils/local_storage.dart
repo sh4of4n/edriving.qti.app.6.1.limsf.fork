@@ -36,8 +36,9 @@ class LocalStorage {
   static const String kPlateNo = 'PLATE_NO';
   static const String kMsgDoc = 'MSG_DOC';
   static const String kMsgRef = 'MSG_REF';
-
+  static const String kMySikapId = 'MY_SIKAP_ID';
   static const String kType = '';
+  static const String KMysikapVehicle = 'MYSIKAP_VEHICLE';
 
   static const String part2MarkSessionB = 'part2MarkB';
   static const String part2MarkSessionC = 'part2MarkC';
@@ -61,8 +62,6 @@ class LocalStorage {
   static const String DeductMarkF = 'DeductMarkF';
   static const String DeductMarkG = 'DeductMarkG';
   static const String DeductMarkH = 'DeductMarkH';
-
-  static const String mysikapVehicle = 'MYSIKAP_VEHICLE';
 
   Future<bool> setPart2MarkB(int deductMarkB) {
     return Preference.setInt(DeductMarkB, deductMarkB);
@@ -790,11 +789,19 @@ class LocalStorage {
   }
 
   Future<bool> getMySikapVehicle() async {
-    return Preference.getBool(mysikapVehicle, def: false);
+    return Preference.getBool(KMysikapVehicle, def: false);
   }
 
   Future<bool> saveMySikapVehicle(bool check) async {
-    return Preference.setBool(mysikapVehicle, check);
+    return Preference.setBool(KMysikapVehicle, check);
+  }
+
+  Future<String?> getMySikapId() async {
+    return Preference.getString(kMySikapId, def: '');
+  }
+
+  Future<bool> saveMySikapId(String mySikapId) async {
+    return Preference.setString(kMySikapId, mySikapId);
   }
 
   Future<void> reset() async {
@@ -834,6 +841,7 @@ class LocalStorage {
     await Preference.remove(kMsgDoc);
     await Preference.remove(kMsgRef);
     await Preference.remove(kType);
-    await Preference.remove(mysikapVehicle);
+    await Preference.remove(KMysikapVehicle);
+    await Preference.remove(kMySikapId);
   }
 }

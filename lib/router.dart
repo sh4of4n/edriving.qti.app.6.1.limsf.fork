@@ -8,6 +8,7 @@ import 'package:edriving_qti_app/pages/forgot_password/forgot_password.dart';
 import 'package:edriving_qti_app/pages/home/home_page_rpk.dart';
 import 'package:edriving_qti_app/pages/home/home_select.dart';
 import 'package:edriving_qti_app/pages/profile/profile.dart';
+import 'package:edriving_qti_app/pages/qr_scanner.dart';
 import 'package:edriving_qti_app/pages/register/register.dart';
 import 'package:edriving_qti_app/pages/rpk/rpk.dart';
 import 'package:edriving_qti_app/pages/rpk/rule.dart';
@@ -60,6 +61,7 @@ import 'package:edriving_qti_app/common_library/utils/image_viewer.dart';
     AutoRoute(page: ChecklistHome),
     AutoRoute(page: ChecklistResultPage),
     AutoRoute(page: RulePage),
+    AutoRoute(page: QrScannerPage),
   ],
 )
 class $AppRouter {}

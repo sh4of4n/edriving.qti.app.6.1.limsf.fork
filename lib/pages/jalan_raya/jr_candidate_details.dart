@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -182,11 +183,14 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     }
   }
 
-  compareCandidateInfo() async {
-    // var merchantNo = selectedCandidate.merchantNo;
-    var testCode = selectedCandidate.testCode;
-    var groupId = selectedCandidate.groupId;
-    var testDate = selectedCandidate.testDate;
+  compareCandidateInfo({
+    required String testCode,
+    required String groupId,
+    required String testDate,
+  }) async {
+    // var testCode = selectedCandidate.testCode;
+    // var groupId = selectedCandidate.groupId;
+    // var testDate = selectedCandidate.testDate;
 
     if (this.groupId == groupId) {
       if (this.testCode == testCode) {
@@ -194,8 +198,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           // await callPart3JpjTest();
         }
 
-        context.router
-            .push(
+        context.router.push(
           ConfirmCandidateInfo(
             part3Type: 'JALAN RAYA',
             nric: this.nric,
@@ -206,11 +209,11 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
             testCode: this.testCode,
             icPhoto: icPhoto,
           ),
-        )
-            .then((value) {
-          // cancelCallPart3JpjTest();
-          getPart3AvailableToCallJpjTestList();
-        });
+        );
+        //   .then((value) {
+        //   // cancelCallPart3JpjTest();
+        //   getPart3AvailableToCallJpjTestList();
+        // },);
       } else {
         for (int i = 0; i < candidateList!.length; i += 1) {
           if (candidateList![i].testCode == this.testCode) {
@@ -461,7 +464,11 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           isVisible = false;
 
           if (qNo!.isNotEmpty) {
-            compareCandidateInfo();
+            compareCandidateInfo(
+              groupId: selectedCandidate.groupId,
+              testCode: selectedCandidate.testCode,
+              testDate: selectedCandidate.testDate,
+            );
           } else {
             nric = '';
 
@@ -503,6 +510,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   }
 
   Future<bool> _onWillPop() async {
+    EasyLoading.dismiss();
     if (success > 0) {
       // return CustomDialog().show(
       //   context: context,
@@ -568,6 +576,57 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         appBar: AppBar(
           title: const Text('Calling'),
           actions: [
+            TextButton(
+              onPressed: () async {
+                var scanData = await context.router.push(QrScannerRoute());
+                if (scanData != null) {
+                  await EasyLoading.show();
+                  String? plateNo = await localStorage.getPlateNo();
+                  Response result = await etestingRepo.isCurrentCallingCalon(
+                    plateNo: plateNo ?? '',
+                    partType: 'PART3',
+                    nricNo: jsonDecode(scanData.toString())['Table1'][0]
+                        ['nric_no'],
+                  );
+                  await EasyLoading.dismiss();
+                  if (result.isSuccess) {
+                    if (result.data == 'False') {
+                      showDialog<void>(
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('JPJ QTO'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: const <Widget>[
+                                  Text(
+                                      'Tiada calon yang mengambil peperiksaan'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Ok'),
+                                onPressed: () {
+                                  context.router.pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  }
+                }
+              },
+              child: Text(
+                'Calon Semasa',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
             IconButton(
               onPressed: () {
                 customDialog.show(

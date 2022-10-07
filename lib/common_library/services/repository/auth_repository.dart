@@ -298,7 +298,6 @@ class AuthRepo {
     return Response(false, message: response.message);
   }
 
-  
   Future<Response> jpjQtiLoginWithMySikap({
     required String mySikapId,
     required String permitCode,
@@ -323,6 +322,7 @@ class AuthRepo {
         localStorage.saveUserId(responseData.userId!);
         localStorage.saveDiCode(permitCode);
         localStorage.saveMerchantDbCode(permitCode);
+        localStorage.saveMySikapId(mySikapId);
         return response;
       }
     }

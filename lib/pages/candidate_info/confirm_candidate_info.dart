@@ -192,7 +192,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   startTest() async {
     vehNo = await localStorage.getPlateNo();
 
-    if (widget.part3Type == 'RPK')
+    if (widget.part3Type == 'RPK') {
       context.router.push(
         RpkPartIII(
           qNo: widget.qNo,
@@ -204,7 +204,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           vehNo: vehNo,
         ),
       );
-    else
+    } else {
       context.router.push(
         JrPartIII(
           qNo: widget.qNo,
@@ -216,6 +216,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           vehNo: vehNo,
         ),
       );
+    }
   }
 
   @override

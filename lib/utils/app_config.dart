@@ -16,7 +16,7 @@ class AppConfig {
   String eWalletCaPwd = 'visa2u';
 
   String appCode = 'EPANDU';
-  String appId = 'ePandu.JPJ.QTO.App';
+  String appId = 'eDriving.QTI.APP';
 
   String wsVer = '6_1';
 }
