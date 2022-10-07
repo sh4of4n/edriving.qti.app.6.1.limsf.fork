@@ -36,7 +36,7 @@ void main() async {
       (options) {
         options.dsn = kDebugMode
             ? ''
-            : 'https://f22e4d09f6bb417da45ababa664d1847@o354605.ingest.sentry.io/6770268';
+            : 'https://56a93727ddd3442f9acc49762a68b78b@o354605.ingest.sentry.io/6749453';
       },
     );
 

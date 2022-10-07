@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_button.dart';
@@ -153,14 +154,36 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           .saveMerchantDbCode(merchantNoController.text.replaceAll(' ', ''));
       localStorage.saveType(widget.type);
       if (widget.type == "RPK") {
+        EasyLoading.show();
         Response result = await etestingRepo.qtiUjianLoginBhg2(
             licenseClass: groupIdController.text);
+        await EasyLoading.dismiss();
         if (result.isSuccess) {
           context.router
               .pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
-        } else {}
+        } else {
+          if (mounted) {
+            SnackBar snackBar = SnackBar(
+              content: Text(result.message!),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        }
       } else if (widget.type == "Jalan Raya") {
-        context.router.pushAndPopUntil(Home(), predicate: (r) => false);
+        EasyLoading.show();
+        Response result = await etestingRepo.qtiUjianLoginBhg3(
+            licenseClass: groupIdController.text);
+        await EasyLoading.dismiss();
+        if (result.isSuccess) {
+          context.router.pushAndPopUntil(Home(), predicate: (r) => false);
+        } else {
+          if (mounted) {
+            SnackBar snackBar = SnackBar(
+              content: Text(result.message!),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        }
       }
     }
   }
@@ -175,150 +198,156 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Get Vehicle Info'),
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    width: 1300.w,
-                    margin: EdgeInsets.symmetric(vertical: 30.h),
-                    child: TextFormField(
-                      inputFormatters: [UpperCaseTextFormatter()],
-                      focusNode: groupIdFocus,
-                      controller: groupIdController,
-                      decoration: InputDecoration(
-                        labelText: 'Group ID',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => groupIdController.clear());
-                          },
+      child: WillPopScope(
+        onWillPop: () async {
+          EasyLoading.dismiss();
+          return true;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Get Vehicle Info'),
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              width: double.infinity,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: TextFormField(
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: groupIdFocus,
+                        controller: groupIdController,
+                        decoration: InputDecoration(
+                          labelText: 'Group ID',
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => groupIdController.clear());
+                            },
+                          ),
                         ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Group ID is required.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: 1300.w,
-                    margin: EdgeInsets.symmetric(vertical: 30.h),
-                    child: TextFormField(
-                      inputFormatters: [UpperCaseTextFormatter()],
-                      focusNode: carNoFocus,
-                      controller: carNoController,
-                      decoration: InputDecoration(
-                        labelText: 'Car No',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => carNoController.clear());
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Car no is required.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: 1300.w,
-                    margin: EdgeInsets.symmetric(vertical: 30.h),
-                    child: TextFormField(
-                      inputFormatters: [UpperCaseTextFormatter()],
-                      focusNode: plateNoFocus,
-                      controller: plateNoController,
-                      decoration: InputDecoration(
-                        labelText: 'Plate No',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => plateNoController.clear());
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Plate no is required.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: 1300.w,
-                    margin: EdgeInsets.symmetric(vertical: 30.h),
-                    child: TextFormField(
-                      inputFormatters: [UpperCaseTextFormatter()],
-                      focusNode: merchantNoFocus,
-                      controller: merchantNoController,
-                      decoration: InputDecoration(
-                        labelText: 'Permit No',
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => merchantNoController.clear());
-                          },
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Permit No is required.';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Visibility(
-                    visible: showQR,
-                    child: Container(
-                      width: 300,
-                      height: 300,
-                      child: _buildQrView(context),
-                    ),
-                  ),
-                  Visibility(
-                    visible: showCameraIcon,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 100.h),
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showQR = true;
-                            showCameraIcon = false;
-                          });
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Group ID is required.';
+                          }
+                          return null;
                         },
-                        iconSize: 250,
-                        icon: Icon(Icons.camera_alt),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 30.h),
-                    child: CustomButton(
-                      onPressed: _submit,
-                      buttonColor: Color(0xffdd0e0e),
-                      title: 'Save',
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: TextFormField(
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: carNoFocus,
+                        controller: carNoController,
+                        decoration: InputDecoration(
+                          labelText: 'Car No',
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => carNoController.clear());
+                            },
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Car no is required.';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: TextFormField(
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: plateNoFocus,
+                        controller: plateNoController,
+                        decoration: InputDecoration(
+                          labelText: 'Plate No',
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => plateNoController.clear());
+                            },
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Plate no is required.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: TextFormField(
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: merchantNoFocus,
+                        controller: merchantNoController,
+                        decoration: InputDecoration(
+                          labelText: 'Permit No',
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => merchantNoController.clear());
+                            },
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Permit No is required.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Visibility(
+                      visible: showQR,
+                      child: Container(
+                        width: 300,
+                        height: 300,
+                        child: _buildQrView(context),
+                      ),
+                    ),
+                    Visibility(
+                      visible: showCameraIcon,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 100.h),
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              showQR = true;
+                              showCameraIcon = false;
+                            });
+                          },
+                          iconSize: 250,
+                          icon: Icon(Icons.camera_alt),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: CustomButton(
+                        onPressed: _submit,
+                        buttonColor: Color(0xffdd0e0e),
+                        title: 'Save',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

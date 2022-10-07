@@ -110,11 +110,7 @@ class ResultRequest {
   String? permitCode;
 
   ResultRequest(
-      {this.wsCodeCrypt,
-      this.caUid,
-      this.caPwd,
-      this.userId,
-      this.permitCode});
+      {this.wsCodeCrypt, this.caUid, this.caPwd, this.userId, this.permitCode});
 
   ResultRequest.fromJson(Map<String, dynamic> json) {
     wsCodeCrypt = json['wsCodeCrypt'];
@@ -134,6 +130,7 @@ class ResultRequest {
     return data;
   }
 }
+
 class OwnerIdCategoryResponse {
   List<OwnerIdCategoryList>? ownerIdCategoryList;
 
@@ -262,6 +259,47 @@ class MysikapVehicle {
     data['branch_code'] = this.branchCode;
     data['deleted'] = this.deleted;
     data['checked'] = this.checked;
+    return data;
+  }
+}
+
+class QtiUjianLogoutRequest {
+  String? wsCodeCrypt;
+  String? caUid;
+  String? caPwd;
+  String? appId;
+  String? appVersion;
+  String? mySikapId;
+  String? permitCode;
+
+  QtiUjianLogoutRequest(
+      {this.wsCodeCrypt,
+      this.caUid,
+      this.caPwd,
+      this.appId,
+      this.appVersion,
+      this.mySikapId,
+      this.permitCode});
+
+  QtiUjianLogoutRequest.fromJson(Map<String, dynamic> json) {
+    wsCodeCrypt = json['wsCodeCrypt'];
+    caUid = json['caUid'];
+    caPwd = json['caPwd'];
+    appId = json['appId'];
+    appVersion = json['appVersion'];
+    mySikapId = json['mySikapId'];
+    permitCode = json['permitCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['wsCodeCrypt'] = this.wsCodeCrypt;
+    data['caUid'] = this.caUid;
+    data['caPwd'] = this.caPwd;
+    data['appId'] = this.appId;
+    data['appVersion'] = this.appVersion;
+    data['mySikapId'] = this.mySikapId;
+    data['permitCode'] = this.permitCode;
     return data;
   }
 }

@@ -576,57 +576,57 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         appBar: AppBar(
           title: const Text('Calling'),
           actions: [
-            TextButton(
-              onPressed: () async {
-                var scanData = await context.router.push(QrScannerRoute());
-                if (scanData != null) {
-                  await EasyLoading.show();
-                  String? plateNo = await localStorage.getPlateNo();
-                  Response result = await etestingRepo.isCurrentCallingCalon(
-                    plateNo: plateNo ?? '',
-                    partType: 'PART3',
-                    nricNo: jsonDecode(scanData.toString())['Table1'][0]
-                        ['nric_no'],
-                  );
-                  await EasyLoading.dismiss();
-                  if (result.isSuccess) {
-                    if (result.data == 'False') {
-                      showDialog<void>(
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('JPJ QTO'),
-                            content: SingleChildScrollView(
-                              child: ListBody(
-                                children: const <Widget>[
-                                  Text(
-                                      'Tiada calon yang mengambil peperiksaan'),
-                                ],
-                              ),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('Ok'),
-                                onPressed: () {
-                                  context.router.pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  }
-                }
-              },
-              child: Text(
-                'Calon Semasa',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () async {
+            //     var scanData = await context.router.push(QrScannerRoute());
+            //     if (scanData != null) {
+            //       await EasyLoading.show();
+            //       String? plateNo = await localStorage.getPlateNo();
+            //       Response result = await etestingRepo.isCurrentCallingCalon(
+            //         plateNo: plateNo ?? '',
+            //         partType: 'PART3',
+            //         nricNo: jsonDecode(scanData.toString())['Table1'][0]
+            //             ['nric_no'],
+            //       );
+            //       await EasyLoading.dismiss();
+            //       if (result.isSuccess) {
+            //         if (result.data == 'False') {
+            //           showDialog<void>(
+            //             context: context,
+            //             barrierDismissible: false, // user must tap button!
+            //             builder: (BuildContext context) {
+            //               return AlertDialog(
+            //                 title: const Text('JPJ QTO'),
+            //                 content: SingleChildScrollView(
+            //                   child: ListBody(
+            //                     children: const <Widget>[
+            //                       Text(
+            //                           'Tiada calon yang mengambil peperiksaan'),
+            //                     ],
+            //                   ),
+            //                 ),
+            //                 actions: <Widget>[
+            //                   TextButton(
+            //                     child: const Text('Ok'),
+            //                     onPressed: () {
+            //                       context.router.pop();
+            //                     },
+            //                   ),
+            //                 ],
+            //               );
+            //             },
+            //           );
+            //         }
+            //       }
+            //     }
+            //   },
+            //   child: Text(
+            //     'Calon Semasa',
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ),
             IconButton(
               onPressed: () {
                 customDialog.show(

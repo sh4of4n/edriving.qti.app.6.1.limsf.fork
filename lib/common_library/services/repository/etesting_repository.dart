@@ -195,4 +195,32 @@ class EtestingRepo {
 
     return Response(false, message: response.message, data: []);
   }
+
+  Future<Response> qtiUjianLogout() async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? appVersion = await localStorage.getAppVersion();
+    String? mySikapId = await localStorage.getMySikapId();
+    QtiUjianLogoutRequest params = QtiUjianLogoutRequest(
+      wsCodeCrypt: appConfig.wsCodeCrypt,
+      caUid: caUid,
+      caPwd: caPwd,
+      appId: appConfig.appId,
+      appVersion: appVersion,
+      mySikapId: mySikapId,
+      permitCode: diCode,
+    );
+    String body = jsonEncode(params);
+    String api = 'QtiUjianLogout';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+    var response =
+        await networking.postData(api: api, body: body, headers: headers);
+    // Success
+    if (response.isSuccess) {
+      await localStorage.reset();
+      return Response(true, data: response.data);
+    }
+    return Response(false, message: response.message, data: []);
+  }
 }
