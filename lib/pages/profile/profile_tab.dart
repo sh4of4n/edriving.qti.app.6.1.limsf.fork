@@ -255,7 +255,7 @@ class _ProfileTabState extends State<ProfileTab>
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: _getTitle(),
-            actions: _getActions(),
+            // actions: _getActions(),
           ),
           backgroundColor: Colors.transparent,
           body: TabBarView(controller: _tabController, children: [

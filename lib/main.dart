@@ -108,6 +108,9 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Myriad',
         textTheme: FontTheme().primaryFont,
         primaryTextTheme: FontTheme().primaryFont,
+        appBarTheme: AppBarTheme(
+          backgroundColor: ColorConstant.primaryColor,
+        ),
       ),
       // List all of the app's supported locales here
       supportedLocales: [

@@ -6,9 +6,11 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/device_info.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../common_library/utils/uppercase_formatter.dart';
 import '../../router.gr.dart';
@@ -21,7 +23,7 @@ class NewLoginForm extends StatefulWidget {
 class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   final authRepo = AuthRepo();
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   final FocusNode _phoneFocus = FocusNode();
 
@@ -58,6 +60,10 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
 
     // _getCurrentLocation();
     _getDeviceInfo();
+
+    localStorage.getPermitCode().then((value) {
+      _formKey.currentState?.fields['permitCode']?.didChange(value);
+    });
   }
 
   _getDeviceInfo() async {
@@ -96,7 +102,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       child: Padding(
         padding:
             EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 20.0),
-        child: Form(
+        child: FormBuilder(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +110,8 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               SizedBox(
                 height: 35.h,
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: 'ic',
                 focusNode: _phoneFocus,
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
@@ -125,26 +132,19 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onFieldSubmitted: (term) {
-                  fieldFocusChange(context, _phoneFocus, _passwordFocus);
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)!
-                        .translate('ic_no_required_msg');
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  if (value != _phone) {
-                    _phone = value;
-                  }
-                },
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!
+                            .translate('ic_no_required_msg')),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 70.h,
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: 'permitCode',
                 focusNode: _passwordFocus,
                 inputFormatters: [UpperCaseTextFormatter()],
                 decoration: InputDecoration(
@@ -173,13 +173,13 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)!
-                        .translate('permit_code_required_msg');
-                  }
-                  return null;
-                },
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!
+                            .translate('permit_code_required_msg')),
+                  ],
+                ),
                 onSaved: (value) {
                   if (value != _password) {
                     _password = value;
@@ -283,8 +283,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   }
 
   _submitLogin() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
       FocusScope.of(context).requestFocus(new FocusNode());
 
       setState(() {
@@ -300,9 +299,12 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       ); */
 
       var result = await authRepo.jpjQtiLoginWithMySikap(
-        mySikapId: _phone!,
-        permitCode: _password!,
+        mySikapId: _formKey.currentState?.fields['ic']?.value!,
+        permitCode: _formKey.currentState?.fields['permitCode']?.value!,
       );
+
+      await localStorage
+          .savePermitCode(_formKey.currentState?.fields['permitCode']?.value!);
 
       if (result.isSuccess) {
         context.router.replace(HomeSelect());

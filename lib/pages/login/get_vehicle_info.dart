@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:edriving_qti_app/common_library/services/model/etesting_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_button.dart';
@@ -25,13 +29,9 @@ class GetVehicleInfo extends StatefulWidget {
 }
 
 class _GetVehicleInfoState extends State<GetVehicleInfo> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
   final localStorage = LocalStorage();
   final customDialog = CustomDialog();
-  final groupIdController = TextEditingController();
-  final plateNoController = TextEditingController();
-  final carNoController = TextEditingController();
-  final merchantNoController = TextEditingController();
   final groupIdFocus = FocusNode();
   final plateNoFocus = FocusNode();
   final carNoFocus = FocusNode();
@@ -42,11 +42,14 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
   QRViewController? qrController;
   bool showCameraIcon = true;
   bool showQR = false;
-
+  List<MysikapVehicle> vehicleArr = [];
   @override
   void initState() {
     super.initState();
-
+    localStorage.getPermitCode().then((value) {
+      _formKey.currentState!.fields['permitNo']!.didChange(value);
+    });
+    getMySikapVehicleListByStatus();
     //getSavedInfo();
   }
 
@@ -58,6 +61,19 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
     } else if (Platform.isIOS) {
       qrController?.resumeCamera();
     }
+  }
+
+  Future getMySikapVehicleListByStatus() async {
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
+    var result =
+        await etestingRepo.getMySikapVehicleListByStatus(status: 'CHECKED');
+    setState(() {
+      vehicleArr = result.data;
+    });
+    EasyLoading.dismiss();
+    return result;
   }
 
   Widget _buildQrView(BuildContext context) {
@@ -91,14 +107,13 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
 
       try {
         setState(() {
-          groupIdController.text =
-              jsonDecode(scanData.code!)['Table1'][0]['group_id'];
-          carNoController.text =
-              jsonDecode(scanData.code!)['Table1'][0]['car_no'];
-          plateNoController.text =
-              jsonDecode(scanData.code!)['Table1'][0]['plate_no'];
-          merchantNoController.text =
-              jsonDecode(scanData.code!)['Table1'][0]['merchant_no'];
+          _formKey.currentState!.patchValue({
+            'groupId': jsonDecode(scanData.code!)['Table1'][0]['group_id'],
+            'permitNo': jsonDecode(scanData.code!)['Table1'][0]['merchant_no'],
+            'carNo': jsonDecode(scanData.code!)['Table1'][0]['car_no'],
+            'plateNo': jsonDecode(scanData.code!)['Table1'][0]['plate_no'],
+          });
+
           showCameraIcon = true;
           showQR = false;
         });
@@ -125,9 +140,6 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
 
   @override
   void dispose() {
-    groupIdController.dispose();
-    plateNoController.dispose();
-    carNoController.dispose();
     groupIdFocus.dispose();
     plateNoFocus.dispose();
     carNoFocus.dispose();
@@ -136,72 +148,49 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
   }
 
   getSavedInfo() async {
-    groupIdController.text = await localStorage.getEnrolledGroupId() ?? '';
-    plateNoController.text = await localStorage.getPlateNo() ?? '';
-    carNoController.text = await localStorage.getCarNo() ?? '';
-    merchantNoController.text = await localStorage.getMerchantDbCode() ?? '';
+    _formKey.currentState!.patchValue({
+      'groupId': await localStorage.getEnrolledGroupId() ?? '',
+      'permitNo': await localStorage.getMerchantDbCode() ?? '',
+      'carNo': await localStorage.getCarNo() ?? '',
+      'plateNo': await localStorage.getPlateNo() ?? '',
+    });
   }
 
-  _submit() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+  _submit() {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
       FocusScope.of(context).requestFocus(new FocusNode());
 
-      localStorage.saveEnrolledGroupId(groupIdController.text);
-      localStorage.saveCarNo(carNoController.text.replaceAll(' ', ''));
-      localStorage.savePlateNo(plateNoController.text.replaceAll(' ', ''));
       localStorage
-          .saveMerchantDbCode(merchantNoController.text.replaceAll(' ', ''));
+          .saveEnrolledGroupId(_formKey.currentState?.fields['groupId']?.value);
+      localStorage.saveCarNo(
+          _formKey.currentState?.fields['carNo']?.value.replaceAll(' ', ''));
+      localStorage.savePlateNo(
+          _formKey.currentState?.fields['plateNo']?.value.replaceAll(' ', ''));
+      localStorage.saveMerchantDbCode(
+          _formKey.currentState?.fields['permitNo']?.value.replaceAll(' ', ''));
       localStorage.saveType(widget.type);
       if (widget.type == "RPK") {
-        EasyLoading.show();
-        Response result = await etestingRepo.qtiUjianLoginBhg2(
-            licenseClass: groupIdController.text);
-        await EasyLoading.dismiss();
-        if (result.isSuccess) {
-          context.router
-              .pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
-        } else {
-          if (mounted) {
-            SnackBar snackBar = SnackBar(
-              content: Text(result.message!),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        }
+        context.router.pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
       } else if (widget.type == "Jalan Raya") {
-        EasyLoading.show();
-        Response result = await etestingRepo.qtiUjianLoginBhg3(
-            licenseClass: groupIdController.text);
-        await EasyLoading.dismiss();
-        if (result.isSuccess) {
-          context.router.pushAndPopUntil(Home(), predicate: (r) => false);
-        } else {
-          if (mounted) {
-            SnackBar snackBar = SnackBar(
-              content: Text(result.message!),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        }
+        context.router.pushAndPopUntil(Home(), predicate: (r) => false);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        EasyLoading.dismiss();
+        return true;
       },
-      child: WillPopScope(
-        onWillPop: () async {
-          EasyLoading.dismiss();
-          return true;
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
         },
         child: Scaffold(
           appBar: AppBar(
@@ -210,99 +199,134 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           body: SingleChildScrollView(
             child: Container(
               width: double.infinity,
-              child: Form(
+              child: FormBuilder(
                 key: _formKey,
                 child: Column(
                   children: [
                     Container(
                       width: 1300.w,
                       margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: TextFormField(
-                        inputFormatters: [UpperCaseTextFormatter()],
+                      child: FormBuilderDropdown(
+                        name: 'groupId',
+                        items: ['D', 'DA']
+                            .map(
+                              (gender) => DropdownMenuItem(
+                                value: gender,
+                                child: Text(gender),
+                              ),
+                            )
+                            .toList(),
                         focusNode: groupIdFocus,
-                        controller: groupIdController,
                         decoration: InputDecoration(
                           labelText: 'Group ID',
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                  (_) => groupIdController.clear());
-                            },
-                          ),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Group ID is required.';
-                          }
-                          return null;
-                        },
+                        validator: FormBuilderValidators.compose(
+                          [FormBuilderValidators.required()],
+                        ),
                       ),
                     ),
                     Container(
                       width: 1300.w,
                       margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: TextFormField(
+                      child: FormBuilderTextField(
+                        name: 'carNo',
                         inputFormatters: [UpperCaseTextFormatter()],
                         focusNode: carNoFocus,
-                        controller: carNoController,
                         decoration: InputDecoration(
                           labelText: 'Car No',
                           suffixIcon: IconButton(
                             icon: Icon(Icons.close),
                             onPressed: () {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                  (_) => carNoController.clear());
+                              _formKey.currentState!.fields['carNo']?.reset();
                             },
                           ),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Car no is required.';
-                          }
-                          return null;
-                        },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
                     ),
                     Container(
                       width: 1300.w,
                       margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: TextFormField(
-                        inputFormatters: [UpperCaseTextFormatter()],
-                        focusNode: plateNoFocus,
-                        controller: plateNoController,
-                        decoration: InputDecoration(
-                          labelText: 'Plate No',
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                  (_) => plateNoController.clear());
+                      child: FormBuilderField(
+                        name: 'plateNo',
+                        builder: (field) {
+                          return DropdownSearch<MysikapVehicle>(
+                            items: vehicleArr,
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)!
+                                    .translate('plate_no'),
+                              ),
+                            ),
+                            validator: (MysikapVehicle? i) {
+                              if (i == null) return field.errorText;
+                              return null;
                             },
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Plate no is required.';
-                          }
-                          return null;
+                            itemAsString: (MysikapVehicle u) => u.plateNo!,
+                            compareFn: (i, s) => i.plateNo == s.plateNo,
+                            onChanged: ((value) {
+                              field.didChange(value!.plateNo);
+                            }),
+                            popupProps:
+                                PopupPropsMultiSelection.modalBottomSheet(
+                              isFilterOnline: true,
+                              showSelectedItems: true,
+                              showSearchBox: true,
+                              itemBuilder: (context, item, isSelected) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: !isSelected
+                                      ? null
+                                      : BoxDecoration(
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.white,
+                                        ),
+                                  child: ListTile(
+                                    selected: isSelected,
+                                    title: Text(item.plateNo ?? ''),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
                         },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
+
+                      // FormBuilderTextField(
+                      //   name: 'plateNo',
+                      //   inputFormatters: [UpperCaseTextFormatter()],
+                      //   focusNode: plateNoFocus,
+                      //   decoration: InputDecoration(
+                      //     labelText: 'Plate No',
+                      //   ),
+                      //   validator: FormBuilderValidators.compose([
+                      //     FormBuilderValidators.required(),
+                      //   ]),
+                      // ),
                     ),
                     Container(
                       width: 1300.w,
                       margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: TextFormField(
+                      child: FormBuilderTextField(
+                        name: 'permitNo',
                         inputFormatters: [UpperCaseTextFormatter()],
                         focusNode: merchantNoFocus,
-                        controller: merchantNoController,
                         decoration: InputDecoration(
                           labelText: 'Permit No',
                           suffixIcon: IconButton(
                             icon: Icon(Icons.close),
                             onPressed: () {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                  (_) => merchantNoController.clear());
+                              _formKey.currentState!.fields['permitNo']
+                                  ?.reset();
                             },
                           ),
                         ),

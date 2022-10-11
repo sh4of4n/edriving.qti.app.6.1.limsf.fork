@@ -76,6 +76,7 @@ class _HomeSelectState extends State<HomeSelect> {
         key: _scaffoldKey,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          title: const Text('eDriving QTI'),
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.grey,
           elevation: 0,

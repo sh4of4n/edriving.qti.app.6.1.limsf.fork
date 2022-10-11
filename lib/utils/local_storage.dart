@@ -39,6 +39,7 @@ class LocalStorage {
   static const String kMySikapId = 'MY_SIKAP_ID';
   static const String kType = '';
   static const String KMysikapVehicle = 'MYSIKAP_VEHICLE';
+  static const String kPermitCode = 'PERMIT_CODE';
 
   static const String part2MarkSessionB = 'part2MarkB';
   static const String part2MarkSessionC = 'part2MarkC';
@@ -802,6 +803,14 @@ class LocalStorage {
 
   Future<bool> saveMySikapId(String mySikapId) async {
     return Preference.setString(kMySikapId, mySikapId);
+  }
+
+  Future<String?> getPermitCode() async {
+    return Preference.getString(kPermitCode, def: '');
+  }
+
+  Future<bool> savePermitCode(String permitCode) async {
+    return Preference.setString(kPermitCode, permitCode);
   }
 
   Future<void> reset() async {
