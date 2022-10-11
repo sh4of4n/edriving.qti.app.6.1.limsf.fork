@@ -44,7 +44,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       curve: Curves.elasticOut,
       width: double.infinity,
       height: _height,
@@ -52,12 +52,12 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black26,
             offset: Offset(0.0, 15.0),
             blurRadius: 15.0,
           ),
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black12,
             offset: Offset(0.0, -10.0),
             blurRadius: 10.0,
@@ -65,7 +65,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -77,13 +77,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
               TextFormField(
                 focusNode: _oldPasswordFocus,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 16.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
                   hintStyle: TextStyle(color: primaryColor),
                   labelText:
                       AppLocalizations.of(context)!.translate('password_lbl'),
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(_obscureOldPassword
                         ? Icons.visibility_off
@@ -97,7 +97,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
                     },
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -128,13 +128,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
               TextFormField(
                 focusNode: _newPasswordFocus,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 16.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
                   hintStyle: TextStyle(color: primaryColor),
                   labelText: AppLocalizations.of(context)!
                       .translate('new_password_lbl'),
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(_obscureNewPassword
                         ? Icons.visibility_off
@@ -148,7 +148,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
                     },
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -179,13 +179,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
               TextFormField(
                 focusNode: _confirmNewPasswordFocus,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 16.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
                   hintStyle: TextStyle(color: primaryColor),
                   labelText: AppLocalizations.of(context)!
                       .translate('confirm_new_password_lbl'),
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(_obscureConfirmPassword
                         ? Icons.visibility_off
@@ -199,7 +199,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
                     },
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -249,10 +249,11 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
           : ElevatedButton(
               onPressed: _submit,
               style: ElevatedButton.styleFrom(
-                onPrimary: Colors.white,
-                primary: primaryColor,
-                minimumSize: Size(88, 36),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 11.0),
+                foregroundColor: Colors.white,
+                backgroundColor: primaryColor,
+                minimumSize: const Size(88, 36),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 11.0),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(2)),
                 ),

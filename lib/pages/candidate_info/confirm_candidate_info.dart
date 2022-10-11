@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
@@ -103,37 +104,46 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   } */
 
   Future<bool> _onWillPop() async {
-    return (await showDialog(
-          context: context,
-          barrierDismissible: false, // user must tap button!
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(
-                  AppLocalizations.of(context)!.translate('warning_title')),
-              content: SingleChildScrollView(
-                  child: Text(AppLocalizations.of(context)!
-                      .translate('confirm_exit_desc'))),
-              actions: <Widget>[
-                TextButton(
-                  child:
-                      Text(AppLocalizations.of(context)!.translate('yes_lbl')),
-                  onPressed: () async {
-                    await context.router.pop(true);
-                    await cancelCallPart3JpjTest();
-                  },
-                ),
-                TextButton(
-                  child:
-                      Text(AppLocalizations.of(context)!.translate('no_lbl')),
-                  onPressed: () {
-                    context.router.pop(false);
-                  },
-                ),
-              ],
-            );
-          },
-        )) ??
-        false;
+    bool result = await showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.translate('warning_title')),
+          content: SingleChildScrollView(
+              child: Text(AppLocalizations.of(context)!
+                  .translate('confirm_exit_desc'))),
+          actions: <Widget>[
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.translate('yes_lbl')),
+              onPressed: () async {
+                await context.router.pop(true);
+              },
+            ),
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.translate('no_lbl')),
+              onPressed: () {
+                context.router.pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result) {
+      EasyLoading.show(
+        maskType: EasyLoadingMaskType.black,
+      );
+      if (widget.part3Type == 'RPK') {
+        await cancelCallPart3RpkTest();
+      } else {
+        await cancelCallPart3JpjTest();
+      }
+      await EasyLoading.dismiss();
+    }
+
+    return result;
     // await CustomDialog().show(
     //   context: context,
     //   title: Text(AppLocalizations.of(context)!.translate('warning_title')),
@@ -189,10 +199,41 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
     }
   }
 
+  Future<void> cancelCallPart3RpkTest() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    var result = await epanduRepo.cancelCallRpkJpjTest(
+      part3Type: widget.part3Type,
+      groupId: widget.groupId,
+      testCode: widget.testCode,
+      icNo: widget.nric,
+    );
+
+    if (result.isSuccess) {
+      // context.router.pop();
+    } else {
+      if (mounted) {
+        customDialog.show(
+          context: context,
+          content: result.message,
+          type: DialogType.WARNING,
+        );
+      }
+    }
+
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   startTest() async {
     vehNo = await localStorage.getPlateNo();
 
-    if (widget.part3Type == 'RPK') {
+    if (widget.part3Type == 'RPK')
       context.router.push(
         RpkPartIII(
           qNo: widget.qNo,
@@ -202,9 +243,10 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           groupId: widget.groupId,
           testCode: widget.testCode,
           vehNo: vehNo,
+          skipUpdateRpkJpjTestStart: false,
         ),
       );
-    } else {
+    else
       context.router.push(
         JrPartIII(
           qNo: widget.qNo,
@@ -214,9 +256,9 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           groupId: widget.groupId,
           testCode: widget.testCode,
           vehNo: vehNo,
+          skipUpdateJrJpjTestStart: false,
         ),
       );
-    }
   }
 
   @override

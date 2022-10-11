@@ -24,6 +24,7 @@ import 'package:edriving_qti_app/utils/local_storage.dart';
 import '../../router.gr.dart';
 
 enum Gender { male, female }
+
 enum AppState { free, picked, cropped }
 
 class UpdateProfile extends StatefulWidget {
@@ -296,7 +297,7 @@ class _UpdateProfileState extends State<UpdateProfile> with PageBaseClass {
         ),
         OutlinedButton(
           style: OutlinedButton.styleFrom(
-            primary: Colors.black87,
+            foregroundColor: Colors.black87,
             minimumSize: Size(88, 36),
             padding: EdgeInsets.symmetric(horizontal: 16),
             shape: const RoundedRectangleBorder(
@@ -1061,8 +1062,7 @@ class _UpdateProfileState extends State<UpdateProfile> with PageBaseClass {
               child: ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.white,
-                  primary: Color(0xffdd0e0e),
+                  foregroundColor: Color(0xffdd0e0e),
                   minimumSize: Size(88, 36),
                   padding:
                       EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),

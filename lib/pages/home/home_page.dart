@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
   String? plateNo;
   String? dbCode;
 
-  TextStyle textStyle = TextStyle(fontWeight: FontWeight.bold);
+  TextStyle textStyle = const TextStyle(fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -104,25 +104,25 @@ class _HomeState extends State<Home> {
         children: [
           TableRow(
             children: [
-              Text('Group ID'),
+              const Text('Group ID'),
               Text(groupId ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Car No'),
+              const Text('Car No'),
               Text(carNo ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Plate No'),
+              const Text('Plate No'),
               Text(plateNo ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Permit No'),
+              const Text('Permit No'),
               Text(dbCode ?? '', style: textStyle),
             ],
           ),
@@ -149,15 +149,16 @@ class _HomeState extends State<Home> {
         key: _scaffoldKey,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          title: const Text('eDriving QTI'),
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.grey,
           elevation: 0,
           actions: <Widget>[
             IconButton(
               onPressed: () => context.router.push(
-                ProfileTab(),
+                const ProfileTab(),
               ),
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
             ),
           ],
         ),
@@ -166,15 +167,15 @@ class _HomeState extends State<Home> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Ujian Memandu Bahagian III',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 vehInfo(),
                 HomeModule(),
                 Padding(
@@ -190,7 +191,7 @@ class _HomeState extends State<Home> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.translate('change_car'),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),
@@ -217,7 +218,7 @@ class _HomeState extends State<Home> {
                       child: Text(
                         AppLocalizations.of(context)!
                             .translate('change_bahagian'),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),

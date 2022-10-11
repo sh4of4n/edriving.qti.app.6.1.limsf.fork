@@ -23,6 +23,7 @@ class RpkPartIII extends StatefulWidget {
   final String? groupId;
   final String? testCode;
   final String? vehNo;
+  final bool skipUpdateRpkJpjTestStart;
 
   RpkPartIII(
     this.qNo,
@@ -32,6 +33,7 @@ class RpkPartIII extends StatefulWidget {
     this.groupId,
     this.testCode,
     this.vehNo,
+    this.skipUpdateRpkJpjTestStart,
   );
 
   @override
@@ -59,7 +61,9 @@ class _Part3MainState extends State<RpkPartIII> {
   void initState() {
     super.initState();
     getRule();
-    updateRpkJpjTestStart();
+    if (!widget.skipUpdateRpkJpjTestStart) {
+      updateRpkJpjTestStart();
+    }
   }
 
   Future<void> getRule() async {
@@ -299,8 +303,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                                         Alignment.centerRight,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets
-                                                                  .only(
+                                                          const EdgeInsets.only(
                                                               right: 25,
                                                               top: 5),
                                                       child: Wrap(
@@ -309,18 +312,14 @@ class _Part3MainState extends State<RpkPartIII> {
                                                             scale: 1.3,
                                                             child: Checkbox(
                                                               checkColor:
-                                                                  Colors
-                                                                      .black,
+                                                                  Colors.black,
                                                               activeColor:
-                                                                  Colors
-                                                                      .white,
+                                                                  Colors.white,
                                                               value: checkAll,
-                                                              onChanged:
-                                                                  (bool?
-                                                                      value) {
+                                                              onChanged: (bool?
+                                                                  value) {
                                                                 if (value!) {
-                                                                  setState(
-                                                                      () {
+                                                                  setState(() {
                                                                     checkAll =
                                                                         true;
                                                                     for (var element
@@ -332,8 +331,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                                                 } else {
                                                                   checkAll =
                                                                       false;
-                                                                  setState(
-                                                                      () {
+                                                                  setState(() {
                                                                     for (var element
                                                                         in ruleList) {
                                                                       element.isCheck =
@@ -359,16 +357,15 @@ class _Part3MainState extends State<RpkPartIII> {
                                                         Alignment.centerRight,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets
-                                                                  .only(
+                                                          const EdgeInsets.only(
                                                               right: 30,
                                                               top: 5),
                                                       child: Container(
                                                         child: Text(
                                                           '${ruleList.where((c) => c.isCheck == true).length}/24',
                                                           style: TextStyle(
-                                                              color: Colors
-                                                                  .black,
+                                                              color:
+                                                                  Colors.black,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -412,16 +409,11 @@ class _Part3MainState extends State<RpkPartIII> {
                                                                     .data[i]
                                                                     .isCheck ==
                                                                 false) {
-                                                          snapshot
-                                                              .data
-                                                              .data[i]
+                                                          snapshot.data.data[i]
                                                               .isCheck = true;
                                                         } else {
-                                                          snapshot
-                                                                  .data
-                                                                  .data[i]
-                                                                  .isCheck =
-                                                              false;
+                                                          snapshot.data.data[i]
+                                                              .isCheck = false;
                                                         }
                                                       });
                                                     },
@@ -429,26 +421,21 @@ class _Part3MainState extends State<RpkPartIII> {
                                                       columnWidths: {
                                                         0: FlexColumnWidth(
                                                             10.0),
-                                                        1: FlexColumnWidth(
-                                                            1.5),
+                                                        1: FlexColumnWidth(1.5),
                                                       },
                                                       children: [
                                                         TableRow(children: [
                                                           Container(
                                                             child: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .centerLeft,
-                                                                child:
-                                                                    Padding(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      left:
-                                                                          10,
+                                                                      left: 10,
                                                                       bottom:
                                                                           10,
-                                                                      top:
-                                                                          10),
+                                                                      top: 10),
                                                                   child: Text(
                                                                       '${i + 1}. ${snapshot.data.data[i].ruleDesc}'),
                                                                 )),
@@ -491,9 +478,8 @@ class _Part3MainState extends State<RpkPartIII> {
                                             return Expandable(
                                               collapsed: collapsed,
                                               expanded: expanded,
-                                              theme:
-                                                  const ExpandableThemeData(
-                                                      crossFadePoint: 0),
+                                              theme: const ExpandableThemeData(
+                                                  crossFadePoint: 0),
                                             );
                                           },
                                         ),
@@ -638,8 +624,8 @@ class _Part3MainState extends State<RpkPartIII> {
                     child: ElevatedButton(
                       onPressed: updateRpkJpjTestResult,
                       style: ElevatedButton.styleFrom(
-                        onPrimary: ColorConstant.primaryColor,
-                        primary: Color(0xffdd0e0e),
+                        foregroundColor: ColorConstant.primaryColor,
+                        backgroundColor: Color(0xffdd0e0e),
                         minimumSize: Size(88, 36),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         shape: const RoundedRectangleBorder(

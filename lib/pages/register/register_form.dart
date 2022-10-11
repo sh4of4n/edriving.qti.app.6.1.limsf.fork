@@ -191,12 +191,12 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
           OutlinedButton(
             style: OutlinedButton.styleFrom(
               primary: Colors.black87,
-              minimumSize: Size(88, 36),
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              minimumSize: const Size(88, 36),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(2)),
               ),
-              side: BorderSide(
+              side: const BorderSide(
                 color: Colors.blue,
                 width: 1.5,
               ),
@@ -260,7 +260,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
   Future<void> _editImage() async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       sourcePath: _image.path,
-      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+      aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
       maxWidth: 512,
       maxHeight: 512,
     );
@@ -353,7 +353,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.phone_android),
+                            prefixIcon: const Icon(Icons.phone_android),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(context, _phoneFocus, _nameFocus);
@@ -431,7 +431,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.account_circle),
+                            prefixIcon: const Icon(Icons.account_circle),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -467,7 +467,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.account_circle),
+                            prefixIcon: const Icon(Icons.account_circle),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -504,7 +504,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.mail),
+                            prefixIcon: const Icon(Icons.mail),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -529,16 +529,16 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             contentPadding:
-                                EdgeInsets.symmetric(vertical: 10.0),
+                                const EdgeInsets.symmetric(vertical: 10.0),
                             hintStyle: TextStyle(
                               color: primaryColor,
                             ),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Color(0xff808080),
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('postcode_lbl'),
-                            prefixIcon: Icon(Icons.home),
+                            prefixIcon: const Icon(Icons.home),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -647,7 +647,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffixIcon: IconButton(
                               icon: Icon(_obscurePassword
                                   ? Icons.visibility_off
@@ -693,7 +693,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             labelStyle: TextStyle(
                               color: Colors.grey[800],
                             ),
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffixIcon: IconButton(
                               icon: Icon(_obscureConfirmPassword
                                   ? Icons.visibility_off
@@ -729,25 +729,26 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             _message.isNotEmpty
                                 ? Text(
                                     _message,
-                                    style: TextStyle(color: Colors.red),
+                                    style: const TextStyle(color: Colors.red),
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                             Container(
                               alignment: Alignment.center,
                               child: _isLoading
-                                  ? SpinKitFoldingCube(
+                                  ? const SpinKitFoldingCube(
                                       color: Colors.blue,
                                     )
                                   : ButtonTheme(
-                                      padding: EdgeInsets.all(0.0),
-                                      shape: StadiumBorder(),
+                                      padding: const EdgeInsets.all(0.0),
+                                      shape: const StadiumBorder(),
                                       child: ElevatedButton(
                                         onPressed: _submit,
                                         style: ElevatedButton.styleFrom(
-                                          onPrimary: Colors.white,
-                                          primary: Color(0xffdd0e0e),
-                                          minimumSize: Size(88, 36),
-                                          padding: EdgeInsets.symmetric(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor:
+                                              const Color(0xffdd0e0e),
+                                          minimumSize: const Size(88, 36),
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 30.0),
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
@@ -846,7 +847,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('login_id'),
-                            prefixIcon: Icon(Icons.phone_android),
+                            prefixIcon: const Icon(Icons.phone_android),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(context, _phoneFocus, _nameFocus);
@@ -876,18 +877,18 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             contentPadding:
-                                EdgeInsets.symmetric(vertical: -10.0),
+                                const EdgeInsets.symmetric(vertical: -10.0),
                             hintStyle: TextStyle(
                               color: primaryColor,
                             ),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Color(0xff808080),
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('ic_lbl'),
                             fillColor: Colors.white,
                             filled: true,
-                            prefixIcon: Icon(Icons.featured_video),
+                            prefixIcon: const Icon(Icons.featured_video),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -921,7 +922,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('ic_name_lbl'),
-                            prefixIcon: Icon(Icons.account_circle),
+                            prefixIcon: const Icon(Icons.account_circle),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -955,7 +956,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('nick_name_lbl'),
-                            prefixIcon: Icon(Icons.account_circle),
+                            prefixIcon: const Icon(Icons.account_circle),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -990,7 +991,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('email_lbl'),
-                            prefixIcon: Icon(Icons.mail),
+                            prefixIcon: const Icon(Icons.mail),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -1015,16 +1016,16 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             contentPadding:
-                                EdgeInsets.symmetric(vertical: 10.0),
+                                const EdgeInsets.symmetric(vertical: 10.0),
                             hintStyle: TextStyle(
                               color: primaryColor,
                             ),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: Color(0xff808080),
                             ),
                             labelText: AppLocalizations.of(context)!
                                 .translate('postcode_lbl'),
-                            prefixIcon: Icon(Icons.home),
+                            prefixIcon: const Icon(Icons.home),
                           ),
                           onFieldSubmitted: (term) {
                             fieldFocusChange(
@@ -1131,7 +1132,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             hintStyle: TextStyle(color: primaryColor),
                             labelText: AppLocalizations.of(context)!
                                 .translate('password_lbl'),
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffixIcon: IconButton(
                               icon: Icon(_obscurePassword
                                   ? Icons.visibility_off
@@ -1175,7 +1176,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             hintStyle: TextStyle(color: primaryColor),
                             labelText: AppLocalizations.of(context)!
                                 .translate('confirm_password'),
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffixIcon: IconButton(
                               icon: Icon(_obscureConfirmPassword
                                   ? Icons.visibility_off
@@ -1211,24 +1212,24 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                             _message.isNotEmpty
                                 ? Text(
                                     _message,
-                                    style: TextStyle(color: Colors.red),
+                                    style: const TextStyle(color: Colors.red),
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                             Container(
                               alignment: Alignment.center,
                               child: _isLoading
-                                  ? SpinKitFoldingCube(
+                                  ? const SpinKitFoldingCube(
                                       color: Colors.blue,
                                     )
                                   : ButtonTheme(
-                                      shape: StadiumBorder(),
+                                      shape: const StadiumBorder(),
                                       child: ElevatedButton(
                                         onPressed: _submit,
                                         style: ElevatedButton.styleFrom(
                                           onPrimary: Colors.white,
-                                          primary: Color(0xffdd0e0e),
-                                          minimumSize: Size(88, 36),
-                                          padding: EdgeInsets.symmetric(
+                                          primary: const Color(0xffdd0e0e),
+                                          minimumSize: const Size(88, 36),
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 16),
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
@@ -1307,7 +1308,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
         if (result.isSuccess) {
           customDialog.show(
             context: context,
-            title: Center(
+            title: const Center(
               child: Icon(
                 Icons.check_circle_outline,
                 color: Colors.green,
@@ -1377,10 +1378,10 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
         //     .pushAndPopUntil(GetVehicleInfo(), predicate: (r) => false);
         context.router.pushAndPopUntil(HomeSelect(), predicate: (r) => false);
       } else {
-        context.router.pushAndPopUntil(Login(), predicate: (r) => false);
+        context.router.pushAndPopUntil(const Login(), predicate: (r) => false);
       }
     } else {
-      context.router.pushAndPopUntil(Login(), predicate: (r) => false);
+      context.router.pushAndPopUntil(const Login(), predicate: (r) => false);
     }
 
     setState(() {

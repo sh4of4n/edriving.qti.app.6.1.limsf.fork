@@ -329,8 +329,8 @@ class _Part2MainState extends State<Part2Main>
                   refresh();
                 },
                 style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.black87,
-                  primary: ColorConstant.primaryColor,
+                  foregroundColor: Colors.black87,
+                  backgroundColor: ColorConstant.primaryColor,
                   minimumSize: Size(88, 36),
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   shape: const RoundedRectangleBorder(
