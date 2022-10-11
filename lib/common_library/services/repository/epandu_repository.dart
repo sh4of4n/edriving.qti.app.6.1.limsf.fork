@@ -797,7 +797,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-   Future<Response> updateRpkJpjTestStart({
+  Future<Response> updateRpkJpjTestStart({
     context,
     required part3Type,
     required groupId,
@@ -948,8 +948,7 @@ class EpanduRepo {
 
     if (response.isSuccess && response.data != null) {
       if (part3Type == 'RPK') {
-        UpdateRpkJpjTestResultResponse
-            updatePart3JpjTestResultRpkResponse =
+        UpdateRpkJpjTestResultResponse updatePart3JpjTestResultRpkResponse =
             UpdateRpkJpjTestResultResponse.fromJson(response.data);
 
         return Response(true,
@@ -1000,10 +999,9 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-   Future<Response> callRpkJpjTest({
+  Future<Response> callRpkJpjTest({
     context,
     required vehNo,
-    required part3Type,
     required groupId,
     required icNo,
     required testCode,
@@ -1023,7 +1021,6 @@ class EpanduRepo {
       diCode: diCode,
       userId: userId,
       vehNo: vehNo,
-      part3Type: part3Type,
       groupId: groupId,
       nricNo: icNo,
       testCode: testCode,

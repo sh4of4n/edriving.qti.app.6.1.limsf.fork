@@ -178,7 +178,6 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
     var result = await epanduRepo.callRpkJpjTest(
       vehNo: vehNo,
-      part3Type: 'RPK',
       groupId: groupId,
       testCode: testCode,
       icNo: nric,

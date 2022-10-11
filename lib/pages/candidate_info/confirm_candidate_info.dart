@@ -233,7 +233,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   startTest() async {
     vehNo = await localStorage.getPlateNo();
 
-    if (widget.part3Type == 'RPK')
+    if (widget.part3Type == 'RPK') {
       context.router.push(
         RpkPartIII(
           qNo: widget.qNo,
@@ -246,7 +246,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           skipUpdateRpkJpjTestStart: false,
         ),
       );
-    else
+    } else {
       context.router.push(
         JrPartIII(
           qNo: widget.qNo,
@@ -259,6 +259,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
           skipUpdateJrJpjTestStart: false,
         ),
       );
+    }
   }
 
   @override
@@ -267,7 +268,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Maklumat Calon'),
+          title: const Text('Maklumat Calon'),
           actions: [
             IconButton(
               onPressed: () {
@@ -278,7 +279,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
                   type: DialogType.INFO,
                 );
               },
-              icon: Icon(Icons.info_outline),
+              icon: const Icon(Icons.info_outline),
               tooltip: AppLocalizations.of(context)!
                   .translate('confirm_candidate_tooltip'),
             ),
@@ -332,13 +333,13 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
                           onPressed: () {
                             context.router.pop();
                           },
-                          buttonColor: Color(0xffdd0e0e),
+                          buttonColor: const Color(0xffdd0e0e),
                           title: AppLocalizations.of(context)!
                               .translate('cancel_btn'),
                         ),
                         CustomButton(
                           onPressed: startTest,
-                          buttonColor: Color(0xffdd0e0e),
+                          buttonColor: const Color(0xffdd0e0e),
                           title: AppLocalizations.of(context)!
                               .translate('start_test'),
                         ),
