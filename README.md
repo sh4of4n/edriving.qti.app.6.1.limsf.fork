@@ -1,3 +1,7 @@
+11/10/2022 V.0.0.8
+ePandu ws 6.1.159.0 
+- New app icon
+
 07/10/2022 V.0.0.7
 ePandu ws 6.1.157.0 
 - New app icon
