@@ -194,37 +194,6 @@ class _SettingsState extends State<Settings> {
                 });
 
                 await context.router.pop();
-                var result = await etestingRepo.qtiUjianLogout();
-                if (!result.isSuccess) {
-                  const snackBar = SnackBar(
-                    behavior: SnackBarBehavior.floating,
-                    content: Text('Something went wrong'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  setState(() {
-                    _isLoading = false;
-                  });
-                  return;
-                }
-                await context.router
-                    .pushAndPopUntil(Login(), predicate: (r) => false);
-
-                if (mounted) {
-                  setState(() {
-                    _isLoading = false;
-                  });
-                }
-              },
-              child: Text(AppLocalizations.of(context)!
-                  .translate('logout_from_mysikap_and_app')),
-            ),
-            TextButton(
-              onPressed: () async {
-                setState(() {
-                  _isLoading = true;
-                });
-
-                await context.router.pop();
                 await localStorage.reset();
                 await context.router
                     .pushAndPopUntil(Login(), predicate: (r) => false);
@@ -235,8 +204,8 @@ class _SettingsState extends State<Settings> {
                   });
                 }
               },
-              child: Text(AppLocalizations.of(context)!
-                  .translate('logout_from_app_only')),
+              child:
+                  Text(AppLocalizations.of(context)!.translate('logout_lbl')),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, 'OK'),

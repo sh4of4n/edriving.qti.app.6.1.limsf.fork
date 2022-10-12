@@ -154,36 +154,9 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           .saveMerchantDbCode(merchantNoController.text.replaceAll(' ', ''));
       localStorage.saveType(widget.type);
       if (widget.type == "RPK") {
-        EasyLoading.show();
-        Response result = await etestingRepo.qtiUjianLoginBhg2(
-            licenseClass: groupIdController.text);
-        await EasyLoading.dismiss();
-        if (result.isSuccess) {
-          context.router
-              .pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
-        } else {
-          if (mounted) {
-            SnackBar snackBar = SnackBar(
-              content: Text(result.message!),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        }
+        context.router.pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
       } else if (widget.type == "Jalan Raya") {
-        EasyLoading.show();
-        Response result = await etestingRepo.qtiUjianLoginBhg3(
-            licenseClass: groupIdController.text);
-        await EasyLoading.dismiss();
-        if (result.isSuccess) {
-          context.router.pushAndPopUntil(Home(), predicate: (r) => false);
-        } else {
-          if (mounted) {
-            SnackBar snackBar = SnackBar(
-              content: Text(result.message!),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        }
+        context.router.pushAndPopUntil(Home(), predicate: (r) => false);
       }
     }
   }

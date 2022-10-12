@@ -75,7 +75,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     String? vehNo = await localStorage.getPlateNo();
 
@@ -308,7 +310,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     vehNo = await localStorage.getPlateNo();
 
@@ -370,7 +374,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     var result = await epanduRepo.cancelCallPart3JpjTest(
       part3Type: 'JALAN RAYA',

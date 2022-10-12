@@ -73,7 +73,9 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     String? vehNo = await localStorage.getPlateNo();
 
@@ -111,7 +113,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
       EasyLoading.dismiss();
       return;
     }
-    
+
     var result =
         await epanduRepo.getRpkAvailableToCallJpjTestList(vehNo: vehNo);
 
@@ -298,7 +300,9 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     vehNo = await localStorage.getPlateNo();
 
@@ -347,7 +351,9 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
 
     var result = await epanduRepo.cancelCallRpkJpjTest(
       part3Type: 'JALAN RAYA',

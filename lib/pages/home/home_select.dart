@@ -31,7 +31,9 @@ class _HomeSelectState extends State<HomeSelect> {
   }
 
   Future<void> checkMySikapVehicle() async {
-    EasyLoading.show();
+    EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
     bool isCheck = await localStorage.getMySikapVehicle();
     if (!isCheck) {
       var result = await etestingRepo.getMySikapVehicleListByStatus(status: '');
