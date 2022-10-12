@@ -80,43 +80,6 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
 
     vehNo = await localStorage.getPlateNo();
 
-    // var vehicleResult =
-    //     await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
-
-    // if (vehicleResult.data != 'True') {
-    //   EasyLoading.dismiss();
-    //   await showDialog(
-    //     context: context,
-    //     barrierDismissible: false, // user must tap button!
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         title: const Text('JPJ QTP APP'),
-    //         content: SingleChildScrollView(
-    //           child: ListBody(
-    //             children: <Widget>[
-    //               Text(vehicleResult.message ?? ''),
-    //             ],
-    //           ),
-    //         ),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             child: const Text('OK'),
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //             },
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-
-    //   // setState(() {
-    //   //   isLoading = false;
-    //   // });
-
-    //   return;
-    // }
-
     var result = await epanduRepo.getPart3AvailableToCallJpjTestList(
         part3Type: 'JALAN RAYA', vehNo: vehNo);
 
@@ -132,7 +95,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       });
 
       for (var element in result.data) {
-        if (element.rpkStartDate != null) {
+        if (element.roadStartDate != null) {
           EasyLoading.dismiss();
           await context.router.replace(
             JrPartIII(
@@ -149,7 +112,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           return;
         }
 
-        if (element.rpkCalling == 'true') {
+        if (element.roadCalling == 'true') {
           EasyLoading.dismiss();
           await context.router.push(
             ConfirmCandidateInfo(
@@ -830,69 +793,53 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                           ],
                         ),
                       ),
-
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 150.w),
-                      //   child: Table(
-                      //     // border: TableBorder.all(),
-                      //     columnWidths: {0: FractionColumnWidth(.30)},
-                      //     children: [
-                      //       /* TableRow(
-                      //     children: [
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //         child: Text('Q-NO',
-                      //             textAlign: TextAlign.center, style: textStyle),
-                      //       ),
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //         child: Text(qNo, style: textStyle),
-                      //       ),
-                      //     ],
-                      //   ), */
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('NRIC', style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(nric!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('NAMA', style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(name!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('KEWARGANEGARAAN',
-                      //               overflow: TextOverflow.ellipsis,
-                      //               style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(kewarganegaraan!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //     ],
-                      //   ),
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Row(
                             children: [
                               CustomButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (selectedCandidate != null) {
+                                    EasyLoading.show(
+                                      maskType: EasyLoadingMaskType.black,
+                                    );
+                                    vehNo = await localStorage.getPlateNo();
+                                    var vehicleResult =
+                                        await etestingRepo.isVehicleAvailable(
+                                            plateNo: vehNo ?? '');
+
+                                    EasyLoading.dismiss();
+                                    if (vehicleResult.data != 'True') {
+                                      await showDialog(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('JPJ QTP APP'),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text(vehicleResult.message ??
+                                                      ''),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+
                                     callPart3JpjTest(type: 'MANUAL');
                                   } else {
                                     customDialog.show(

@@ -81,41 +81,6 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
     vehNo = await localStorage.getPlateNo();
 
-    // var vehicleResult =
-    //     await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
-    // if (vehicleResult.data != 'True') {
-    //   EasyLoading.dismiss();
-    //   await showDialog<void>(
-    //     context: context,
-    //     barrierDismissible: false, // user must tap button!
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         title: const Text('JPJ QTP APP'),
-    //         content: SingleChildScrollView(
-    //           child: ListBody(
-    //             children: <Widget>[
-    //               Text(vehicleResult.message ?? ''),
-    //             ],
-    //           ),
-    //         ),
-    //         actions: <Widget>[
-    //           TextButton(
-    //             child: const Text('OK'),
-    //             onPressed: () {
-    //               Navigator.of(context).pop();
-    //             },
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    //   // setState(() {
-    //   //   isLoading = false;
-    //   // });
-    //   EasyLoading.dismiss();
-    //   return;
-    // }
-
     var result =
         await epanduRepo.getRpkAvailableToCallJpjTestList(vehNo: vehNo);
 
@@ -857,16 +822,55 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                           Row(
                             children: [
                               CustomButton(
-                                onPressed: () {
-                                  if (selectedCandidate != null)
+                                onPressed: () async {
+                                  if (selectedCandidate != null) {
+                                    EasyLoading.show(
+                                      maskType: EasyLoadingMaskType.black,
+                                    );
+                                    vehNo = await localStorage.getPlateNo();
+
+                                    var vehicleResult =
+                                        await etestingRepo.isVehicleAvailable(
+                                            plateNo: vehNo ?? '');
+                                    EasyLoading.dismiss();
+                                    if (vehicleResult.data != 'True') {
+                                      await showDialog<void>(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('JPJ QTP APP'),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text(vehicleResult.message ??
+                                                      ''),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
                                     callPart3JpjTest(type: 'MANUAL');
-                                  else
+                                  } else {
                                     customDialog.show(
                                       context: context,
                                       content: AppLocalizations.of(context)!
                                           .translate('select_queue_no'),
                                       type: DialogType.INFO,
                                     );
+                                  }
                                 },
                                 buttonColor: Color(0xffdd0e0e),
                                 title: AppLocalizations.of(context)!

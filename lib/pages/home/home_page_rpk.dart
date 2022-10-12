@@ -255,10 +255,96 @@ class _HomePageRpkState extends State<HomePageRpk> {
                         var scanData =
                             await context.router.push(QrScannerRoute());
                         if (scanData != null) {
+                          EasyLoading.show(
+                            maskType: EasyLoadingMaskType.black,
+                          );
                           try {
-                            jsonDecode(scanData.toString())['Table1'][0]
-                                ['nric_no'];
+                            String? plateNo = await localStorage.getPlateNo();
+                            Response result =
+                                await etestingRepo.isCurrentCallingCalon(
+                              plateNo: plateNo ?? '',
+                              partType: 'RPK',
+                              nricNo: jsonDecode(scanData.toString())['Table1']
+                                  [0]['nric_no'],
+                            );
+                            await EasyLoading.dismiss();
+                            if (!result.isSuccess) {
+                              EasyLoading.show(
+                                maskType: EasyLoadingMaskType.black,
+                              );
+                              Response result2 =
+                                  await etestingRepo.isCurrentInProgressCalon(
+                                plateNo: plateNo ?? '',
+                                partType: 'RPK',
+                                nricNo:
+                                    jsonDecode(scanData.toString())['Table1'][0]
+                                        ['nric_no'],
+                              );
+                              await EasyLoading.dismiss();
+                              if (!result2.isSuccess) {
+                                await showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('JPJ QTO'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: const <Widget>[
+                                            Text(
+                                                'Calon ini tidak mengambil ujian'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Ok'),
+                                          onPressed: () {
+                                            context.router.pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                await context.router.push(
+                                  RpkPartIII(
+                                    qNo: result.data[0].queueNo,
+                                    nric: result.data[0].nricNo,
+                                    rpkName: result.data[0].fullname,
+                                    testDate: result.data[0].testDate,
+                                    groupId: result.data[0].groupId,
+                                    testCode: result.data[0].testCode,
+                                    vehNo: await localStorage.getPlateNo(),
+                                    skipUpdateRpkJpjTestStart: true,
+                                  ),
+                                );
+                              }
+                            } else {
+                              await context.router.push(
+                                ConfirmCandidateInfo(
+                                  part3Type: 'RPK',
+                                  nric: result.data[0].nricNo,
+                                  candidateName: result.data[0].fullname,
+                                  qNo: result.data[0].queueNo,
+                                  groupId: result.data[0].groupId,
+                                  testDate: result.data[0].testDate,
+                                  testCode: result.data[0].testCode,
+                                  icPhoto:
+                                      result.data[0].icPhotoFilename != null &&
+                                              result.data[0].icPhotoFilename
+                                                  .isNotEmpty
+                                          ? result.data[0].icPhotoFilename
+                                              .replaceAll(removeBracket, '')
+                                              .split('\r\n')[0]
+                                          : '',
+                                ),
+                              );
+                            }
                           } catch (e) {
+                            await EasyLoading.dismiss();
                             customDialog.show(
                               barrierDismissable: true,
                               context: context,
@@ -276,92 +362,6 @@ class _HomePageRpkState extends State<HomePageRpk> {
                             );
 
                             return;
-                          }
-                          EasyLoading.show(
-                            maskType: EasyLoadingMaskType.black,
-                          );
-                          String? plateNo = await localStorage.getPlateNo();
-                          Response result =
-                              await etestingRepo.isCurrentCallingCalon(
-                            plateNo: plateNo ?? '',
-                            partType: 'RPK',
-                            nricNo: jsonDecode(scanData.toString())['Table1'][0]
-                                ['nric_no'],
-                          );
-                          await EasyLoading.dismiss();
-                          if (!result.isSuccess) {
-                            EasyLoading.show(
-                              maskType: EasyLoadingMaskType.black,
-                            );
-                            Response result2 =
-                                await etestingRepo.isCurrentInProgressCalon(
-                              plateNo: plateNo ?? '',
-                              partType: 'RPK',
-                              nricNo: jsonDecode(scanData.toString())['Table1']
-                                  [0]['nric_no'],
-                            );
-                            await EasyLoading.dismiss();
-                            if (!result2.isSuccess) {
-                              await showDialog(
-                                context: context,
-                                barrierDismissible:
-                                    false, // user must tap button!
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('JPJ QTO'),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: const <Widget>[
-                                          Text(
-                                              'Calon ini tidak mengambil ujian'),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Ok'),
-                                        onPressed: () {
-                                          context.router.pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            } else {
-                              await context.router.push(
-                                RpkPartIII(
-                                  qNo: result.data[0].queueNo,
-                                  nric: result.data[0].nricNo,
-                                  rpkName: result.data[0].fullname,
-                                  testDate: result.data[0].testDate,
-                                  groupId: result.data[0].groupId,
-                                  testCode: result.data[0].testCode,
-                                  vehNo: await localStorage.getPlateNo(),
-                                  skipUpdateRpkJpjTestStart: true,
-                                ),
-                              );
-                            }
-                          } else {
-                            await context.router.push(
-                              ConfirmCandidateInfo(
-                                part3Type: 'RPK',
-                                nric: result.data[0].nricNo,
-                                candidateName: result.data[0].fullname,
-                                qNo: result.data[0].queueNo,
-                                groupId: result.data[0].groupId,
-                                testDate: result.data[0].testDate,
-                                testCode: result.data[0].testCode,
-                                icPhoto:
-                                    result.data[0].icPhotoFilename != null &&
-                                            result.data[0].icPhotoFilename
-                                                .isNotEmpty
-                                        ? result.data[0].icPhotoFilename
-                                            .replaceAll(removeBracket, '')
-                                            .split('\r\n')[0]
-                                        : '',
-                              ),
-                            );
                           }
                         }
                       },

@@ -2776,6 +2776,8 @@ class GetPart3AvailableToCallJpjTestTrn {
   String? ownerCat;
   String? rpkStartDate;
   String? rpkCalling;
+  String? roadStartDate;
+  String? roadCalling;
 
   GetPart3AvailableToCallJpjTestTrn({
     this.iD,
@@ -2818,6 +2820,8 @@ class GetPart3AvailableToCallJpjTestTrn {
     this.ownerCat,
     this.rpkStartDate,
     this.rpkCalling,
+    this.roadStartDate,
+    this.roadCalling,
   });
 
   GetPart3AvailableToCallJpjTestTrn.fromJson(Map<String, dynamic> json) {
@@ -2861,6 +2865,8 @@ class GetPart3AvailableToCallJpjTestTrn {
     ownerCat = json['owner_cat'];
     rpkStartDate = json['rpk_start_date'];
     rpkCalling = json['rpk_calling'];
+    roadStartDate = json['road_start_date'];
+    roadCalling = json['road_calling'];
   }
 
   Map<String, dynamic> toJson() {
@@ -2905,6 +2911,8 @@ class GetPart3AvailableToCallJpjTestTrn {
     data['owner_cat'] = this.ownerCat;
     data['rpk_start_date'] = this.rpkStartDate;
     data['rpk_calling'] = this.rpkCalling;
+    data['road_start_date'] = this.roadStartDate;
+    data['road_calling'] = this.roadCalling;
     return data;
   }
 }
