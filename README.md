@@ -1,38 +1,54 @@
+17/10/2022 V.0.0.12
+ePandu ws 6.1.163.0
+
+- Change the courseCode from QTO to QTI
+
+17/10/2022 V.0.0.11
+ePandu ws 6.1.163.0
+
+- Q-No RPK and Bhg 3, filter by Pra Ujian and Ujian JPJ
+
 11/10/2022 V.0.0.10
-ePandu ws 6.1.161.0 
+ePandu ws 6.1.161.0
+
 - Remove ujian login bahagian 2 and 3 function
 
 11/10/2022 V.0.0.8
-ePandu ws 6.1.159.0 
+ePandu ws 6.1.159.0
+
 - New app icon
 
 07/10/2022 V.0.0.7
-ePandu ws 6.1.157.0 
+ePandu ws 6.1.157.0
+
 - New app icon
 - Login ujian
 - Logout ujian
 
-
 30/09/2022 V.0.0.6
-ePandu ws 6.1.148.0 
+ePandu ws 6.1.148.0
+
 - Fixed cannot scroll down page to mula ujian
 - New app icon
 
 28/09/2022 V.0.0.5
-ePandu ws 6.1.147.0 
+ePandu ws 6.1.147.0
+
 - Enhance IC photo size
 
 28/09/2022 V.0.0.4
-ePandu ws 6.1.141.0 
+ePandu ws 6.1.141.0
+
 - Change dialog title
 
 28/09/2022 V.0.0.3
-ePandu ws 6.1.141.0 
+ePandu ws 6.1.141.0
+
 - Checklist - No block user submit checklist if no tick mandatory field
 
-
 27/09/2022 V.0.0.2
-ePandu ws 6.1.141.0 
+ePandu ws 6.1.141.0
+
 - Show Kategori ID
 - Can select plate no. from dropdown list to do checklist
 - Popup message after user login success/fail, vehicle download complete, checklist mandatory field
@@ -41,4 +57,4 @@ ePandu ws 6.1.141.0
 - Warning user if no tick mandatory or below 80% score in bahagian 3
 
 15/09/2022 V.0.0.1
-ePandu ws 6.1.141.0 
+ePandu ws 6.1.141.0

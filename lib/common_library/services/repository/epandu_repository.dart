@@ -572,7 +572,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-  Future<Response> getPart3AvailableToCallJpjTestList(
+  Future<Response> getPart3AvailableToCallJpjTestListByCourseCode(
       {vehNo, required part3Type}) async {
     // String customUrl =
     //     'http://192.168.168.2/etesting.MainService/${appConfig.wsVer}/MainService.svc';
@@ -583,10 +583,10 @@ class EpanduRepo {
     String? diCode = await localStorage.getMerchantDbCode();
 
     String path =
-        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&userId=$userId&vehNo=$vehNo&part3Type=${Uri.encodeComponent(part3Type)}';
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&userId=$userId&vehNo=$vehNo&part3Type=${Uri.encodeComponent(part3Type)}&courseCode=QTI';
 
     var response = await networking.getData(
-      path: 'GetPart3AvailableToCallJpjTestList?$path',
+      path: 'GetPart3AvailableToCallJpjTestListByCourseCode?$path',
     );
 
     if (response.isSuccess && response.data != null) {
@@ -604,7 +604,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-  Future<Response> callPart3JpjTest({
+  Future<Response> callPart3JpjTestByCourseCode({
     context,
     required vehNo,
     required part3Type,
@@ -631,10 +631,11 @@ class EpanduRepo {
       groupId: groupId,
       nricNo: icNo,
       testCode: testCode,
+      courseCode: 'QTI',
     );
 
     String body = jsonEncode(verifyScanCodeRequest);
-    String api = 'CallPart3JpjTest';
+    String api = 'CallPart3JpjTestByCourseCode';
     Map<String, String> headers = {'Content-Type': 'application/json'};
 
     var response =
@@ -797,7 +798,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-   Future<Response> updateRpkJpjTestStart({
+  Future<Response> updateRpkJpjTestStart({
     context,
     required part3Type,
     required groupId,
@@ -948,8 +949,7 @@ class EpanduRepo {
 
     if (response.isSuccess && response.data != null) {
       if (part3Type == 'RPK') {
-        UpdateRpkJpjTestResultResponse
-            updatePart3JpjTestResultRpkResponse =
+        UpdateRpkJpjTestResultResponse updatePart3JpjTestResultRpkResponse =
             UpdateRpkJpjTestResultResponse.fromJson(response.data);
 
         return Response(true,
@@ -969,7 +969,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-  Future<Response> getRpkAvailableToCallJpjTestList({vehNo}) async {
+  Future<Response> getRpkAvailableToCallJpjTestListByCourseCode({vehNo}) async {
     // String customUrl =
     //     'http://192.168.168.2/etesting.MainService/${appConfig.wsVer}/MainService.svc';
 
@@ -979,10 +979,10 @@ class EpanduRepo {
     String? diCode = await localStorage.getMerchantDbCode();
 
     String path =
-        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&userId=$userId&vehNo=$vehNo';
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&userId=$userId&vehNo=$vehNo&courseCode=QTI';
 
     var response = await networking.getData(
-      path: 'GetRpkAvailableToCallJpjTestList?$path',
+      path: 'GetRpkAvailableToCallJpjTestListByCourseCode?$path',
     );
 
     if (response.isSuccess && response.data != null) {
@@ -1000,7 +1000,7 @@ class EpanduRepo {
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
 
-   Future<Response> callRpkJpjTest({
+  Future<Response> callRpkJpjTestByCourseCode({
     context,
     required vehNo,
     required part3Type,
@@ -1027,10 +1027,11 @@ class EpanduRepo {
       groupId: groupId,
       nricNo: icNo,
       testCode: testCode,
+      courseCode: 'QTI',
     );
 
     String body = jsonEncode(verifyScanCodeRequest);
-    String api = 'CallRpkJpjTest';
+    String api = 'CallRpkJpjTestByCourseCode';
     Map<String, String> headers = {'Content-Type': 'application/json'};
 
     var response =

@@ -118,8 +118,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       return;
     }
 
-    var result = await epanduRepo.getPart3AvailableToCallJpjTestList(
-        part3Type: 'JALAN RAYA', vehNo: vehNo);
+    var result =
+        await epanduRepo.getPart3AvailableToCallJpjTestListByCourseCode(
+            part3Type: 'JALAN RAYA', vehNo: vehNo);
 
     var result2 = await etestingRepo.getOwnerIdCategoryList();
 
@@ -316,7 +317,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
 
     vehNo = await localStorage.getPlateNo();
 
-    var result = await epanduRepo.callPart3JpjTest(
+    var result = await epanduRepo.callPart3JpjTestByCourseCode(
       vehNo: vehNo,
       part3Type: 'JALAN RAYA',
       groupId: type == 'SKIP' ? this.groupId : groupId,

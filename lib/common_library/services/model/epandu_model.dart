@@ -2911,18 +2911,21 @@ class CallPart3JpjTestRequest {
   String? groupId;
   String? nricNo;
   String? testCode;
+  String? courseCode;
 
-  CallPart3JpjTestRequest(
-      {this.wsCodeCrypt,
-      this.caUid,
-      this.caPwd,
-      this.diCode,
-      this.userId,
-      this.vehNo,
-      this.part3Type,
-      this.groupId,
-      this.nricNo,
-      this.testCode});
+  CallPart3JpjTestRequest({
+    this.wsCodeCrypt,
+    this.caUid,
+    this.caPwd,
+    this.diCode,
+    this.userId,
+    this.vehNo,
+    this.part3Type,
+    this.groupId,
+    this.nricNo,
+    this.testCode,
+    this.courseCode,
+  });
 
   CallPart3JpjTestRequest.fromJson(Map<String, dynamic> json) {
     wsCodeCrypt = json['wsCodeCrypt'];
@@ -2935,6 +2938,7 @@ class CallPart3JpjTestRequest {
     groupId = json['groupId'];
     nricNo = json['nricNo'];
     testCode = json['testCode'];
+    courseCode = json['courseCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -2949,6 +2953,7 @@ class CallPart3JpjTestRequest {
     data['groupId'] = this.groupId;
     data['nricNo'] = this.nricNo;
     data['testCode'] = this.testCode;
+    data['courseCode'] = this.courseCode;
     return data;
   }
 }
@@ -2964,18 +2969,21 @@ class CallRpkJpjTestRequest {
   String? groupId;
   String? nricNo;
   String? testCode;
+  String? courseCode;
 
-  CallRpkJpjTestRequest(
-      {this.wsCodeCrypt,
-      this.caUid,
-      this.caPwd,
-      this.diCode,
-      this.userId,
-      this.vehNo,
-      this.part3Type,
-      this.groupId,
-      this.nricNo,
-      this.testCode});
+  CallRpkJpjTestRequest({
+    this.wsCodeCrypt,
+    this.caUid,
+    this.caPwd,
+    this.diCode,
+    this.userId,
+    this.vehNo,
+    this.part3Type,
+    this.groupId,
+    this.nricNo,
+    this.testCode,
+    this.courseCode,
+  });
 
   CallRpkJpjTestRequest.fromJson(Map<String, dynamic> json) {
     wsCodeCrypt = json['wsCodeCrypt'];
@@ -2988,6 +2996,7 @@ class CallRpkJpjTestRequest {
     groupId = json['groupId'];
     nricNo = json['nricNo'];
     testCode = json['testCode'];
+    courseCode = json['courseCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -3002,6 +3011,7 @@ class CallRpkJpjTestRequest {
     data['groupId'] = this.groupId;
     data['nricNo'] = this.nricNo;
     data['testCode'] = this.testCode;
+    data['courseCode'] = this.courseCode;
     return data;
   }
 }
