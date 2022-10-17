@@ -110,7 +110,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                     header: Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        "SKIM",
+                                        "Pemeriksaan Kenderaan Ujian",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -293,8 +293,8 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                             value:
                                                                 item.status ==
                                                                         'true'
-                                                                    ? true
-                                                                    : false,
+                                                                    ? false
+                                                                    : true,
                                                             onChanged: (bool?
                                                                 value) {},
                                                           ),
@@ -394,8 +394,8 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                             child: CheckboxListTile(
                                               title: Text(item.checkDesc),
                                               value: item.status == 'true'
-                                                  ? true
-                                                  : false,
+                                                  ? false
+                                                  : true,
                                               onChanged: (bool? value) {},
                                             ),
                                           ),
@@ -463,8 +463,8 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                             child: CheckboxListTile(
                                               title: Text(item.checkDesc),
                                               value: item.status == 'true'
-                                                  ? true
-                                                  : false,
+                                                  ? false
+                                                  : true,
                                               onChanged: (bool? value) {},
                                             ),
                                           ),
