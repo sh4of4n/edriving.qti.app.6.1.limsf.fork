@@ -69,6 +69,9 @@ class _Part3MainState extends State<RpkPartIII> {
     ruleFuture = etestingRepo.getRule(elementCode: 'RPK');
     var result = await ruleFuture;
     ruleList = result.data;
+    for (var element in ruleList) {
+      element.isCheck = true;
+    }
   }
 
   Future<void> updateRpkJpjTestStart() async {
@@ -111,7 +114,7 @@ class _Part3MainState extends State<RpkPartIII> {
     };
     for (var element in ruleList) {
       a['Result']![0][element.ruleCode] =
-          element.isCheck == null || element.isCheck == false ? '1' : 0;
+          element.isCheck == null || element.isCheck == false ? '0' : 1;
     }
 
     print(jsonEncode(a));
@@ -303,65 +306,11 @@ class _Part3MainState extends State<RpkPartIII> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              right: 25,
-                                                              top: 5),
-                                                      child: Wrap(
-                                                        children: <Widget>[
-                                                          Transform.scale(
-                                                            scale: 1.3,
-                                                            child: Checkbox(
-                                                              checkColor:
-                                                                  Colors.black,
-                                                              activeColor:
-                                                                  Colors.white,
-                                                              value: checkAll,
-                                                              onChanged: (bool?
-                                                                  value) {
-                                                                if (value!) {
-                                                                  setState(() {
-                                                                    checkAll =
-                                                                        true;
-                                                                    for (var element
-                                                                        in ruleList) {
-                                                                      element.isCheck =
-                                                                          true;
-                                                                    }
-                                                                  });
-                                                                } else {
-                                                                  checkAll =
-                                                                      false;
-                                                                  setState(() {
-                                                                    for (var element
-                                                                        in ruleList) {
-                                                                      element.isCheck =
-                                                                          false;
-                                                                    }
-                                                                  });
-                                                                }
-                                                                var a = ruleList
-                                                                    .where((c) =>
-                                                                        c.isCheck ==
-                                                                        true)
-                                                                    .length;
-                                                                print(a);
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerRight,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
                                                               right: 30,
                                                               top: 5),
                                                       child: Container(
                                                         child: Text(
-                                                          '${ruleList.where((c) => (c.isCheck == false || c.isCheck == null)).length}/24',
+                                                          '${ruleList.where((c) => c.isCheck == true).length}/24',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,
@@ -461,8 +410,8 @@ class _Part3MainState extends State<RpkPartIII> {
                                                                             null ||
                                                                         snapshot.data.data[i].isCheck ==
                                                                             false
-                                                                    ? '1'
-                                                                    : '0'),
+                                                                    ? '0'
+                                                                    : '1'),
                                                               )),
                                                             ),
                                                           ),
@@ -601,7 +550,7 @@ class _Part3MainState extends State<RpkPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text: ruleList
-                                        .where((c) => c.isCheck == false)
+                                        .where((c) => c.isCheck)
                                         .length
                                         .toString(),
                                     style: TextStyle(color: Colors.black),

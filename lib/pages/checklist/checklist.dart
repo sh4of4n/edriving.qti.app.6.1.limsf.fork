@@ -284,6 +284,13 @@ class _CheckListPageState extends State<CheckListPage> {
         if (expandableControllerSkim.expanded) {
           expandableControllerSkim.toggle();
         }
+
+        setState(() {
+          for (var element in checklist[0].data) {
+            element.isCheck = false;
+          }
+        });
+
         customDialog.show(
             context: context,
             content: AppLocalizations.of(context)!

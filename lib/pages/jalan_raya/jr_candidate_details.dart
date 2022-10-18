@@ -117,7 +117,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           EasyLoading.dismiss();
           await context.router.push(
             ConfirmCandidateInfo(
-              part3Type: 'RPK',
+              part3Type: 'JALAN RAYA',
               nric: element.nricNo,
               candidateName: element.fullname,
               qNo: element.queueNo,
