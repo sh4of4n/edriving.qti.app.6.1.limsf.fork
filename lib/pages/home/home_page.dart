@@ -1,15 +1,22 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/location.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/kpp_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
+import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../router.gr.dart';
 import 'home_module.dart';
@@ -42,7 +49,12 @@ class _HomeState extends State<Home> {
   String? plateNo;
   String? dbCode;
 
-  TextStyle textStyle = TextStyle(fontWeight: FontWeight.bold);
+  TextStyle textStyle = const TextStyle(fontWeight: FontWeight.bold);
+
+  final etestingRepo = EtestingRepo();
+  final customDialog = CustomDialog();
+  final RegExp removeBracket =
+      RegExp("\\[(.*?)\\]", multiLine: true, caseSensitive: true);
 
   @override
   void initState() {
@@ -63,6 +75,46 @@ class _HomeState extends State<Home> {
   void dispose() {
     // positionStream.cancel();
     super.dispose();
+  }
+
+  Future<void> processQrCodeResult(
+      {required Barcode scanData,
+      required selectedCandidate,
+      required String qNo}) async {
+    try {
+      await context.router.push(
+        ConfirmCandidateInfo(
+          part3Type: 'RPK',
+          nric: selectedCandidate.nricNo,
+          candidateName: selectedCandidate.fullname,
+          qNo: selectedCandidate.queueNo,
+          groupId: selectedCandidate.groupId,
+          testDate: selectedCandidate.testDate,
+          testCode: selectedCandidate.testCode,
+          icPhoto: selectedCandidate.icPhotoFilename != null &&
+                  selectedCandidate.icPhotoFilename.isNotEmpty
+              ? selectedCandidate.icPhotoFilename
+                  .replaceAll(removeBracket, '')
+                  .split('\r\n')[0]
+              : '',
+        ),
+      );
+    } catch (e) {
+      customDialog.show(
+        barrierDismissable: true,
+        context: context,
+        content: AppLocalizations.of(context)!.translate('invalid_qr'),
+        customActions: [
+          TextButton(
+            onPressed: () {
+              context.router.pop();
+            },
+            child: const Text('Ok'),
+          ),
+        ],
+        type: DialogType.GENERAL,
+      );
+    }
   }
 
   _setLocale() async {
@@ -104,25 +156,25 @@ class _HomeState extends State<Home> {
         children: [
           TableRow(
             children: [
-              Text('Group ID'),
+              const Text('Group ID'),
               Text(groupId ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Car No'),
+              const Text('Car No'),
               Text(carNo ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Plate No'),
+              const Text('Plate No'),
               Text(plateNo ?? '', style: textStyle),
             ],
           ),
           TableRow(
             children: [
-              Text('Permit No'),
+              const Text('Permit No'),
               Text(dbCode ?? '', style: textStyle),
             ],
           ),
@@ -156,9 +208,9 @@ class _HomeState extends State<Home> {
           actions: <Widget>[
             IconButton(
               onPressed: () => context.router.push(
-                ProfileTab(),
+                const ProfileTab(),
               ),
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
             ),
           ],
         ),
@@ -167,17 +219,152 @@ class _HomeState extends State<Home> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Ujian Memandu Bahagian III',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 vehInfo(),
+                const SizedBox(
+                  height: 16.0,
+                ),
                 HomeModule(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow[100],
+                      ),
+                      onPressed: () async {
+                        var scanData =
+                            await context.router.push(QrScannerRoute());
+                        if (scanData != null) {
+                          EasyLoading.show(
+                            maskType: EasyLoadingMaskType.black,
+                          );
+
+                          try {
+                            String? plateNo = await localStorage.getPlateNo();
+                            Response result =
+                                await etestingRepo.isCurrentCallingCalon(
+                              plateNo: plateNo ?? '',
+                              partType: 'RPK',
+                              nricNo: jsonDecode(scanData.toString())['Table1']
+                                  [0]['nric_no'],
+                            );
+                            await EasyLoading.dismiss();
+                            if (!result.isSuccess) {
+                              EasyLoading.show(
+                                maskType: EasyLoadingMaskType.black,
+                              );
+                              Response result2 =
+                                  await etestingRepo.isCurrentInProgressCalon(
+                                plateNo: plateNo ?? '',
+                                partType: 'RPK',
+                                nricNo:
+                                    jsonDecode(scanData.toString())['Table1'][0]
+                                        ['nric_no'],
+                              );
+                              await EasyLoading.dismiss();
+                              if (!result2.isSuccess) {
+                                await showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('JPJ QTO'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: const <Widget>[
+                                            Text(
+                                                'Calon ini tidak mengambil ujian'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Ok'),
+                                          onPressed: () {
+                                            context.router.pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                await context.router.push(
+                                  RpkPartIII(
+                                    qNo: result.data[0].queueNo,
+                                    nric: result.data[0].nricNo,
+                                    rpkName: result.data[0].fullname,
+                                    testDate: result.data[0].testDate,
+                                    groupId: result.data[0].groupId,
+                                    testCode: result.data[0].testCode,
+                                    vehNo: await localStorage.getPlateNo(),
+                                    skipUpdateRpkJpjTestStart: true,
+                                  ),
+                                );
+                              }
+                            } else {
+                              await context.router.push(
+                                ConfirmCandidateInfo(
+                                  part3Type: 'RPK',
+                                  nric: result.data[0].nricNo,
+                                  candidateName: result.data[0].fullname,
+                                  qNo: result.data[0].queueNo,
+                                  groupId: result.data[0].groupId,
+                                  testDate: result.data[0].testDate,
+                                  testCode: result.data[0].testCode,
+                                  icPhoto:
+                                      result.data[0].icPhotoFilename != null &&
+                                              result.data[0].icPhotoFilename
+                                                  .isNotEmpty
+                                          ? result.data[0].icPhotoFilename
+                                              .replaceAll(removeBracket, '')
+                                              .split('\r\n')[0]
+                                          : '',
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            await EasyLoading.dismiss();
+                            customDialog.show(
+                              barrierDismissable: true,
+                              context: context,
+                              content: AppLocalizations.of(context)!
+                                  .translate('invalid_qr'),
+                              customActions: [
+                                TextButton(
+                                  onPressed: () {
+                                    context.router.pop();
+                                  },
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                              type: DialogType.GENERAL,
+                            );
+
+                            return;
+                          }
+                        }
+                      },
+                      child: const Text(
+                        'Calon Semasa',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
                   child: Container(
@@ -191,7 +378,7 @@ class _HomeState extends State<Home> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.translate('change_car'),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),
@@ -218,7 +405,7 @@ class _HomeState extends State<Home> {
                       child: Text(
                         AppLocalizations.of(context)!
                             .translate('change_bahagian'),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),

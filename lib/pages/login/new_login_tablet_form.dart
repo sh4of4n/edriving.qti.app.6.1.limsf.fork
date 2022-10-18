@@ -6,9 +6,11 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/device_info.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../common_library/utils/uppercase_formatter.dart';
 import '../../router.gr.dart';
@@ -22,7 +24,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
     with PageBaseClass {
   final authRepo = AuthRepo();
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   final FocusNode _phoneFocus = FocusNode();
 
@@ -59,6 +61,10 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
 
     // _getCurrentLocation();
     _getDeviceInfo();
+
+    localStorage.getPermitCode().then((value) {
+      _formKey.currentState?.fields['permitCode']?.didChange(value);
+    });
   }
 
   _getDeviceInfo() async {
@@ -110,7 +116,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
       child: Padding(
         padding:
             EdgeInsets.only(left: 50.w, right: 50.w, top: 48.h, bottom: 60.h),
-        child: Form(
+        child: FormBuilder(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +124,8 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
               SizedBox(
                 height: 35.h,
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: 'ic',
                 style: TextStyle(
                   fontSize: 35.sp,
                 ),
@@ -142,26 +149,19 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onFieldSubmitted: (term) {
-                  fieldFocusChange(context, _phoneFocus, _passwordFocus);
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)!
-                        .translate('ic_no_required_msg');
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  if (value != _phone) {
-                    _phone = value;
-                  }
-                },
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!
+                            .translate('ic_no_required_msg')),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 50.h,
               ),
-              TextFormField(
+              FormBuilderTextField(
+                name: 'permitCode',
                 style: TextStyle(
                   fontSize: 35.sp,
                 ),
@@ -193,18 +193,13 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)!
-                        .translate('permit_code_required_msg');
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  if (value != _password) {
-                    _password = value;
-                  }
-                },
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(
+                        errorText: AppLocalizations.of(context)!
+                            .translate('permit_code_required_msg')),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 40.h,
@@ -307,8 +302,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
   }
 
   _submitLogin() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
       FocusScope.of(context).requestFocus(new FocusNode());
 
       setState(() {
@@ -324,9 +318,12 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
       ); */
 
       var result = await authRepo.jpjQtiLoginWithMySikap(
-        mySikapId: _phone!,
-        permitCode: _password!,
+        mySikapId: _formKey.currentState?.fields['ic']?.value!,
+        permitCode: _formKey.currentState?.fields['permitCode']?.value!,
       );
+
+      await localStorage
+          .savePermitCode(_formKey.currentState?.fields['permitCode']?.value!);
 
       if (result.isSuccess) {
         await showDialog<String>(

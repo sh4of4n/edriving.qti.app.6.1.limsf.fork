@@ -1003,7 +1003,6 @@ class EpanduRepo {
   Future<Response> callRpkJpjTestByCourseCode({
     context,
     required vehNo,
-    required part3Type,
     required groupId,
     required icNo,
     required testCode,
@@ -1023,7 +1022,6 @@ class EpanduRepo {
       diCode: diCode,
       userId: userId,
       vehNo: vehNo,
-      part3Type: part3Type,
       groupId: groupId,
       nricNo: icNo,
       testCode: testCode,

@@ -64,7 +64,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
             title: Image.asset(image.logo2, height: 90.h),
             elevation: 0,
             backgroundColor: Colors.transparent,
-            iconTheme: IconThemeData(
+            iconTheme: const IconThemeData(
               color: Colors.black, //change your color here
             ),
           ),
@@ -103,7 +103,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               enabled: false,
                               textStyle: TextStyle(
                                 fontSize: 58.sp,
-                                color: Color(0xff808080),
+                                color: const Color(0xff808080),
                               ),
                             ),
                             Container(
@@ -112,7 +112,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               child: TextFormField(
                                 style: TextStyle(
                                   fontSize: 58.sp,
-                                  color: Color(0xff808080),
+                                  color: const Color(0xff808080),
                                 ),
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
@@ -169,7 +169,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                   width: 1300.w,
                                   child: Text(
                                     _message!,
-                                    style: TextStyle(color: Colors.red),
+                                    style: const TextStyle(color: Colors.red),
                                   ),
                                 )
                               : Container(
@@ -177,22 +177,22 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                 ),
                           Container(
                             child: _isLoading
-                                ? SpinKitFoldingCube(
+                                ? const SpinKitFoldingCube(
                                     color: Colors.blue,
                                   )
                                 : ElevatedButton(
                                     onPressed: _next,
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(0xffdd0e0e),
-                                      onPrimary: Colors.white,
-                                      minimumSize: Size(88, 36),
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: const Color(0xffdd0e0e),
+                                      minimumSize: const Size(88, 36),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(18.0),
                                         ),
                                       ),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 30),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 30),
                                     ),
                                     child: Text(
                                       AppLocalizations.of(context)!
@@ -282,7 +282,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               enabled: false,
                               textStyle: TextStyle(
                                 fontSize: 40.sp,
-                                color: Color(0xff808080),
+                                color: const Color(0xff808080),
                               ),
                             ),
                             Container(
@@ -291,7 +291,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               child: TextFormField(
                                 style: TextStyle(
                                   fontSize: 40.sp,
-                                  color: Color(0xff808080),
+                                  color: const Color(0xff808080),
                                 ),
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
@@ -348,7 +348,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                   width: 1300.w,
                                   child: Text(
                                     _message!,
-                                    style: TextStyle(color: Colors.red),
+                                    style: const TextStyle(color: Colors.red),
                                   ),
                                 )
                               : Container(
@@ -356,19 +356,19 @@ class _RegisterMobileState extends State<RegisterMobile> {
                                 ),
                           Container(
                             child: _isLoading
-                                ? SpinKitFoldingCube(
+                                ? const SpinKitFoldingCube(
                                     color: Colors.blue,
                                   )
                                 : ButtonTheme(
                                     // padding: EdgeInsets.all(0.0),
-                                    shape: StadiumBorder(),
+                                    shape: const StadiumBorder(),
                                     child: ElevatedButton(
                                       onPressed: _next,
                                       style: ElevatedButton.styleFrom(
                                         onPrimary: Colors.white,
-                                        primary: Color(0xffdd0e0e),
-                                        minimumSize: Size(88, 36),
-                                        padding: EdgeInsets.symmetric(
+                                        primary: const Color(0xffdd0e0e),
+                                        minimumSize: const Size(88, 36),
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 16),
                                         shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(

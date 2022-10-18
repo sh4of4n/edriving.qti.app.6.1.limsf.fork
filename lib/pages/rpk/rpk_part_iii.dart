@@ -23,6 +23,7 @@ class RpkPartIII extends StatefulWidget {
   final String? groupId;
   final String? testCode;
   final String? vehNo;
+  final bool skipUpdateRpkJpjTestStart;
 
   RpkPartIII(
     this.qNo,
@@ -32,6 +33,7 @@ class RpkPartIII extends StatefulWidget {
     this.groupId,
     this.testCode,
     this.vehNo,
+    this.skipUpdateRpkJpjTestStart,
   );
 
   @override
@@ -58,7 +60,9 @@ class _Part3MainState extends State<RpkPartIII> {
   void initState() {
     super.initState();
     getRule();
-    updateRpkJpjTestStart();
+    if (!widget.skipUpdateRpkJpjTestStart) {
+      updateRpkJpjTestStart();
+    }
   }
 
   Future<void> getRule() async {
@@ -299,6 +303,61 @@ class _Part3MainState extends State<RpkPartIII> {
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.only(
+                                                              right: 25,
+                                                              top: 5),
+                                                      child: Wrap(
+                                                        children: <Widget>[
+                                                          Transform.scale(
+                                                            scale: 1.3,
+                                                            child: Checkbox(
+                                                              checkColor:
+                                                                  Colors.black,
+                                                              activeColor:
+                                                                  Colors.white,
+                                                              value: checkAll,
+                                                              onChanged: (bool?
+                                                                  value) {
+                                                                if (value!) {
+                                                                  setState(() {
+                                                                    checkAll =
+                                                                        true;
+                                                                    for (var element
+                                                                        in ruleList) {
+                                                                      element.isCheck =
+                                                                          true;
+                                                                    }
+                                                                  });
+                                                                } else {
+                                                                  checkAll =
+                                                                      false;
+                                                                  setState(() {
+                                                                    for (var element
+                                                                        in ruleList) {
+                                                                      element.isCheck =
+                                                                          false;
+                                                                    }
+                                                                  });
+                                                                }
+                                                                var a = ruleList
+                                                                    .where((c) =>
+                                                                        c.isCheck ==
+                                                                        true)
+                                                                    .length;
+                                                                print(a);
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 30,
                                                               top: 5),
                                                       child: Container(
                                                         child: Text(
@@ -564,8 +623,8 @@ class _Part3MainState extends State<RpkPartIII> {
                     child: ElevatedButton(
                       onPressed: updateRpkJpjTestResult,
                       style: ElevatedButton.styleFrom(
-                        onPrimary: ColorConstant.primaryColor,
-                        primary: Color(0xffdd0e0e),
+                        foregroundColor: ColorConstant.primaryColor,
+                        backgroundColor: Color(0xffdd0e0e),
                         minimumSize: Size(88, 36),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         shape: const RoundedRectangleBorder(

@@ -1,6 +1,7 @@
 // import 'package:epandu/pages/edompet/edompet.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:edriving_qti_app/pages/profile/profile_page.dart' as ProfilePage;
+import 'package:edriving_qti_app/pages/profile/profile_page.dart'
+    as ProfilePage;
 import 'package:edriving_qti_app/pages/settings/settings.dart' as SettingsPage;
 import 'package:edriving_qti_app/common_library/services/model/profile_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/profile_repository.dart';
@@ -216,7 +217,7 @@ class _ProfileTabState extends State<ProfileTab>
         // ),
         // shape: StadiumBorder(),
         style: OutlinedButton.styleFrom(
-          primary: Colors.black87,
+          foregroundColor: Colors.black87,
           minimumSize: Size(88, 36),
           padding: EdgeInsets.symmetric(horizontal: 16),
           shape: StadiumBorder(),
@@ -254,7 +255,7 @@ class _ProfileTabState extends State<ProfileTab>
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: _getTitle(),
-            actions: _getActions(),
+            // actions: _getActions(),
           ),
           backgroundColor: Colors.transparent,
           body: TabBarView(controller: _tabController, children: [

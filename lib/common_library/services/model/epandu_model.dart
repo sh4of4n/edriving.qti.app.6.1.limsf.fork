@@ -2774,46 +2774,55 @@ class GetPart3AvailableToCallJpjTestTrn {
   String? deleted;
   String? icPhotoFilename;
   String? ownerCat;
+  String? rpkStartDate;
+  String? rpkCalling;
+  String? roadStartDate;
+  String? roadCalling;
 
-  GetPart3AvailableToCallJpjTestTrn(
-      {this.iD,
-      this.testDate,
-      this.courseCode,
-      this.groupId,
-      this.nricNo,
-      this.fullname,
-      this.sex,
-      this.race,
-      this.nationality,
-      this.birthDate,
-      this.add1,
-      this.add2,
-      this.add3,
-      this.postcode,
-      this.cityName,
-      this.stateName,
-      this.icPhoto,
-      this.queueNo,
-      this.regDate,
-      this.registerPhoto,
-      this.testCode,
-      this.startDate,
-      this.startTime,
-      this.endTime,
-      this.printed,
-      this.prnCount,
-      this.printLog,
-      this.createUser,
-      this.createDate,
-      this.editUser,
-      this.editDate,
-      this.transtamp,
-      this.lastupload,
-      this.compCode,
-      this.branchCode,
-      this.deleted,
-      this.icPhotoFilename,
-      this.ownerCat});
+  GetPart3AvailableToCallJpjTestTrn({
+    this.iD,
+    this.testDate,
+    this.courseCode,
+    this.groupId,
+    this.nricNo,
+    this.fullname,
+    this.sex,
+    this.race,
+    this.nationality,
+    this.birthDate,
+    this.add1,
+    this.add2,
+    this.add3,
+    this.postcode,
+    this.cityName,
+    this.stateName,
+    this.icPhoto,
+    this.queueNo,
+    this.regDate,
+    this.registerPhoto,
+    this.testCode,
+    this.startDate,
+    this.startTime,
+    this.endTime,
+    this.printed,
+    this.prnCount,
+    this.printLog,
+    this.createUser,
+    this.createDate,
+    this.editUser,
+    this.editDate,
+    this.transtamp,
+    this.lastupload,
+    this.compCode,
+    this.branchCode,
+    this.deleted,
+    this.icPhotoFilename,
+    this.ownerCat,
+    this.rpkStartDate,
+    this.rpkCalling,
+    this.roadStartDate,
+    this.roadCalling,
+  });
 
   GetPart3AvailableToCallJpjTestTrn.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -2854,6 +2863,10 @@ class GetPart3AvailableToCallJpjTestTrn {
     deleted = json['deleted'];
     icPhotoFilename = json['ic_photo_filename'];
     ownerCat = json['owner_cat'];
+    rpkStartDate = json['rpk_start_date'];
+    rpkCalling = json['rpk_calling'];
+    roadStartDate = json['road_start_date'];
+    roadCalling = json['road_calling'];
   }
 
   Map<String, dynamic> toJson() {
@@ -2896,6 +2909,10 @@ class GetPart3AvailableToCallJpjTestTrn {
     data['deleted'] = this.deleted;
     data['ic_photo_filename'] = this.icPhotoFilename;
     data['owner_cat'] = this.ownerCat;
+    data['rpk_start_date'] = this.rpkStartDate;
+    data['rpk_calling'] = this.rpkCalling;
+    data['road_start_date'] = this.roadStartDate;
+    data['road_calling'] = this.roadCalling;
     return data;
   }
 }

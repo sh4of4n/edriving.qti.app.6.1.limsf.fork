@@ -25,6 +25,7 @@ class JrPartIII extends StatefulWidget {
   final String? groupId;
   final String? testCode;
   final String? vehNo;
+  final bool skipUpdateJrJpjTestStart;
 
   JrPartIII(
     this.qNo,
@@ -34,6 +35,7 @@ class JrPartIII extends StatefulWidget {
     this.groupId,
     this.testCode,
     this.vehNo,
+    this.skipUpdateJrJpjTestStart,
   );
 
   @override
@@ -69,7 +71,9 @@ class _JrPartIIIState extends State<JrPartIII> {
   void initState() {
     super.initState();
     getRule();
-    updatePart3JpjTestStart();
+    if (!widget.skipUpdateJrJpjTestStart) {
+      updatePart3JpjTestStart();
+    }
   }
 
   void getRule() async {
@@ -141,7 +145,7 @@ class _JrPartIIIState extends State<JrPartIII> {
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('eDriving QTI App'),
+            title: const Text('JPJ QTO APP'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[

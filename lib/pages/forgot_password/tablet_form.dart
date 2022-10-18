@@ -180,8 +180,8 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
               child: ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.white,
-                  primary: Colors.grey[300],
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.grey[300],
                   minimumSize: Size(88, 36),
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   shape: const RoundedRectangleBorder(

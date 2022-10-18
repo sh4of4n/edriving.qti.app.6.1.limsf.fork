@@ -496,7 +496,6 @@ class _CheckListPageState extends State<CheckListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorConstant.primaryColor,
         title: Text(AppLocalizations.of(context)!.translate('checklist')),
         actions: [
           IconButton(

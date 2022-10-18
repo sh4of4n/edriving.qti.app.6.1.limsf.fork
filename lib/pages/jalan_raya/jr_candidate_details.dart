@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -79,44 +78,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       maskType: EasyLoadingMaskType.black,
     );
 
-    String? vehNo = await localStorage.getPlateNo();
-
-    var vehicleResult =
-        await etestingRepo.isVehicleAvailable(plateNo: vehNo ?? '');
-
-    if (vehicleResult.data != 'True') {
-      EasyLoading.dismiss();
-      await showDialog(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('JPJ QTP APP'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(vehicleResult.message ?? ''),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-
-      // setState(() {
-      //   isLoading = false;
-      // });
-
-      return;
-    }
+    vehNo = await localStorage.getPlateNo();
 
     var result =
         await epanduRepo.getPart3AvailableToCallJpjTestListByCourseCode(
@@ -132,6 +94,47 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       setState(() {
         candidateList = result.data;
       });
+
+      for (var element in result.data) {
+        if (element.roadStartDate != null) {
+          EasyLoading.dismiss();
+          await context.router.replace(
+            JrPartIII(
+              qNo: element.queueNo,
+              nric: element.nricNo,
+              jrName: element.fullname,
+              testDate: element.testDate,
+              groupId: element.groupId,
+              testCode: element.testCode,
+              vehNo: vehNo,
+              skipUpdateJrJpjTestStart: true,
+            ),
+          );
+          return;
+        }
+
+        if (element.roadCalling == 'true') {
+          EasyLoading.dismiss();
+          await context.router.push(
+            ConfirmCandidateInfo(
+              part3Type: 'RPK',
+              nric: element.nricNo,
+              candidateName: element.fullname,
+              qNo: element.queueNo,
+              groupId: element.groupId,
+              testDate: element.testDate,
+              testCode: element.testCode,
+              icPhoto: element.icPhotoFilename != null &&
+                      element.icPhotoFilename.isNotEmpty
+                  ? element.icPhotoFilename
+                      .replaceAll(removeBracket, '')
+                      .split('\r\n')[0]
+                  : '',
+            ),
+          );
+          return;
+        }
+      }
     } else {
       if (mounted) {
         setState(() {
@@ -204,9 +207,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         context.router.push(
           ConfirmCandidateInfo(
             part3Type: 'JALAN RAYA',
-            nric: this.nric,
-            candidateName: this.name,
-            qNo: this.qNo,
+            nric: nric,
+            candidateName: name,
+            qNo: qNo,
             groupId: this.groupId,
             testDate: testDate,
             testCode: this.testCode,
@@ -233,8 +236,8 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                     context.router.pop();
 
                     setState(() {
-                      this.name = candidateList![i].fullname;
-                      this.qNo = candidateList![i].queueNo;
+                      name = candidateList![i].fullname;
+                      qNo = candidateList![i].queueNo;
                       for (var owner in owners) {
                         if (owner.ownerCat == candidateList![i].ownerCat) {
                           kewarganegaraan = owner.ownerCatDesc;
@@ -242,21 +245,22 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                       }
                     });
 
-                    if (success > 0)
+                    if (success > 0) {
                       Future.wait([
                         cancelCallPart3JpjTest(),
                         callPart3JpjTest(type: 'SKIP'),
                       ]);
-                    else
+                    } else {
                       await callPart3JpjTest(type: 'SKIP');
+                    }
 
                     context.router
                         .push(
                       ConfirmCandidateInfo(
                         part3Type: 'JALAN RAYA',
-                        nric: this.nric,
-                        candidateName: this.name,
-                        qNo: this.qNo,
+                        nric: nric,
+                        candidateName: name,
+                        qNo: qNo,
                         groupId: this.groupId,
                         testDate: testDate,
                         testCode: this.testCode,
@@ -460,53 +464,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     await qrController.resumeCamera();
     qrController.scannedDataStream.listen((scanData) async {
       await qrController.pauseCamera();
-
-      setState(() {
-        try {
-          merchantNo = jsonDecode(scanData.code!)['Table1'][0]['merchant_no'];
-          testCode = jsonDecode(scanData.code!)['Table1'][0]['test_code'];
-          groupId = jsonDecode(scanData.code!)['Table1'][0]['group_id'];
-          nric = jsonDecode(scanData.code!)['Table1'][0]['nric_no'];
-          iconVisible = true;
-          isVisible = false;
-
-          if (qNo!.isNotEmpty) {
-            compareCandidateInfo(
-              groupId: selectedCandidate.groupId,
-              testCode: selectedCandidate.testCode,
-              testDate: selectedCandidate.testDate,
-            );
-          } else {
-            nric = '';
-
-            customDialog.show(
-              barrierDismissable: true,
-              context: context,
-              content: AppLocalizations.of(context)!.translate('scan_again'),
-              type: DialogType.INFO,
-            );
-          }
-        } catch (e) {
-          customDialog.show(
-            barrierDismissable: true,
-            context: context,
-            content: AppLocalizations.of(context)!.translate('invalid_qr'),
-            customActions: [
-              TextButton(
-                onPressed: () {
-                  context.router.pop();
-
-                  qrController.resumeCamera();
-                },
-                child: const Text('Ok'),
-              ),
-            ],
-            type: DialogType.GENERAL,
-          );
-        }
-      });
-
-      // await qrController.resumeCamera();
+      processQrCodeResult(
+          scanData: scanData, selectedCandidate: selectedCandidate, qNo: qNo!);
+      await qrController.resumeCamera();
     });
   }
 
@@ -575,6 +535,54 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     return true;
   }
 
+  void processQrCodeResult(
+      {required Barcode scanData,
+      required selectedCandidate,
+      required String qNo}) {
+    setState(() {
+      try {
+        merchantNo = jsonDecode(scanData.code!)['Table1'][0]['merchant_no'];
+        testCode = jsonDecode(scanData.code!)['Table1'][0]['test_code'];
+        groupId = jsonDecode(scanData.code!)['Table1'][0]['group_id'];
+        nric = jsonDecode(scanData.code!)['Table1'][0]['nric_no'];
+        iconVisible = true;
+        isVisible = false;
+
+        if (qNo.isNotEmpty) {
+          compareCandidateInfo(
+            groupId: selectedCandidate.groupId,
+            testCode: selectedCandidate.testCode,
+            testDate: selectedCandidate.testDate,
+          );
+        } else {
+          nric = '';
+
+          customDialog.show(
+            barrierDismissable: true,
+            context: context,
+            content: AppLocalizations.of(context)!.translate('scan_again'),
+            type: DialogType.INFO,
+          );
+        }
+      } catch (e) {
+        customDialog.show(
+          barrierDismissable: true,
+          context: context,
+          content: AppLocalizations.of(context)!.translate('invalid_qr'),
+          customActions: [
+            TextButton(
+              onPressed: () {
+                context.router.pop();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+          type: DialogType.GENERAL,
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -587,43 +595,47 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
             //   onPressed: () async {
             //     var scanData = await context.router.push(QrScannerRoute());
             //     if (scanData != null) {
-            //       await EasyLoading.show();
+            //       await EasyLoading.show(
+            //         maskType: EasyLoadingMaskType.black,
+            //       );
             //       String? plateNo = await localStorage.getPlateNo();
             //       Response result = await etestingRepo.isCurrentCallingCalon(
             //         plateNo: plateNo ?? '',
             //         partType: 'PART3',
-            //         nricNo: jsonDecode(scanData.toString())['Table1'][0]
+            //         nricNo: jsonDecode((scanData as Barcode).code!)['Table1'][0]
             //             ['nric_no'],
             //       );
             //       await EasyLoading.dismiss();
-            //       if (result.isSuccess) {
-            //         if (result.data == 'False') {
-            //           showDialog<void>(
-            //             context: context,
-            //             barrierDismissible: false, // user must tap button!
-            //             builder: (BuildContext context) {
-            //               return AlertDialog(
-            //                 title: const Text('JPJ QTO'),
-            //                 content: SingleChildScrollView(
-            //                   child: ListBody(
-            //                     children: const <Widget>[
-            //                       Text(
-            //                           'Tiada calon yang mengambil peperiksaan'),
-            //                     ],
-            //                   ),
+            //       if (!result.isSuccess) {
+            //         showDialog<void>(
+            //           context: context,
+            //           barrierDismissible: false, // user must tap button!
+            //           builder: (BuildContext context) {
+            //             return AlertDialog(
+            //               title: const Text('JPJ QTO'),
+            //               content: SingleChildScrollView(
+            //                 child: ListBody(
+            //                   children: const <Widget>[
+            //                     Text('Calon ini tidak mengambil ujian'),
+            //                   ],
             //                 ),
-            //                 actions: <Widget>[
-            //                   TextButton(
-            //                     child: const Text('Ok'),
-            //                     onPressed: () {
-            //                       context.router.pop();
-            //                     },
-            //                   ),
-            //                 ],
-            //               );
-            //             },
-            //           );
-            //         }
+            //               ),
+            //               actions: <Widget>[
+            //                 TextButton(
+            //                   child: const Text('Ok'),
+            //                   onPressed: () {
+            //                     context.router.pop();
+            //                   },
+            //                 ),
+            //               ],
+            //             );
+            //           },
+            //         );
+            //       } else {
+            //         processQrCodeResult(
+            //             scanData: (scanData as Barcode),
+            //             selectedCandidate: result.data[0],
+            //             qNo: 'XXX');
             //       }
             //     }
             //   },
@@ -659,7 +671,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(height: 50.h),
-                      Container(
+                      SizedBox(
                         width: 1300.h,
                         child: DropdownButtonFormField<String>(
                           decoration: InputDecoration(
@@ -782,77 +794,62 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                           ],
                         ),
                       ),
-
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: 150.w),
-                      //   child: Table(
-                      //     // border: TableBorder.all(),
-                      //     columnWidths: {0: FractionColumnWidth(.30)},
-                      //     children: [
-                      //       /* TableRow(
-                      //     children: [
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //         child: Text('Q-NO',
-                      //             textAlign: TextAlign.center, style: textStyle),
-                      //       ),
-                      //       Padding(
-                      //         padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //         child: Text(qNo, style: textStyle),
-                      //       ),
-                      //     ],
-                      //   ), */
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('NRIC', style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(nric!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('NAMA', style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(name!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //       TableRow(children: [
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text('KEWARGANEGARAAN',
-                      //               overflow: TextOverflow.ellipsis,
-                      //               style: textStyle),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsets.symmetric(vertical: 10.h),
-                      //           child: Text(kewarganegaraan!, style: textStyle),
-                      //         ),
-                      //       ]),
-                      //     ],
-                      //   ),
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Row(
                             children: [
                               CustomButton(
-                                onPressed: () {
-                                  if (selectedCandidate != null)
+                                onPressed: () async {
+                                  if (selectedCandidate != null) {
+                                    EasyLoading.show(
+                                      maskType: EasyLoadingMaskType.black,
+                                    );
+                                    vehNo = await localStorage.getPlateNo();
+                                    var vehicleResult =
+                                        await etestingRepo.isVehicleAvailable(
+                                            plateNo: vehNo ?? '');
+
+                                    EasyLoading.dismiss();
+                                    if (vehicleResult.data != 'True') {
+                                      await showDialog(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('JPJ QTP APP'),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text(vehicleResult.message ??
+                                                      ''),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+
                                     callPart3JpjTest(type: 'MANUAL');
-                                  else
+                                  } else {
                                     customDialog.show(
                                       context: context,
                                       content: AppLocalizations.of(context)!
                                           .translate('select_queue_no'),
                                       type: DialogType.INFO,
                                     );
+                                  }
                                 },
                                 buttonColor: const Color(0xffdd0e0e),
                                 title: AppLocalizations.of(context)!
@@ -906,13 +903,14 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                       ],
                                       type: DialogType.GENERAL,
                                     );
-                                  } else
+                                  } else {
                                     customDialog.show(
                                       context: context,
                                       content: AppLocalizations.of(context)!
                                           .translate('select_queue_no'),
                                       type: DialogType.INFO,
                                     );
+                                  }
                                 },
                                 buttonColor: const Color(0xffdd0e0e),
                                 title: AppLocalizations.of(context)!

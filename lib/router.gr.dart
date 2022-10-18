@@ -237,6 +237,7 @@ class AppRouter extends _i22.RootStackRouter {
           args.groupId,
           args.testCode,
           args.vehNo,
+          args.skipUpdateRpkJpjTestStart,
         ),
       );
     },
@@ -258,6 +259,7 @@ class AppRouter extends _i22.RootStackRouter {
           args.groupId,
           args.testCode,
           args.vehNo,
+          args.skipUpdateJrJpjTestStart,
         ),
       );
     },
@@ -987,6 +989,7 @@ class RpkPartIII extends _i22.PageRouteInfo<RpkPartIIIArgs> {
     required String? groupId,
     required String? testCode,
     required String? vehNo,
+    required bool skipUpdateRpkJpjTestStart,
   }) : super(
           RpkPartIII.name,
           path: '/rpk-part-ii-i',
@@ -998,6 +1001,7 @@ class RpkPartIII extends _i22.PageRouteInfo<RpkPartIIIArgs> {
             groupId: groupId,
             testCode: testCode,
             vehNo: vehNo,
+            skipUpdateRpkJpjTestStart: skipUpdateRpkJpjTestStart,
           ),
         );
 
@@ -1013,6 +1017,7 @@ class RpkPartIIIArgs {
     required this.groupId,
     required this.testCode,
     required this.vehNo,
+    required this.skipUpdateRpkJpjTestStart,
   });
 
   final String? qNo;
@@ -1029,9 +1034,11 @@ class RpkPartIIIArgs {
 
   final String? vehNo;
 
+  final bool skipUpdateRpkJpjTestStart;
+
   @override
   String toString() {
-    return 'RpkPartIIIArgs{qNo: $qNo, nric: $nric, rpkName: $rpkName, testDate: $testDate, groupId: $groupId, testCode: $testCode, vehNo: $vehNo}';
+    return 'RpkPartIIIArgs{qNo: $qNo, nric: $nric, rpkName: $rpkName, testDate: $testDate, groupId: $groupId, testCode: $testCode, vehNo: $vehNo, skipUpdateRpkJpjTestStart: $skipUpdateRpkJpjTestStart}';
   }
 }
 
@@ -1058,6 +1065,7 @@ class JrPartIII extends _i22.PageRouteInfo<JrPartIIIArgs> {
     required String? groupId,
     required String? testCode,
     required String? vehNo,
+    required bool skipUpdateJrJpjTestStart,
   }) : super(
           JrPartIII.name,
           path: '/jr-part-ii-i',
@@ -1069,6 +1077,7 @@ class JrPartIII extends _i22.PageRouteInfo<JrPartIIIArgs> {
             groupId: groupId,
             testCode: testCode,
             vehNo: vehNo,
+            skipUpdateJrJpjTestStart: skipUpdateJrJpjTestStart,
           ),
         );
 
@@ -1084,6 +1093,7 @@ class JrPartIIIArgs {
     required this.groupId,
     required this.testCode,
     required this.vehNo,
+    required this.skipUpdateJrJpjTestStart,
   });
 
   final String? qNo;
@@ -1100,9 +1110,11 @@ class JrPartIIIArgs {
 
   final String? vehNo;
 
+  final bool skipUpdateJrJpjTestStart;
+
   @override
   String toString() {
-    return 'JrPartIIIArgs{qNo: $qNo, nric: $nric, jrName: $jrName, testDate: $testDate, groupId: $groupId, testCode: $testCode, vehNo: $vehNo}';
+    return 'JrPartIIIArgs{qNo: $qNo, nric: $nric, jrName: $jrName, testDate: $testDate, groupId: $groupId, testCode: $testCode, vehNo: $vehNo, skipUpdateJrJpjTestStart: $skipUpdateJrJpjTestStart}';
   }
 }
 
