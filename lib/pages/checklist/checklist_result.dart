@@ -44,9 +44,13 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
   Future getMySikapVehicleListByStatus() async {
     var result =
         await etestingRepo.getMySikapVehicleListByStatus(status: 'CHECKED');
-    setState(() {
-      vehicleArr = result.data;
-    });
+    if (mounted) {
+      if (result.isSuccess && result.data != null) {
+        setState(() {
+          vehicleArr = result.data;
+        });
+      }
+    }
 
     return result;
   }

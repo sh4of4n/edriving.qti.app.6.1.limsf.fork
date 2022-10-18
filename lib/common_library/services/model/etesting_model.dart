@@ -38,7 +38,7 @@ class Rule {
   String? compCode;
   String? branchCode;
   String? deleted;
-  bool? isCheck;
+  bool? isCheck = true;
 
   Rule(
       {this.iD,

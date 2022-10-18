@@ -50,7 +50,6 @@ class _Part3MainState extends State<RpkPartIII> {
   final customDialog = CustomDialog();
   bool isVisible = false;
 
-  bool? checkAll = false;
   Future? ruleFuture;
   final etestingRepo = EtestingRepo();
   var ruleList = [];
@@ -108,7 +107,7 @@ class _Part3MainState extends State<RpkPartIII> {
     };
     for (var element in ruleList) {
       a['Result']![0][element.ruleCode] =
-          element.isCheck == null || element.isCheck == false ? 0 : '1';
+          element.isCheck == null || element.isCheck == false ? '1' : 0;
     }
 
     print(jsonEncode(a));
@@ -286,7 +285,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    "SKIM",
+                                                    "Pemeriksaan Kenderaan Ujian",
                                                     style: TextStyle(
                                                       fontSize: 20,
                                                       fontWeight:
@@ -299,76 +298,14 @@ class _Part3MainState extends State<RpkPartIII> {
                                                         Alignment.centerRight,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets
-                                                                  .only(
-                                                              right: 25,
-                                                              top: 5),
-                                                      child: Wrap(
-                                                        children: <Widget>[
-                                                          Transform.scale(
-                                                            scale: 1.3,
-                                                            child: Checkbox(
-                                                              checkColor:
-                                                                  Colors
-                                                                      .black,
-                                                              activeColor:
-                                                                  Colors
-                                                                      .white,
-                                                              value: checkAll,
-                                                              onChanged:
-                                                                  (bool?
-                                                                      value) {
-                                                                if (value!) {
-                                                                  setState(
-                                                                      () {
-                                                                    checkAll =
-                                                                        true;
-                                                                    for (var element
-                                                                        in ruleList) {
-                                                                      element.isCheck =
-                                                                          true;
-                                                                    }
-                                                                  });
-                                                                } else {
-                                                                  checkAll =
-                                                                      false;
-                                                                  setState(
-                                                                      () {
-                                                                    for (var element
-                                                                        in ruleList) {
-                                                                      element.isCheck =
-                                                                          false;
-                                                                    }
-                                                                  });
-                                                                }
-                                                                var a = ruleList
-                                                                    .where((c) =>
-                                                                        c.isCheck ==
-                                                                        true)
-                                                                    .length;
-                                                                print(a);
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.centerRight,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets
-                                                                  .only(
-                                                              right: 30,
+                                                          const EdgeInsets.only(
                                                               top: 5),
                                                       child: Container(
                                                         child: Text(
-                                                          '${ruleList.where((c) => c.isCheck == true).length}/24',
+                                                          '${ruleList.where((c) => (c.isCheck == false || c.isCheck == null)).length}/24',
                                                           style: TextStyle(
-                                                              color: Colors
-                                                                  .black,
+                                                              color:
+                                                                  Colors.black,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -412,16 +349,11 @@ class _Part3MainState extends State<RpkPartIII> {
                                                                     .data[i]
                                                                     .isCheck ==
                                                                 false) {
-                                                          snapshot
-                                                              .data
-                                                              .data[i]
+                                                          snapshot.data.data[i]
                                                               .isCheck = true;
                                                         } else {
-                                                          snapshot
-                                                                  .data
-                                                                  .data[i]
-                                                                  .isCheck =
-                                                              false;
+                                                          snapshot.data.data[i]
+                                                              .isCheck = false;
                                                         }
                                                       });
                                                     },
@@ -429,26 +361,21 @@ class _Part3MainState extends State<RpkPartIII> {
                                                       columnWidths: {
                                                         0: FlexColumnWidth(
                                                             10.0),
-                                                        1: FlexColumnWidth(
-                                                            1.5),
+                                                        1: FlexColumnWidth(1.5),
                                                       },
                                                       children: [
                                                         TableRow(children: [
                                                           Container(
                                                             child: Align(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .centerLeft,
-                                                                child:
-                                                                    Padding(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      left:
-                                                                          10,
+                                                                      left: 10,
                                                                       bottom:
                                                                           10,
-                                                                      top:
-                                                                          10),
+                                                                      top: 10),
                                                                   child: Text(
                                                                       '${i + 1}. ${snapshot.data.data[i].ruleDesc}'),
                                                                 )),
@@ -475,8 +402,8 @@ class _Part3MainState extends State<RpkPartIII> {
                                                                             null ||
                                                                         snapshot.data.data[i].isCheck ==
                                                                             false
-                                                                    ? '0'
-                                                                    : '1'),
+                                                                    ? '1'
+                                                                    : '0'),
                                                               )),
                                                             ),
                                                           ),
@@ -491,9 +418,8 @@ class _Part3MainState extends State<RpkPartIII> {
                                             return Expandable(
                                               collapsed: collapsed,
                                               expanded: expanded,
-                                              theme:
-                                                  const ExpandableThemeData(
-                                                      crossFadePoint: 0),
+                                              theme: const ExpandableThemeData(
+                                                  crossFadePoint: 0),
                                             );
                                           },
                                         ),
@@ -616,7 +542,7 @@ class _Part3MainState extends State<RpkPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text: ruleList
-                                        .where((c) => c.isCheck == true)
+                                        .where((c) => c.isCheck == false)
                                         .length
                                         .toString(),
                                     style: TextStyle(color: Colors.black),

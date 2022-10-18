@@ -149,6 +149,7 @@ class _HomeState extends State<Home> {
         key: _scaffoldKey,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          title: Text('eDriving QTI'),
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.grey,
           elevation: 0,

@@ -64,17 +64,6 @@ class _JrPartIIIState extends State<JrPartIII> {
     'h': [],
     'i': [],
   };
-  Map<String, bool> checkAllJson = {
-    'a': false,
-    'b': false,
-    'c': false,
-    'd': false,
-    'e': false,
-    'f': false,
-    'g': false,
-    'h': false,
-    'i': false
-  };
 
   @override
   void initState() {
@@ -84,17 +73,6 @@ class _JrPartIIIState extends State<JrPartIII> {
   }
 
   void getRule() async {
-    checkAllJson = {
-      'a': false,
-      'b': false,
-      'c': false,
-      'd': false,
-      'e': false,
-      'f': false,
-      'g': false,
-      'h': false,
-      'i': false
-    };
     ruleFuture = etestingRepo.getRule(elementCode: 'PART3');
     var result = await ruleFuture;
     ruleList = result.data;
@@ -150,18 +128,15 @@ class _JrPartIIIState extends State<JrPartIII> {
     bool isUntickMandatory = false;
 
     for (var element in ruleList) {
-      if (element.mandatory == 'true' &&
-          (element.isCheck == null ||
-              element.isCheck == 'false' ||
-              !element.isCheck)) {
+      if (element.mandatory == 'true' && element.isCheck == true) {
         isUntickMandatory = true;
       }
       a['Result']![0][element.ruleCode] =
-          element.isCheck == null || element.isCheck == false ? 0 : '1';
+          element.isCheck == null || element.isCheck == false ? '1' : '0';
     }
-
+    bool canContinue = false;
     if (isUntickMandatory) {
-      bool canContinue = await showDialog(
+      canContinue = await showDialog(
         context: context,
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
@@ -207,7 +182,63 @@ class _JrPartIIIState extends State<JrPartIII> {
       isVisible = true;
     });
 
-    // print(resultJson);
+    int score = 0;
+    for (var element in ruleList) {
+      if (element.mandatory == 'false' &&
+          !(element.isCheck == false && element.isCheck)) {
+        score += 1;
+      }
+    }
+
+    print(score);
+
+    if (score < 64 || isUntickMandatory) {
+      await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('eDriving QTI App'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('Calon Gagal Kerana Markah Kurang Dari 80%'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.translate('go_back_lbl'),
+                ),
+                onPressed: () {
+                  canContinue = false;
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  AppLocalizations.of(context)!.translate('ok_btn'),
+                ),
+                onPressed: () {
+                  canContinue = true;
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      canContinue = true;
+    }
+
+    if (!canContinue) {
+      setState(() {
+        isVisible = false;
+      });
+      return;
+    }
 
     var result = await epanduRepo.updatePart3JpjTestResult(
       vehNo: widget.vehNo,
@@ -219,45 +250,6 @@ class _JrPartIIIState extends State<JrPartIII> {
     );
 
     if (result.isSuccess) {
-      // success += 1;
-
-      // if (success == 2) {
-      int score = 0;
-      for (var element in ruleList) {
-        if (element.mandatory == 'false' && element.isCheck) {
-          score += 1;
-        }
-      }
-
-    if (score < 64 || isUntickMandatory) {
-        await showDialog(
-          context: context,
-          barrierDismissible: true, // user must tap button!
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('eDriving QTI App'),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: const <Widget>[
-                    Text('Calon ini telah gagal, ujian akan ditamatkan'),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text(
-                    AppLocalizations.of(context)!.translate('ok_btn'),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
-
       customDialog.show(
         context: context,
         barrierDismissable: false,
@@ -269,7 +261,6 @@ class _JrPartIIIState extends State<JrPartIII> {
         content: AppLocalizations.of(context)!.translate('test_submitted'),
         type: DialogType.SUCCESS,
       );
-      // }
     } else {
       customDialog.show(
         context: context,
@@ -506,7 +497,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['a']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['a']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -517,7 +508,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['a']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['a']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -533,7 +524,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['b']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['b']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -544,7 +535,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['b']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['b']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -560,7 +551,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['c']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['c']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -571,7 +562,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['c']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['c']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -587,7 +578,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['d']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['d']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -598,7 +589,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['d']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['d']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -614,7 +605,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['e']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['e']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -625,7 +616,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['e']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['e']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -641,7 +632,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['f']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['f']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -652,7 +643,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['f']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['f']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -668,7 +659,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['g']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['g']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -679,7 +670,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['g']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['g']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -695,7 +686,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['h']!.where((c) => c.isCheck == true && c.mandatory == 'false').length.toString()}',
+                                        '${ruleJson['h']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'false').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -706,7 +697,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['h']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['h']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -725,7 +716,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['i']!.where((c) => c.isCheck == true && c.mandatory == 'true').length.toString()}',
+                                        '${ruleJson['i']!.where((c) => (c.isCheck == false || c.isCheck == null) && c.mandatory == 'true').length.toString()}',
                                     style: TextStyle(color: Colors.black),
                                     children: <TextSpan>[
                               TextSpan(
@@ -807,46 +798,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                             alignment: Alignment.centerRight,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 5),
-                              child: Wrap(
-                                children: <Widget>[
-                                  Transform.scale(
-                                    scale: 1.3,
-                                    child: Checkbox(
-                                      checkColor: Colors.black,
-                                      activeColor: Colors.white,
-                                      value: checkAllJson[code],
-                                      onChanged: (bool? value) {
-                                        if (value!) {
-                                          setState(() {
-                                            checkAllJson[code] = true;
-                                            for (var element
-                                                in ruleJson[code]!) {
-                                              element.isCheck = true;
-                                            }
-                                          });
-                                        } else {
-                                          checkAllJson[code] = false;
-                                          setState(() {
-                                            for (var element
-                                                in ruleJson[code]!) {
-                                              element.isCheck = false;
-                                            }
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 30, top: 5),
                               child: Container(
                                 child: Text(
-                                  '${ruleJson[code]!.where((c) => c.isCheck == true).length}/${ruleJson[code]!.length}',
+                                  '${ruleJson[code]!.where((c) => (c.isCheck == false || c.isCheck == null)).length}/${ruleJson[code]!.length}',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
@@ -882,13 +836,6 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 } else {
                                   ruleJson[code]![i].isCheck = false;
                                 }
-
-                                int checkCount = ruleJson[code]!
-                                    .where((i) => i.isCheck)
-                                    .toList()
-                                    .length;
-                                checkAllJson[code] =
-                                    checkCount == ruleJson[code]!.length;
                               });
                             },
                             child: Table(
@@ -931,8 +878,8 @@ class _JrPartIIIState extends State<JrPartIII> {
                                                     null ||
                                                 ruleJson[code]![i].isCheck ==
                                                     false
-                                            ? '0'
-                                            : '1'),
+                                            ? '1'
+                                            : '0'),
                                       )),
                                     ),
                                   ),
