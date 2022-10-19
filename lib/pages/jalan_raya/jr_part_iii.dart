@@ -374,39 +374,48 @@ class _JrPartIIIState extends State<JrPartIII> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 1, top: 2),
-                                    child: expandableList(code: 'a'),
+                                    child: expandableList(
+                                        code: 'a', numberRank: 1),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'b'),
+                                    child: expandableList(
+                                        code: 'b', numberRank: 2),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'c'),
+                                    child: expandableList(
+                                        code: 'c', numberRank: 3),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'd'),
+                                    child: expandableList(
+                                        code: 'd', numberRank: 4),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'e'),
+                                    child: expandableList(
+                                        code: 'e', numberRank: 5),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'f'),
+                                    child: expandableList(
+                                        code: 'f', numberRank: 6),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'g'),
+                                    child: expandableList(
+                                        code: 'g', numberRank: 7),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'h'),
+                                    child: expandableList(
+                                        code: 'h', numberRank: 8),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 1),
-                                    child: expandableList(code: 'i'),
+                                    child: expandableList(
+                                        code: 'i', numberRank: 9),
                                   ),
                                 ],
                               );
@@ -771,7 +780,7 @@ class _JrPartIIIState extends State<JrPartIII> {
     );
   }
 
-  Widget expandableList({required String code}) {
+  Widget expandableList({required String code, required int numberRank}) {
     return SingleChildScrollView(
       child: ExpandableNotifier(
         child: Card(
@@ -846,53 +855,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 }
                               });
                             },
-                            child: Table(
-                              columnWidths: {
-                                0: FlexColumnWidth(10.0),
-                                1: FlexColumnWidth(1.5),
-                              },
-                              children: [
-                                TableRow(children: [
-                                  Container(
-                                    child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, bottom: 10, top: 10),
-                                          child: Text(
-                                            '${i + 1}. ${ruleJson[code]![i].ruleDesc}',
-                                            style: TextStyle(
-                                              fontWeight: ruleJson[code]![i]
-                                                          .mandatory ==
-                                                      'true'
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal,
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 12, top: 8),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.black)),
-                                      child: Center(
-                                          child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Text(ruleJson[code]![i]
-                                                        .isCheck ==
-                                                    null ||
-                                                ruleJson[code]![i].isCheck ==
-                                                    false
-                                            ? '0'
-                                            : '1'),
-                                      )),
-                                    ),
-                                  ),
-                                ]),
-                              ],
+                            child: customCheckbox(
+                              '$numberRank.${i + 1}',
+                              ruleJson[code]![i],
                             ),
                           ),
                         ),
@@ -912,6 +877,41 @@ class _JrPartIIIState extends State<JrPartIII> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget customCheckbox(String index, var item) {
+    return ListTile(
+      title: Text(
+        '$index. ${item.ruleDesc}',
+        style: TextStyle(
+          fontWeight:
+              item.mandatory == 'false' ? FontWeight.normal : FontWeight.bold,
+        ),
+      ),
+      trailing: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: (item.isCheck == null || item.isCheck == false)
+                ? Colors.blue
+                : Colors.grey.shade700,
+          ),
+          color: (item.isCheck == null || item.isCheck == false)
+              ? Colors.blue
+              : Colors.white,
+        ),
+        child: (item.isCheck == null || item.isCheck == false)
+            ? Icon(
+                Icons.close,
+                size: 18,
+                color: Colors.white,
+              )
+            : SizedBox(
+                height: 18,
+                width: 18,
+              ),
       ),
     );
   }
