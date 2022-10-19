@@ -52,7 +52,8 @@ class RegisterUserToDi extends StatelessWidget {
               children: <Widget>[
                 data.status == 'success'
                     ? Text(
-                        AppLocalizations.of(context)!.translate('scan_success') +
+                        AppLocalizations.of(context)!
+                                .translate('scan_success') +
                             ' ' +
                             data.barcode.qRCode[0].name +
                             ' ' +
@@ -71,7 +72,7 @@ class RegisterUserToDi extends StatelessWidget {
                   onPressed: () => context.router.popUntil(
                     ModalRoute.withName('Home'),
                   ),
-                  buttonColor: Color(0xffdd0e0e),
+                  buttonColor: Colors.blue,
                   title: AppLocalizations.of(context)!.translate('ok_btn'),
                 ),
               ],

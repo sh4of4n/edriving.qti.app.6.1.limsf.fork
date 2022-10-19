@@ -366,7 +366,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                       margin: EdgeInsets.symmetric(vertical: 30.h),
                       child: CustomButton(
                         onPressed: _submit,
-                        buttonColor: Color(0xffdd0e0e),
+                        buttonColor: Colors.blue,
                         title: 'Save',
                       ),
                     ),
@@ -376,6 +376,42 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget customCheckbox(String index, var item) {
+    return ListTile(
+      onTap: () {
+        setState(() {
+          item.isCheck = !item.isCheck;
+        });
+      },
+      title: Text(
+        '$index. ${item.checkDesc}',
+        style: TextStyle(
+          fontWeight:
+              item.mandatory == 'false' ? FontWeight.normal : FontWeight.bold,
+        ),
+      ),
+      trailing: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: item.isCheck ? Colors.blue : Colors.grey.shade700,
+          ),
+          color: item.isCheck ? Colors.blue : Colors.white,
+        ),
+        child: item.isCheck
+            ? Icon(
+                Icons.close,
+                size: 18,
+                color: Colors.white,
+              )
+            : SizedBox(
+                height: 18,
+                width: 18,
+              ),
       ),
     );
   }

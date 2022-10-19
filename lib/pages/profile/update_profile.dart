@@ -1011,7 +1011,7 @@ class _UpdateProfileState extends State<UpdateProfile> with PageBaseClass {
           ),
         ),
         Radio(
-          activeColor: Color(0xffdd0e0e),
+          activeColor: Colors.blue,
           value: Gender.male,
           groupValue: _gender,
           onChanged: (Gender? value) {
@@ -1029,7 +1029,7 @@ class _UpdateProfileState extends State<UpdateProfile> with PageBaseClass {
           ),
         ),
         Radio(
-          activeColor: Color(0xffdd0e0e),
+          activeColor: Colors.blue,
           value: Gender.female,
           groupValue: _gender,
           onChanged: (Gender? value) {
@@ -1062,7 +1062,7 @@ class _UpdateProfileState extends State<UpdateProfile> with PageBaseClass {
               child: ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Color(0xffdd0e0e),
+                  foregroundColor: Colors.blue,
                   minimumSize: Size(88, 36),
                   padding:
                       EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),

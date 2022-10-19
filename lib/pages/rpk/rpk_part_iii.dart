@@ -573,7 +573,7 @@ class _Part3MainState extends State<RpkPartIII> {
                       onPressed: updateRpkJpjTestResult,
                       style: ElevatedButton.styleFrom(
                         foregroundColor: ColorConstant.primaryColor,
-                        backgroundColor: Color(0xffdd0e0e),
+                        backgroundColor: Colors.blue,
                         minimumSize: Size(88, 36),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         shape: const RoundedRectangleBorder(

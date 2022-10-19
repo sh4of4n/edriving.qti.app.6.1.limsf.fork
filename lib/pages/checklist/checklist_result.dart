@@ -114,7 +114,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                     header: Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        "Pemeriksaan Kenderaan Ujian",
+                                        "1. Pemeriksaan Kenderaan Ujian",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -274,35 +274,34 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                               default:
                                                 if (snapshot2.hasData) {
                                                   return Column(
-                                                    children: [
-                                                      for (var item in snapshot2
-                                                          .data.data)
-                                                        Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border(
-                                                              bottom:
-                                                                  BorderSide(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade400,
-                                                                width: 1,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          child:
-                                                              CheckboxListTile(
-                                                            title: Text(
-                                                                item.checkDesc),
-                                                            value:
-                                                                item.status ==
-                                                                        'true'
-                                                                    ? false
-                                                                    : true,
-                                                            onChanged: (bool?
-                                                                value) {},
-                                                          ),
-                                                        ),
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: <Widget>[
+                                                      ListView.separated(
+                                                        shrinkWrap: true,
+                                                        physics:
+                                                            NeverScrollableScrollPhysics(),
+                                                        itemCount: snapshot2
+                                                            .data.data.length,
+                                                        separatorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return Divider(
+                                                            height: 1,
+                                                          );
+                                                        },
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return customCheckbox(
+                                                              '1.${index + 1}',
+                                                              snapshot2.data
+                                                                  .data[index]);
+                                                        },
+                                                      ),
                                                     ],
                                                   );
                                                 } else if (snapshot.hasError) {
@@ -373,7 +372,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                     header: Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        "LITAR",
+                                        "2. LITAR",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -381,28 +380,29 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                       ),
                                     ),
                                     collapsed: SizedBox(),
-                                    expanded: ListView(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      children: [
-                                        for (var item in checklist[0].data)
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                  color: Colors.grey.shade400,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                            child: CheckboxListTile(
-                                              title: Text(item.checkDesc),
-                                              value: item.status == 'true'
-                                                  ? false
-                                                  : true,
-                                              onChanged: (bool? value) {},
-                                            ),
-                                          ),
+                                    expanded: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: checklist[0].data.length,
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                                  int index) {
+                                            return Divider(
+                                              height: 1,
+                                            );
+                                          },
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return customCheckbox(
+                                                '2.${index + 1}',
+                                                checklist[0].data[index]);
+                                          },
+                                        ),
                                       ],
                                     ),
                                     builder: (_, collapsed, expanded) {
@@ -442,7 +442,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                     header: Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        "Bilik kawalan",
+                                        "3. Bilik kawalan",
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -450,28 +450,29 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                       ),
                                     ),
                                     collapsed: SizedBox(),
-                                    expanded: ListView(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      children: [
-                                        for (var item in checklist[1].data)
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                  color: Colors.grey.shade400,
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                            child: CheckboxListTile(
-                                              title: Text(item.checkDesc),
-                                              value: item.status == 'true'
-                                                  ? false
-                                                  : true,
-                                              onChanged: (bool? value) {},
-                                            ),
-                                          ),
+                                    expanded: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: checklist[1].data.length,
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                                  int index) {
+                                            return Divider(
+                                              height: 1,
+                                            );
+                                          },
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return customCheckbox(
+                                                '3.${index + 1}',
+                                                checklist[1].data[index]);
+                                          },
+                                        ),
                                       ],
                                     ),
                                     builder: (_, collapsed, expanded) {
@@ -519,6 +520,37 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
               }
           }
         },
+      ),
+    );
+  }
+
+  Widget customCheckbox(String index, var item) {
+    return ListTile(
+      title: Text(
+        '$index. ${item.checkDesc}',
+        style: TextStyle(
+          fontWeight:
+              item.mandatory == 'false' ? FontWeight.normal : FontWeight.bold,
+        ),
+      ),
+      trailing: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: item.status == 'false' ? Colors.blue : Colors.grey.shade700,
+          ),
+          color: item.status == 'false' ? Colors.blue : Colors.white,
+        ),
+        child: item.status == 'false'
+            ? Icon(
+                Icons.close,
+                size: 18,
+                color: Colors.white,
+              )
+            : SizedBox(
+                height: 18,
+                width: 18,
+              ),
       ),
     );
   }
