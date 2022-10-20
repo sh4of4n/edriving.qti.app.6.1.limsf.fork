@@ -1,3 +1,10 @@
+20/10/2022 V.0.0.14
+ePandu ws 6.1.166.0
+
+- Change button color from red to blue
+- Change ✔ to × as demerit
+- Add number in front of each item
+
 18/10/2022 V.0.0.13
 ePandu ws 6.1.165.0
 

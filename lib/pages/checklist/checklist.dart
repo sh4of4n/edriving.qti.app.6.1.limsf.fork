@@ -518,18 +518,10 @@ class _CheckListPageState extends State<CheckListPage> {
             onPressed: () {
               context.router.push(ChecklistResultRoute());
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.history,
             ),
           ),
-          // IconButton(
-          //   onPressed: () {
-          //     updateJpjCheckList();
-          //   },
-          //   icon: Icon(
-          //     Icons.save,
-          //   ),
-          // ),
         ],
       ),
       body: FutureBuilder(
@@ -543,9 +535,17 @@ class _CheckListPageState extends State<CheckListPage> {
               ),
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
-                      height: 16.0,
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Tandakan ✖️ Untuk Demerit',
+                        style: TextStyle(
+                          fontSize: 20,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
                     ExpandableNotifier(
                       controller: expandableControllerSkim,
@@ -567,18 +567,18 @@ class _CheckListPageState extends State<CheckListPage> {
                                     tapBodyToCollapse: false,
                                   ),
                                   header: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
                                     child: Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "1. Pemeriksaan Kenderaan Ujian",
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Builder(
                                           builder: (context) {
                                             var controller =
@@ -600,7 +600,7 @@ class _CheckListPageState extends State<CheckListPage> {
                                       ],
                                     ),
                                   ),
-                                  collapsed: SizedBox(),
+                                  collapsed: const SizedBox(),
                                   expanded: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -651,9 +651,9 @@ class _CheckListPageState extends State<CheckListPage> {
                                                   itemBuilder: (context, item,
                                                       isSelected) {
                                                     return Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 8),
+                                                      margin: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8),
                                                       decoration: !isSelected
                                                           ? null
                                                           : BoxDecoration(
@@ -679,8 +679,9 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         trailing: item
                                                                     .checked ==
                                                                 'true'
-                                                            ? Icon(Icons.check)
-                                                            : SizedBox(),
+                                                            ? const Icon(
+                                                                Icons.check)
+                                                            : const SizedBox(),
                                                       ),
                                                     );
                                                   },
@@ -696,11 +697,12 @@ class _CheckListPageState extends State<CheckListPage> {
                                       ),
                                       ListView.separated(
                                         shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: checklist[0].data.length,
                                         separatorBuilder:
                                             (BuildContext context, int index) {
-                                          return Divider(
+                                          return const Divider(
                                             height: 1,
                                           );
                                         },
@@ -747,11 +749,11 @@ class _CheckListPageState extends State<CheckListPage> {
                                     tapBodyToCollapse: false,
                                   ),
                                   header: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
                                     child: Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "2. LITAR",
                                           style: TextStyle(
                                             fontSize: 20,
@@ -769,7 +771,7 @@ class _CheckListPageState extends State<CheckListPage> {
                                         //     color: Colors.red,
                                         //   ),
                                         // ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Builder(
                                           builder: (context) {
                                             var controller =
@@ -784,7 +786,7 @@ class _CheckListPageState extends State<CheckListPage> {
                                                       }
                                                       updateJpjCheckListLitarA();
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.check_circle,
                                                     ),
                                                     label: Text(AppLocalizations
@@ -813,18 +815,19 @@ class _CheckListPageState extends State<CheckListPage> {
                                       ],
                                     ),
                                   ),
-                                  collapsed: SizedBox(),
+                                  collapsed: const SizedBox(),
                                   expanded: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       ListView.separated(
                                         shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: checklist[1].data.length,
                                         separatorBuilder:
                                             (BuildContext context, int index) {
-                                          return Divider(
+                                          return const Divider(
                                             height: 1,
                                           );
                                         },
@@ -871,18 +874,18 @@ class _CheckListPageState extends State<CheckListPage> {
                                     tapBodyToCollapse: false,
                                   ),
                                   header: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
                                     child: Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "3. Bilik kawalan",
                                           style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Builder(
                                           builder: (context) {
                                             var controller =
@@ -897,7 +900,7 @@ class _CheckListPageState extends State<CheckListPage> {
                                                       }
                                                       updateJpjCheckListSistemA();
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.check_circle,
                                                     ),
                                                     label: Text(AppLocalizations
@@ -926,18 +929,19 @@ class _CheckListPageState extends State<CheckListPage> {
                                       ],
                                     ),
                                   ),
-                                  collapsed: SizedBox(),
+                                  collapsed: const SizedBox(),
                                   expanded: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       ListView.separated(
                                         shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: checklist[2].data.length,
                                         separatorBuilder:
                                             (BuildContext context, int index) {
-                                          return Divider(
+                                          return const Divider(
                                             height: 1,
                                           );
                                         },
@@ -965,7 +969,7 @@ class _CheckListPageState extends State<CheckListPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16.0,
                     ),
                   ],
@@ -990,7 +994,7 @@ class _CheckListPageState extends State<CheckListPage> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -1022,12 +1026,12 @@ class _CheckListPageState extends State<CheckListPage> {
           color: item.isCheck ? Colors.blue : Colors.white,
         ),
         child: item.isCheck
-            ? Icon(
+            ? const Icon(
                 Icons.close,
                 size: 18,
                 color: Colors.white,
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 18,
                 width: 18,
               ),

@@ -274,7 +274,20 @@ class _Part3MainState extends State<RpkPartIII> {
                                 child: Card(
                                   clipBehavior: Clip.antiAlias,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Text(
+                                          'Tandakan ✖️ Untuk Demerit',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
                                       ScrollOnExpand(
                                         scrollOnExpand: true,
                                         scrollOnCollapse: false,
@@ -292,7 +305,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    "Pemeriksaan Kenderaan Ujian",
+                                                    "1. Pemeriksaan Kenderaan Ujian",
                                                     style: TextStyle(
                                                       fontSize: 20,
                                                       fontWeight:
@@ -365,58 +378,9 @@ class _Part3MainState extends State<RpkPartIII> {
                                                         }
                                                       });
                                                     },
-                                                    child: Table(
-                                                      columnWidths: {
-                                                        0: FlexColumnWidth(
-                                                            10.0),
-                                                        1: FlexColumnWidth(1.5),
-                                                      },
-                                                      children: [
-                                                        TableRow(children: [
-                                                          Container(
-                                                            child: Align(
-                                                                alignment: Alignment
-                                                                    .centerLeft,
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left: 10,
-                                                                      bottom:
-                                                                          10,
-                                                                      top: 10),
-                                                                  child: Text(
-                                                                      '${i + 1}. ${snapshot.data.data[i].ruleDesc}'),
-                                                                )),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    right: 12,
-                                                                    top: 8),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .black)),
-                                                              child: Center(
-                                                                  child:
-                                                                      Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        2.0),
-                                                                child: Text(snapshot.data.data[i].isCheck ==
-                                                                            null ||
-                                                                        snapshot.data.data[i].isCheck ==
-                                                                            false
-                                                                    ? '0'
-                                                                    : '1'),
-                                                              )),
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                      ],
+                                                    child: customCheckbox(
+                                                      '1.${i + 1}',
+                                                      snapshot.data.data[i],
                                                     ),
                                                   ),
                                                 ),
@@ -597,6 +561,41 @@ class _Part3MainState extends State<RpkPartIII> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget customCheckbox(String index, var item) {
+    return ListTile(
+      title: Text(
+        '$index. ${item.ruleDesc}',
+        style: TextStyle(
+          fontWeight:
+              item.mandatory == 'false' ? FontWeight.normal : FontWeight.bold,
+        ),
+      ),
+      trailing: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: (item.isCheck == null || item.isCheck == false)
+                ? Colors.blue
+                : Colors.grey.shade700,
+          ),
+          color: (item.isCheck == null || item.isCheck == false)
+              ? Colors.blue
+              : Colors.white,
+        ),
+        child: (item.isCheck == null || item.isCheck == false)
+            ? Icon(
+                Icons.close,
+                size: 18,
+                color: Colors.white,
+              )
+            : SizedBox(
+                height: 18,
+                width: 18,
+              ),
       ),
     );
   }

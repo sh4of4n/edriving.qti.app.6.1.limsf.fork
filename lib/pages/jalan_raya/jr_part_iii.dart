@@ -370,7 +370,18 @@ class _JrPartIIIState extends State<JrPartIII> {
                           if (snapshot.hasData) {
                             if (snapshot.data.isSuccess) {
                               return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Text(
+                                      'Tandakan ✖️ Untuk Demerit',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 1, top: 2),
