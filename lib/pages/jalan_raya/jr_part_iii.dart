@@ -79,10 +79,12 @@ class _JrPartIIIState extends State<JrPartIII> {
   void getRule() async {
     ruleFuture = etestingRepo.getRule(elementCode: 'PART3');
     var result = await ruleFuture;
-    ruleList = result.data;
-    for (var element in ruleList) {
-      element.isCheck = true;
-    }
+    setState(() {
+      ruleList = result.data;
+      for (var element in ruleList) {
+        element.isCheck = true;
+      }
+    });
     ruleJson = {};
 
     for (var i = 0; i < ruleList.length; i++) {

@@ -68,10 +68,12 @@ class _Part3MainState extends State<RpkPartIII> {
   Future<void> getRule() async {
     ruleFuture = etestingRepo.getRule(elementCode: 'RPK');
     var result = await ruleFuture;
-    ruleList = result.data;
-    for (var element in ruleList) {
-      element.isCheck = true;
-    }
+    setState(() {
+      ruleList = result.data;
+      for (var element in ruleList) {
+        element.isCheck = true;
+      }
+    });
   }
 
   Future<void> updateRpkJpjTestStart() async {
