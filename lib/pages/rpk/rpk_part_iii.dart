@@ -9,6 +9,8 @@ import 'package:edriving_qti_app/common_library/utils/loading_model.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown.dart';
+import 'package:flutter_countdown_timer/countdown_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +57,13 @@ class _Part3MainState extends State<RpkPartIII> {
   Future? ruleFuture;
   final etestingRepo = EtestingRepo();
   var ruleList = [];
+  late CountdownController controller;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -63,6 +72,54 @@ class _Part3MainState extends State<RpkPartIII> {
     if (!widget.skipUpdateRpkJpjTestStart) {
       updateRpkJpjTestStart();
     }
+
+    controller = CountdownController(
+      duration: const Duration(
+        minutes: 7,
+      ),
+      onEnd: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('JPJ QTO'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const <Widget>[
+                    Text(
+                        'Masa Ujian Calon Telah Melebihi 7 Minit. Markah Ujian Calon Akan Dihantar'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Ok'),
+                  onPressed: () {
+                    context.router.pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+        setState(() {
+          ruleList[ruleList.length - 1].isCheck = false;
+        });
+        updateRpkJpjTestResult();
+      },
+    );
+    controller.stop();
+  }
+
+  String format(int? num) {
+    if (num == null) {
+      return '00';
+    }
+    if (num < 10) {
+      return '0$num';
+    }
+    return num.toString();
   }
 
   Future<void> getRule() async {
@@ -74,6 +131,7 @@ class _Part3MainState extends State<RpkPartIII> {
         element.isCheck = true;
       }
     });
+    controller.start();
   }
 
   Future<void> updateRpkJpjTestStart() async {
@@ -92,14 +150,14 @@ class _Part3MainState extends State<RpkPartIII> {
     } else {
       customDialog.show(
           context: context,
-          title: Icon(Icons.error_outline),
+          title: const Icon(Icons.error_outline),
           content: result.message,
           customActions: [
             TextButton(
               onPressed: () => context.router.popUntil(
                 ModalRoute.withName('ConfirmCandidateInfo'),
               ),
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
           type: DialogType.GENERAL);
@@ -111,6 +169,7 @@ class _Part3MainState extends State<RpkPartIII> {
   }
 
   updateRpkJpjTestResult() async {
+    controller.stop();
     var a = {
       'Result': [{}]
     };
@@ -133,23 +192,26 @@ class _Part3MainState extends State<RpkPartIII> {
       icNo: widget.nric,
       part3Type: 'RPK',
     );
+    if (mounted) {
+      if (result.isSuccess) {
+        customDialog.show(
+            context: context,
+            barrierDismissable: false,
+            onPressed: () {
+              Provider.of<RpkSessionModel>(context, listen: false).reset();
 
-    if (result.isSuccess) {
-      customDialog.show(
-          context: context,
-          barrierDismissable: false,
-          onPressed: () {
-            Provider.of<RpkSessionModel>(context, listen: false).reset();
-
-            context.router.popUntil(
-              ModalRoute.withName('HomePageRpk'),
-            );
-          },
-          content: AppLocalizations.of(context)!.translate('test_submitted'),
-          type: DialogType.SUCCESS);
-    } else {
-      customDialog.show(
-          context: context, content: result.message, type: DialogType.WARNING);
+              context.router.popUntil(
+                ModalRoute.withName('HomePageRpk'),
+              );
+            },
+            content: AppLocalizations.of(context)!.translate('test_submitted'),
+            type: DialogType.SUCCESS);
+      } else {
+        customDialog.show(
+            context: context,
+            content: result.message,
+            type: DialogType.WARNING);
+      }
     }
 
     setState(() {
@@ -187,15 +249,13 @@ class _Part3MainState extends State<RpkPartIII> {
 
   @override
   Widget build(BuildContext context) {
-    int mark = context.watch<RpkSessionModel>().mark;
-
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('RPK'),
+          title: const Text('RPK'),
           automaticallyImplyLeading: false,
-          actions: [
+          actions: const [
             // IconButton(
             //     onPressed: () {
             //       setState(() {
@@ -233,26 +293,26 @@ class _Part3MainState extends State<RpkPartIII> {
                           children: [
                             TableRow(
                               children: [
-                                Text('Tarikh'),
+                                const Text('Tarikh'),
                                 Text(widget.testDate!.substring(0, 10),
                                     style: textStyle),
                               ],
                             ),
                             TableRow(
                               children: [
-                                Text('Nama'),
+                                const Text('Nama'),
                                 Text(widget.rpkName!, style: textStyle),
                               ],
                             ),
                             TableRow(
                               children: [
-                                Text('NRIC'),
+                                const Text('NRIC'),
                                 Text(widget.nric!, style: textStyle),
                               ],
                             ),
                             TableRow(
                               children: [
-                                Text('No Giliran'),
+                                const Text('No Giliran'),
                                 Text(widget.qNo!,
                                     style: TextStyle(
                                         fontSize: 80.sp,
@@ -280,14 +340,37 @@ class _Part3MainState extends State<RpkPartIII> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Padding(
-                                        padding: EdgeInsets.all(16.0),
-                                        child: Text(
-                                          'Tandakan ✖️ Untuk Demerit',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text(
+                                              'Tandakan ✖️ Untuk Demerit',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                            ),
+                                            Countdown(
+                                              countdownController: controller,
+                                              builder: (_, Duration time) {
+                                                return Row(
+                                                  children: [
+                                                    const Icon(Icons.timer),
+                                                    Text(
+                                                      '${format(time.inMinutes)}:${format(time.inSeconds % 60)}',
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       ScrollOnExpand(
@@ -303,10 +386,10 @@ class _Part3MainState extends State<RpkPartIII> {
                                           header: Container(
                                             color: ColorConstant.primaryColor,
                                             child: Padding(
-                                              padding: EdgeInsets.all(10),
+                                              padding: const EdgeInsets.all(10),
                                               child: Row(
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     "1. Pemeriksaan Kenderaan Ujian",
                                                     style: TextStyle(
                                                       fontSize: 20,
@@ -314,7 +397,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                                           FontWeight.bold,
                                                     ),
                                                   ),
-                                                  Spacer(),
+                                                  const Spacer(),
                                                   Align(
                                                     alignment:
                                                         Alignment.centerRight,
@@ -326,7 +409,7 @@ class _Part3MainState extends State<RpkPartIII> {
                                                       child: Container(
                                                         child: Text(
                                                           '${ruleList.where((c) => c.isCheck == true).length}/24',
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               color:
                                                                   Colors.black,
                                                               fontWeight:
@@ -340,11 +423,11 @@ class _Part3MainState extends State<RpkPartIII> {
                                               ),
                                             ),
                                           ),
-                                          collapsed: SizedBox(),
+                                          collapsed: const SizedBox(),
                                           expanded: ListView(
                                             shrinkWrap: true,
                                             physics:
-                                                NeverScrollableScrollPhysics(),
+                                                const NeverScrollableScrollPhysics(),
                                             children: [
                                               for (int i = 0;
                                                   i < ruleList.length;
@@ -440,7 +523,7 @@ class _Part3MainState extends State<RpkPartIII> {
                             ),
                           );
                         } else {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -496,20 +579,20 @@ class _Part3MainState extends State<RpkPartIII> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('session_lbl'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                         Center(
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('normal_mistake_mark'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                         Center(
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('mandatory_mistake_mark'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('R',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -519,45 +602,43 @@ class _Part3MainState extends State<RpkPartIII> {
                                         .where((c) => c.isCheck)
                                         .length
                                         .toString(),
-                                    style: TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
+                                    style: const TextStyle(color: Colors.black),
+                                    children: const <TextSpan>[
                               TextSpan(
                                   text: '/24',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
-                        Center(
+                        const Center(
                             child: Text('-',
                                 style: TextStyle(color: Colors.black))),
                       ]),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16.0,
                   ),
                   Text(
                     'Jumlah Markah: ${ruleList.where((c) => c.isCheck).length.toString()}/24',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16.0,
                   ),
-                  Container(
-                    child: ElevatedButton(
-                      onPressed: updateRpkJpjTestResult,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        minimumSize: Size(88, 36),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(2)),
-                        ),
+                  ElevatedButton(
+                    onPressed: updateRpkJpjTestResult,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      minimumSize: const Size(88, 36),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2)),
                       ),
-                      child: Text(
-                        AppLocalizations.of(context)!.translate('submit_btn'),
-                      ),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.translate('submit_btn'),
                     ),
                   ),
                   SizedBox(
@@ -598,12 +679,12 @@ class _Part3MainState extends State<RpkPartIII> {
               : Colors.white,
         ),
         child: (item.isCheck == null || item.isCheck == false)
-            ? Icon(
+            ? const Icon(
                 Icons.close,
                 size: 18,
                 color: Colors.white,
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 18,
                 width: 18,
               ),

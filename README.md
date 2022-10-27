@@ -1,3 +1,9 @@
+27/10/2022 V.6.1.1
+ePandu ws 6.1.167.0
+Enhanced
+
+- Add timer countdown at RPK
+
 27/10/2022 V.6.1.0
 ePandu ws 6.1.167.0
 Enhanced

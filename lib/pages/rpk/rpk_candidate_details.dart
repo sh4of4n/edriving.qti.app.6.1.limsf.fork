@@ -86,20 +86,19 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
     var result2 = await etestingRepo.getOwnerIdCategoryList();
 
-    EasyLoading.dismiss();
-
-    await context.router.push(
-      RpkPartIII(
-        qNo: '1',
-        nric: '1',
-        rpkName: '1',
-        testDate: '11111111111',
-        groupId: '1',
-        testCode: '1',
-        vehNo: '1',
-        skipUpdateRpkJpjTestStart: true,
-      ),
-    );
+    // EasyLoading.dismiss();
+    // await context.router.push(
+    //   RpkPartIII(
+    //     qNo: '1',
+    //     nric: '1',
+    //     rpkName: '1',
+    //     testDate: '11111111111',
+    //     groupId: '1',
+    //     testCode: '1',
+    //     vehNo: '1',
+    //     skipUpdateRpkJpjTestStart: true,
+    //   ),
+    // );
 
     if (result2.isSuccess) {
       owners = result2.data;
