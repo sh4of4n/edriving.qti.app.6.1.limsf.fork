@@ -533,6 +533,18 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
               item.mandatory == 'false' ? FontWeight.normal : FontWeight.bold,
         ),
       ),
+      subtitle:
+          item.checkDesc.toLowerCase() == 'lain-lain' && item.status == 'false'
+              ? FormBuilderTextField(
+                  name: 'skimLain',
+                  readOnly: true,
+                  initialValue: item.remark,
+                  decoration: InputDecoration(
+                    filled: true,
+                    labelText: 'Remark',
+                  ),
+                )
+              : null,
       trailing: Container(
         decoration: BoxDecoration(
           border: Border.all(

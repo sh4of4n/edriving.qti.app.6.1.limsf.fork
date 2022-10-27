@@ -757,7 +757,11 @@ class _JrPartIIIState extends State<JrPartIII> {
                     ],
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(100),
+                    height: 16,
+                  ),
+                  totalScore(),
+                  SizedBox(
+                    height: 16,
                   ),
                   Container(
                     child: ElevatedButton(
@@ -858,15 +862,71 @@ class _JrPartIIIState extends State<JrPartIII> {
                             ),
                           ),
                           child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (ruleJson[code]![i].isCheck == null ||
-                                    ruleJson[code]![i].isCheck == false) {
-                                  ruleJson[code]![i].isCheck = true;
-                                } else {
-                                  ruleJson[code]![i].isCheck = false;
+                            onTap: () async {
+                              if (ruleJson[code]![i].mandatory == 'true' &&
+                                  ruleJson[code]![i].isCheck) {
+                                String message =
+                                    'Calon Ini Telah Gagal Kerana Kesalahan Mandatori.';
+
+                                if (ruleJson[code]![i].ruleCode == 'i02' ||
+                                    ruleJson[code]![i].ruleCode == 'i04') {
+                                  message =
+                                      'Calon Ini Telah Gagal Kerana Kemalangan.';
                                 }
-                              });
+
+                                var wantContinue = await showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      true, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('JPJ QTO APP'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(message),
+                                            Text('Adakah Anda Pasti?'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .translate('cancel_btn'),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(false);
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .translate('ok_btn'),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                if (wantContinue) {
+                                  setState(() {
+                                    ruleJson[code]![i].isCheck = false;
+                                  });
+                                }
+                              } else {
+                                setState(() {
+                                  if (ruleJson[code]![i].isCheck == null ||
+                                      ruleJson[code]![i].isCheck == false) {
+                                    ruleJson[code]![i].isCheck = true;
+                                  } else {
+                                    ruleJson[code]![i].isCheck = false;
+                                  }
+                                });
+                              }
                             },
                             child: customCheckbox(
                               '$numberRank.${i + 1}',
@@ -890,6 +950,22 @@ class _JrPartIIIState extends State<JrPartIII> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget totalScore() {
+    int score = 0;
+    int totalScore = 0;
+    for (var element in ruleJson.keys) {
+      score += ruleJson[element]!.where((c) => c.isCheck == true).length;
+      totalScore += ruleJson[element]!.length;
+    }
+    return Text(
+      'Jumlah Markah: $score/$totalScore',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
       ),
     );
   }

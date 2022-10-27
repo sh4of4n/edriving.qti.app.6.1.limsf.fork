@@ -532,13 +532,22 @@ class _Part3MainState extends State<RpkPartIII> {
                     ],
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(100),
+                    height: 16.0,
+                  ),
+                  Text(
+                    'Jumlah Markah: ${ruleList.where((c) => c.isCheck).length.toString()}/24',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.0,
                   ),
                   Container(
                     child: ElevatedButton(
                       onPressed: updateRpkJpjTestResult,
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: ColorConstant.primaryColor,
                         backgroundColor: Colors.blue,
                         minimumSize: Size(88, 36),
                         padding: EdgeInsets.symmetric(horizontal: 16),

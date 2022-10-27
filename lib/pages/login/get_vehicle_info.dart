@@ -69,9 +69,11 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
     );
     var result =
         await etestingRepo.getMySikapVehicleListByStatus(status: 'CHECKED');
-    setState(() {
-      vehicleArr = result.data;
-    });
+    if (result.isSuccess) {
+      setState(() {
+        vehicleArr = result.data;
+      });
+    }
     EasyLoading.dismiss();
     return result;
   }
@@ -254,6 +256,13 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         builder: (field) {
                           return DropdownSearch<MysikapVehicle>(
                             items: vehicleArr,
+                            selectedItem: field.value != null
+                                ? MysikapVehicle(
+                                    plateNo: field.value.toString(),
+                                  )
+                                : MysikapVehicle(
+                                    plateNo: '',
+                                  ),
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
                                 labelText: AppLocalizations.of(context)!

@@ -1,3 +1,13 @@
+27/10/2022 V.6.1.0
+ePandu ws 6.1.167.0
+Enhanced
+
+- Bhg 3 and RPK shows Jumlah Markah
+- At Bhg 3, when user click element Kemalangan or Mandatori, shows popup message
+- At Senarai Semak Kenderaan, Litar, Bilik Kawalan dan Sistem. If tick ‘Lain-lain’, allow user to insert remark text
+  Fixed
+- At Kenderaan, when scan from QR Code, field that has dropdown not filled.
+
 20/10/2022 V.0.0.14
 ePandu ws 6.1.166.0
 
