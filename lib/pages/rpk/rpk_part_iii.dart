@@ -68,11 +68,13 @@ class _Part3MainState extends State<RpkPartIII> {
   @override
   void initState() {
     super.initState();
-    getRule();
+    List<Future> futures = [getRule()];
     if (!widget.skipUpdateRpkJpjTestStart) {
-      updateRpkJpjTestStart();
+      futures.add(updateRpkJpjTestStart());
     }
-
+    Future.wait(futures).then((value) {
+      controller.start();
+    });
     controller = CountdownController(
       duration: const Duration(
         minutes: 7,
@@ -131,7 +133,6 @@ class _Part3MainState extends State<RpkPartIII> {
         element.isCheck = true;
       }
     });
-    controller.start();
   }
 
   Future<void> updateRpkJpjTestStart() async {
