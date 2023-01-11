@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -131,7 +132,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
 
                 qrController.resumeCamera();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
           type: DialogType.GENERAL,
@@ -172,9 +173,10 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           _formKey.currentState?.fields['permitNo']?.value.replaceAll(' ', ''));
       localStorage.saveType(widget.type);
       if (widget.type == "RPK") {
-        context.router.pushAndPopUntil(HomePageRpk(), predicate: (r) => false);
+        context.router
+            .pushAndPopUntil(const HomePageRpk(), predicate: (r) => false);
       } else if (widget.type == "Jalan Raya") {
-        context.router.pushAndPopUntil(Home(), predicate: (r) => false);
+        context.router.pushAndPopUntil(const Home(), predicate: (r) => false);
       }
     }
   }
@@ -196,58 +198,16 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Get Vehicle Info'),
+            title: const Text('Maklumat Kenderaan'),
           ),
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: FormBuilder(
                 key: _formKey,
                 child: Column(
                   children: [
-                    Container(
-                      width: 1300.w,
-                      margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: FormBuilderDropdown(
-                        name: 'groupId',
-                        items: ['D', 'DA']
-                            .map(
-                              (gender) => DropdownMenuItem(
-                                value: gender,
-                                child: Text(gender),
-                              ),
-                            )
-                            .toList(),
-                        focusNode: groupIdFocus,
-                        decoration: InputDecoration(
-                          labelText: 'Group ID',
-                        ),
-                        validator: FormBuilderValidators.compose(
-                          [FormBuilderValidators.required()],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 1300.w,
-                      margin: EdgeInsets.symmetric(vertical: 30.h),
-                      child: FormBuilderTextField(
-                        name: 'carNo',
-                        inputFormatters: [UpperCaseTextFormatter()],
-                        focusNode: carNoFocus,
-                        decoration: InputDecoration(
-                          labelText: 'Car No',
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              _formKey.currentState!.fields['carNo']?.reset();
-                            },
-                          ),
-                        ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                        ]),
-                      ),
-                    ),
+                    ProfileWidget(),
                     Container(
                       width: 1300.w,
                       margin: EdgeInsets.symmetric(vertical: 30.h),
@@ -277,6 +237,10 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                             compareFn: (i, s) => i.plateNo == s.plateNo,
                             onChanged: ((value) {
                               field.didChange(value!.plateNo);
+                              _formKey.currentState!.fields['groupId']!
+                                  .didChange(value.groupId);
+                              _formKey.currentState!.fields['carNo']!
+                                  .didChange(value.carNo);
                             }),
                             popupProps:
                                 PopupPropsMultiSelection.modalBottomSheet(
@@ -285,7 +249,8 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                               showSearchBox: true,
                               itemBuilder: (context, item, isSelected) {
                                 return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   decoration: !isSelected
                                       ? null
                                       : BoxDecoration(
@@ -299,6 +264,8 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                                   child: ListTile(
                                     selected: isSelected,
                                     title: Text(item.plateNo ?? ''),
+                                    subtitle: Text(
+                                        '${item.groupId?.toString() ?? ''}, ${item.carNo?.toString() ?? ''}'),
                                   ),
                                 );
                               },
@@ -309,18 +276,56 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                           FormBuilderValidators.required(),
                         ]),
                       ),
-
-                      // FormBuilderTextField(
-                      //   name: 'plateNo',
-                      //   inputFormatters: [UpperCaseTextFormatter()],
-                      //   focusNode: plateNoFocus,
-                      //   decoration: InputDecoration(
-                      //     labelText: 'Plate No',
-                      //   ),
-                      //   validator: FormBuilderValidators.compose([
-                      //     FormBuilderValidators.required(),
-                      //   ]),
-                      // ),
+                    ),
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: FormBuilderTextField(
+                        name: 'groupId',
+                        enabled: false,
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: merchantNoFocus,
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!
+                              .translate('group_id'),
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.close),
+                          //   onPressed: () {
+                          //     _formKey.currentState!.fields['permitNo']
+                          //         ?.reset();
+                          //   },
+                          // ),
+                        ),
+                        // validator: (value) {
+                        //   if (value!.isEmpty) {
+                        //     return 'Permit No is required.';
+                        //   }
+                        //   return null;
+                        // },
+                      ),
+                    ),
+                    Container(
+                      width: 1300.w,
+                      margin: EdgeInsets.symmetric(vertical: 30.h),
+                      child: FormBuilderTextField(
+                        name: 'carNo',
+                        enabled: false,
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        focusNode: carNoFocus,
+                        decoration: InputDecoration(
+                          labelText:
+                              AppLocalizations.of(context)!.translate('car_no'),
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(Icons.close),
+                          //   onPressed: () {
+                          //     _formKey.currentState!.fields['carNo']?.reset();
+                          //   },
+                          // ),
+                        ),
+                        // validator: FormBuilderValidators.compose([
+                        //   FormBuilderValidators.required(),
+                        // ]),
+                      ),
                     ),
                     Container(
                       width: 1300.w,
@@ -332,7 +337,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                         decoration: InputDecoration(
                           labelText: 'Permit No',
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () {
                               _formKey.currentState!.fields['permitNo']
                                   ?.reset();
@@ -349,7 +354,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                     ),
                     Visibility(
                       visible: showQR,
-                      child: Container(
+                      child: SizedBox(
                         width: 300,
                         height: 300,
                         child: _buildQrView(context),
@@ -367,7 +372,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                             });
                           },
                           iconSize: 250,
-                          icon: Icon(Icons.camera_alt),
+                          icon: const Icon(Icons.camera_alt),
                         ),
                       ),
                     ),
@@ -412,12 +417,12 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
           color: item.isCheck ? Colors.blue : Colors.white,
         ),
         child: item.isCheck
-            ? Icon(
+            ? const Icon(
                 Icons.close,
                 size: 18,
                 color: Colors.white,
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 18,
                 width: 18,
               ),

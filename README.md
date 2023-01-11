@@ -1,3 +1,19 @@
+11/01/2023 V.6.1.3
+ePandu ws 6.1.175.0
+Enhanced
+
+- Show login time & MySikap name in every page
+- Use all malay word for bahasa melayu
+- Make UI responsive to mobile layout
+
+- Vehicle Detail
+
+  - User just select plat no kenderaan only, app will auto insert kelas kenderaan & no kenderaan
+
+- Senarai Semak SKIM
+  - Show plat number and car no.
+  - After 1 car done SKIM, show tick (/) \*green at the Plate Number.
+
 28/10/2022 V.6.1.2
 ePandu ws 6.1.168.0
 Enhanced

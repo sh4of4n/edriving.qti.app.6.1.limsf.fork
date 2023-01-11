@@ -250,4 +250,46 @@ class EtestingRepo {
     }
     return Response(false, message: response.message, data: []);
   }
+
+  Future<Response> getUserIdByMySikapId() async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? mySikapId = await localStorage.getMySikapId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&mySikapId=$mySikapId&permitCode=$diCode';
+
+    var response = await networking.getData(
+      path: 'GetUserIdByMySikapId?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      GetUserIdByMySikapIdResult ruleResponse =
+          GetUserIdByMySikapIdResult.fromJson(response.data);
+      return Response(true, data: ruleResponse.result);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
+
+  Future<Response> checkUserLoginStatus() async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? mySikapId = await localStorage.getMySikapId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&mySikapId=$mySikapId&permitCode=$diCode';
+
+    var response = await networking.getData(
+      path: 'CheckUserLoginStatus?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      CheckUserLoginStatusResponse ruleResponse =
+          CheckUserLoginStatusResponse.fromJson(response.data);
+      return Response(true, data: ruleResponse.result);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/location.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
@@ -59,13 +60,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-    //_openHiveBoxes();
-    // getStudentInfo();
-    //_getCurrentLocation();
-    //_getDiProfile();
-    //_getActiveFeed();
-
+    checkUserLoginStatus();
     _openHiveBoxes();
     _setLocale();
     _getVehInfo();
@@ -73,8 +68,17 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    // positionStream.cancel();
     super.dispose();
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router.pushAndPopUntil(Login(), predicate: (r) => false);
+      }
+    }
   }
 
   Future<void> processQrCodeResult(
@@ -215,11 +219,11 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 20),
+                ProfileWidget(),
                 const Text(
                   'Ujian Memandu Bahagian III',
                   style: TextStyle(
@@ -235,7 +239,7 @@ class _HomeState extends State<Home> {
                 HomeModule(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -367,7 +371,7 @@ class _HomeState extends State<Home> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -393,7 +397,7 @@ class _HomeState extends State<Home> {
                 // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(

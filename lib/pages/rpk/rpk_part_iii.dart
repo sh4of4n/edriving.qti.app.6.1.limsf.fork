@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:expandable/expandable.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -282,8 +283,7 @@ class _Part3MainState extends State<RpkPartIII> {
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  // _header(),
-                  //RpkSessionA(),
+                  ProfileWidget(),
                   Container(
                     color: primaryColor,
                     padding:
@@ -571,7 +571,6 @@ class _Part3MainState extends State<RpkPartIII> {
                   SizedBox(
                     height: ScreenUtil().setHeight(100),
                   ),
-
                   Table(
                     border: TableBorder.all(color: Colors.grey),
                     children: [

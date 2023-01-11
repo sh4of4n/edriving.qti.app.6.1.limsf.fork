@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -605,61 +606,6 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         appBar: AppBar(
           title: const Text('Calling'),
           actions: [
-            // TextButton(
-            //   onPressed: () async {
-            //     var scanData = await context.router.push(QrScannerRoute());
-            //     if (scanData != null) {
-            //       await EasyLoading.show(
-            //         maskType: EasyLoadingMaskType.black,
-            //       );
-            //       String? plateNo = await localStorage.getPlateNo();
-            //       Response result = await etestingRepo.isCurrentCallingCalon(
-            //         plateNo: plateNo ?? '',
-            //         partType: 'PART3',
-            //         nricNo: jsonDecode((scanData as Barcode).code!)['Table1'][0]
-            //             ['nric_no'],
-            //       );
-            //       await EasyLoading.dismiss();
-            //       if (!result.isSuccess) {
-            //         showDialog<void>(
-            //           context: context,
-            //           barrierDismissible: false, // user must tap button!
-            //           builder: (BuildContext context) {
-            //             return AlertDialog(
-            //               title: const Text('JPJ QTO'),
-            //               content: SingleChildScrollView(
-            //                 child: ListBody(
-            //                   children: const <Widget>[
-            //                     Text('Calon ini tidak mengambil ujian'),
-            //                   ],
-            //                 ),
-            //               ),
-            //               actions: <Widget>[
-            //                 TextButton(
-            //                   child: const Text('Ok'),
-            //                   onPressed: () {
-            //                     context.router.pop();
-            //                   },
-            //                 ),
-            //               ],
-            //             );
-            //           },
-            //         );
-            //       } else {
-            //         processQrCodeResult(
-            //             scanData: (scanData as Barcode),
-            //             selectedCandidate: result.data[0],
-            //             qNo: 'XXX');
-            //       }
-            //     }
-            //   },
-            //   child: Text(
-            //     'Calon Semasa',
-            //     style: TextStyle(
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ),
             IconButton(
               onPressed: () {
                 customDialog.show(
@@ -684,9 +630,10 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 50.h),
-                      SizedBox(
+                      ProfileWidget(),
+                      Container(
                         width: 1300.h,
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: DropdownButtonFormField<String>(
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(

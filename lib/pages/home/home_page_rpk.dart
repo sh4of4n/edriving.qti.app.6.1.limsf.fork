@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/location.dart';
@@ -61,13 +62,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
   @override
   void initState() {
     super.initState();
-
-    //_openHiveBoxes();
-    // getStudentInfo();
-    //_getCurrentLocation();
-    //_getDiProfile();
-    //_getActiveFeed();
-
+    checkUserLoginStatus();
     _openHiveBoxes();
     _setLocale();
     _getVehInfo();
@@ -75,8 +70,18 @@ class _HomePageRpkState extends State<HomePageRpk> {
 
   @override
   void dispose() {
-    // positionStream.cancel();
     super.dispose();
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
+    }
   }
 
   _setLocale() async {
@@ -217,11 +222,11 @@ class _HomePageRpkState extends State<HomePageRpk> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 20),
+                ProfileWidget(),
                 const Text(
                   'Ujian Memandu Bahagian II',
                   style: TextStyle(
@@ -245,7 +250,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -355,7 +360,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                                   onPressed: () {
                                     context.router.pop();
                                   },
-                                  child: Text('Ok'),
+                                  child: const Text('Ok'),
                                 ),
                               ],
                               type: DialogType.GENERAL,
@@ -377,7 +382,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -397,7 +402,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(

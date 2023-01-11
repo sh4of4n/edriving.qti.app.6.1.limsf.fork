@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/base/page_base_class.dart';
 import 'package:edriving_qti_app/common_library/services/location.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/device_info.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
@@ -53,6 +54,8 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   String? _deviceVersion = '';
   String? _deviceId = '';
   String? _deviceOs = '';
+
+  final etestingRepo = EtestingRepo();
 
   @override
   void initState() {
@@ -282,38 +285,62 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     );
   }
 
+  loginFail(String message) async {
+    await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.translate('login')),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _isLoading = false;
+                _loginMessage = message;
+              });
+              Navigator.pop(context, 'OK');
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   _submitLogin() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       setState(() {
-        // _height = ScreenUtil().setHeight(1300);
         _isLoading = true;
         _loginMessage = '';
       });
-
-      /* var result = await authRepo.ePanduJpjQtoLoginResetPwd(
-        context: context,
-        phone: _phone,
-        password: _password,
-      ); */
 
       var result = await authRepo.jpjQtiLoginWithMySikap(
         mySikapId: _formKey.currentState?.fields['ic']?.value!,
         permitCode: _formKey.currentState?.fields['permitCode']?.value!,
       );
 
+      if (!result.isSuccess) {
+        loginFail(result.message!);
+        return;
+      }
+
       await localStorage
           .savePermitCode(_formKey.currentState?.fields['permitCode']?.value!);
 
-      if (result.isSuccess) {
-        context.router.replace(HomeSelect());
-      } else {
-        setState(() {
-          _isLoading = false;
-          _loginMessage = result.message;
-        });
+      var result3 = await etestingRepo.getUserIdByMySikapId();
+      if (!result3.isSuccess) {
+        loginFail(result3.message!);
+        return;
       }
-    } else {}
+
+      await localStorage.saveName(result3.data[0].firstName);
+
+      await localStorage.saveLoginTime(DateTime.now().toString());
+
+      context.router.replace(HomeSelect());
+    }
   }
 }

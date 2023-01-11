@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -89,9 +90,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 16.0,
-                      ),
+                      ProfileWidget(),
                       ExpandableNotifier(
                         initialExpanded: true,
                         child: Padding(
@@ -206,10 +205,8 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                               title: Text(
                                                                   item.plateNo ??
                                                                       ''),
-                                                              subtitle: Text(item
-                                                                      .groupId
-                                                                      ?.toString() ??
-                                                                  ''),
+                                                              subtitle: Text(
+                                                                  '${item.groupId?.toString() ?? ''}, ${item.carNo?.toString() ?? ''}'),
                                                               trailing: item
                                                                           .checked ==
                                                                       'true'

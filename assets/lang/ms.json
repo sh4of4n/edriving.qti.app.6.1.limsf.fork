@@ -261,8 +261,8 @@
   "previous_credentials": "Kami akan menggunakan kelayakan anda untuk mendaftar.",
   "value_club": "Value Club",
   "booking": "Tempahan",
-  "group_id": "Kumpulan ID",
-  "group_id_required": "Group ID is required.",
+  "group_id": "Kelas Kenderaan",
+  "group_id_required": "Kelas Kenderaan diperlukan.",
   "type": "Jenis",
   "type_required": "Jenis diperlukan.",
   "section": "Seksyen",
@@ -660,6 +660,7 @@
   "fail_litar": "Gagal, litar tidak tersedia untuk ujian dijalankan",
   "fail_sistem": "Gagal, bilik kawalan tidak tersedia untuk ujian dijalankan",
   "vehicle_download_success": "Data Kenderaan Berjaya Dimuat Turun",
-  "plate_no": "No. Kenderaan",
-  "select_all": "Pilih semua"
+  "plate_no": "Plat No Kenderaan",
+  "select_all": "Pilih semua",
+  "car_no": "No Kenderaan"
 }

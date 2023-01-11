@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
@@ -374,6 +375,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  ProfileWidget(),
                                   Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Text(

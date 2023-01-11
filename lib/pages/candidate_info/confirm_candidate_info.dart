@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -292,7 +293,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
                 margin: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 30.h),
+                    ProfileWidget(),
                     Text('Q-NO', style: TextStyle(fontSize: 100.sp)),
                     widget.icPhoto == ''
                         ? const SizedBox()

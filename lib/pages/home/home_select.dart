@@ -1,3 +1,4 @@
+import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
@@ -99,61 +100,57 @@ class _HomeSelectState extends State<HomeSelect> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Container(
-            // height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                Column(
-                  children: [
-                    HomeIcon(
-                      component: CheckListRoute(),
-                      image: imageConstant.checkList,
-                      name:
-                          AppLocalizations.of(context)!.translate('checklist'),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                HomeIcon(
-                                  component: GetVehicleInfo(type: 'RPK'),
-                                  image: imageConstant.kppIcon,
-                                  name: 'RPK',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                HomeIcon(
-                                  component: GetVehicleInfo(type: 'Jalan Raya'),
-                                  image: imageConstant.kppIcon,
-                                  name: 'Bahagian III',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
+          child: Column(
+            children: <Widget>[
+              ProfileWidget(),
+              Column(
+                children: [
+                  HomeIcon(
+                    component: CheckListRoute(),
+                    image: imageConstant.checkList,
+                    name: AppLocalizations.of(context)!.translate('checklist'),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              HomeIcon(
+                                component: GetVehicleInfo(type: 'RPK'),
+                                image: imageConstant.kppIcon,
+                                name: 'RPK',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              HomeIcon(
+                                component: GetVehicleInfo(type: 'Jalan Raya'),
+                                image: imageConstant.kppIcon,
+                                name: 'Bahagian III',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

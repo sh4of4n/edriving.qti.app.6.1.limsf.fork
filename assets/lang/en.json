@@ -660,6 +660,7 @@
   "fail_sistem": "Failed, the control room is not available for the test to run",
   "vehicle_download_success": "Vehicle Data Downloaded Successfully",
   "plate_no": "Plate No.",
-  "select_all": "Select All"
+  "select_all": "Select All",
+  "car_no": "Car No"
 
 }

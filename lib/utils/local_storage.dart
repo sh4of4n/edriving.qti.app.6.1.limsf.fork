@@ -64,6 +64,8 @@ class LocalStorage {
   static const String DeductMarkG = 'DeductMarkG';
   static const String DeductMarkH = 'DeductMarkH';
 
+  static const String kLoginTime = 'LOGIN_TIME';
+
   Future<bool> setPart2MarkB(int deductMarkB) {
     return Preference.setInt(DeductMarkB, deductMarkB);
   }
@@ -813,6 +815,14 @@ class LocalStorage {
     return Preference.setString(kPermitCode, permitCode);
   }
 
+  Future<bool> saveLoginTime(String loginTime) async {
+    return Preference.setString(kLoginTime, loginTime);
+  }
+
+  Future<String?> getLoginTime() async {
+    return Preference.getString(kLoginTime, def: '');
+  }
+
   Future<void> reset() async {
     // await Preference.removeAll();
     await Preference.remove(kWsUrl);
@@ -852,5 +862,6 @@ class LocalStorage {
     await Preference.remove(kType);
     await Preference.remove(KMysikapVehicle);
     await Preference.remove(kMySikapId);
+    await Preference.remove(kLoginTime);
   }
 }
