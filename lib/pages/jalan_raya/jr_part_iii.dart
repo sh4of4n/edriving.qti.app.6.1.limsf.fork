@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
@@ -70,10 +71,22 @@ class _JrPartIIIState extends State<JrPartIII> {
 
   @override
   void initState() {
+    checkUserLoginStatus();
     super.initState();
     getRule();
     if (!widget.skipUpdateJrJpjTestStart) {
       updatePart3JpjTestStart();
+    }
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
     }
   }
 
@@ -132,6 +145,7 @@ class _JrPartIIIState extends State<JrPartIII> {
   }
 
   Future<void> updatePart3JpjTestResult(part3Type) async {
+    await checkUserLoginStatus();
     var a = {
       'Result': [{}]
     };

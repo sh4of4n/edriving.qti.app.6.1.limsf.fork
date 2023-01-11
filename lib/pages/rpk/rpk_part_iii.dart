@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/router.gr.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:expandable/expandable.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -69,6 +71,7 @@ class _Part3MainState extends State<RpkPartIII> {
   @override
   void initState() {
     super.initState();
+    checkUserLoginStatus();
     List<Future> futures = [getRule()];
     if (!widget.skipUpdateRpkJpjTestStart) {
       futures.add(updateRpkJpjTestStart());
@@ -113,6 +116,17 @@ class _Part3MainState extends State<RpkPartIII> {
       },
     );
     controller.stop();
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
+    }
   }
 
   String format(int? num) {
@@ -171,6 +185,7 @@ class _Part3MainState extends State<RpkPartIII> {
   }
 
   updateRpkJpjTestResult() async {
+    await checkUserLoginStatus();
     controller.stop();
     var a = {
       'Result': [{}]

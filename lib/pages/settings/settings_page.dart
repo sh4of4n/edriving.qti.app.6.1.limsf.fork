@@ -192,9 +192,22 @@ class _SettingsState extends State<Settings> {
                 setState(() {
                   _isLoading = true;
                 });
-
                 await context.router.pop();
-                await localStorage.reset();
+                var result = await etestingRepo.qtiUjianLogout();
+                if (!result.isSuccess) {
+                  const snackBar = SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text('Something went wrong'),
+                  );
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  }
+
+                  return;
+                }
                 await context.router
                     .pushAndPopUntil(const Login(), predicate: (r) => false);
 

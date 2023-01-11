@@ -7,6 +7,7 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/device_info.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -60,7 +61,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   @override
   void initState() {
     super.initState();
-
+    EasyLoading.dismiss();
     // _getCurrentLocation();
     _getDeviceInfo();
 

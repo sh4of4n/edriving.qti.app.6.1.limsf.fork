@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,6 +47,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   final customDialog = CustomDialog();
   bool isLoading = false;
   String? vehNo = '';
+  final etestingRepo = EtestingRepo();
 
   /* @override
   void initState() {
@@ -103,6 +106,23 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
       isLoading = false;
     });
   } */
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoginStatus();
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
+    }
+  }
 
   Future<bool> _onWillPop() async {
     bool result = await showDialog(
@@ -232,6 +252,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   }
 
   startTest() async {
+    await checkUserLoginStatus();
     vehNo = await localStorage.getPlateNo();
 
     if (widget.part3Type == 'RPK') {

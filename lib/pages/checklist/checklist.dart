@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/services/response.dart';
+import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -36,6 +38,7 @@ class _CheckListPageState extends State<CheckListPage> {
   bool skimCheck = false;
   bool litarCheck = false;
   bool sistemCheck = false;
+  final localStorage = LocalStorage();
 
   final _formKey = GlobalKey<FormBuilderState>();
   final customDialog = CustomDialog();
@@ -109,6 +112,8 @@ class _CheckListPageState extends State<CheckListPage> {
         status: AppLocalizations.of(context)!.translate('updating'),
         maskType: EasyLoadingMaskType.black,
       );
+
+      await checkUserLoginStatus();
 
       JpjCheckListRequest requestSkim = JpjCheckListRequest(
         jpjCheckList: checklistSkimArr,
@@ -226,6 +231,8 @@ class _CheckListPageState extends State<CheckListPage> {
       maskType: EasyLoadingMaskType.black,
     );
 
+    await checkUserLoginStatus();
+
     JpjCheckListRequest requestLitar = JpjCheckListRequest(
       jpjCheckList: checklistLitarArr,
     );
@@ -315,6 +322,8 @@ class _CheckListPageState extends State<CheckListPage> {
       maskType: EasyLoadingMaskType.black,
     );
 
+    await checkUserLoginStatus();
+
     JpjCheckListRequest requestSystem = JpjCheckListRequest(
       jpjCheckList: checklistSystemArr,
     );
@@ -400,6 +409,7 @@ class _CheckListPageState extends State<CheckListPage> {
   @override
   void initState() {
     super.initState();
+    checkUserLoginStatus();
     _checklistFuture = Future.wait([
       getCheclkListSkim(),
       getCheclkListLitar(),
@@ -407,6 +417,17 @@ class _CheckListPageState extends State<CheckListPage> {
       getMySikapVehicleListByStatus(),
     ]);
     storeChecklist();
+  }
+
+  Future checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
+    }
   }
 
   @override
@@ -480,6 +501,8 @@ class _CheckListPageState extends State<CheckListPage> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 16.0),
                                         child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Flexible(
                                               child: Text(

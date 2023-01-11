@@ -1,3 +1,10 @@
+12/01/2023 V.6.1.5
+ePandu ws 6.1.176.0
+Enhanced
+
+- Logout app will logout from mysikap
+- When backoffice logout, will trigger App to logout
+
 11/01/2023 V.6.1.4
 ePandu ws 6.1.175.0
 Fixed

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -67,8 +68,19 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   @override
   void initState() {
     super.initState();
-
+    checkUserLoginStatus();
     getPart3AvailableToCallJpjTestList();
+  }
+
+  checkUserLoginStatus() async {
+    Response result = await etestingRepo.checkUserLoginStatus();
+    if (result.isSuccess) {
+      if (result.data[0].result == 'false') {
+        await localStorage.reset();
+        await context.router
+            .pushAndPopUntil(const Login(), predicate: (r) => false);
+      }
+    }
   }
 
   getPart3AvailableToCallJpjTestList() async {
@@ -766,6 +778,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                     EasyLoading.show(
                                       maskType: EasyLoadingMaskType.black,
                                     );
+                                    await checkUserLoginStatus();
                                     vehNo = await localStorage.getPlateNo();
                                     var vehicleResult =
                                         await etestingRepo.isVehicleAvailable(
@@ -817,7 +830,8 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                     .translate('call_btn'),
                               ),
                               IconButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  await checkUserLoginStatus();
                                   customDialog.show(
                                     context: context,
                                     content: AppLocalizations.of(context)!
