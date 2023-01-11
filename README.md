@@ -1,3 +1,9 @@
+11/01/2023 V.6.1.4
+ePandu ws 6.1.175.0
+Fixed
+
+- Cannot show login time & MySikap name in tablet
+
 11/01/2023 V.6.1.3
 ePandu ws 6.1.175.0
 Enhanced
