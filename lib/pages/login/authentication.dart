@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
+import 'package:edriving_qti_app/main.dart';
+import 'package:edriving_qti_app/services/response.dart';
 import 'package:edriving_qti_app/utils/app_config.dart';
 
 import 'package:edriving_qti_app/utils/device_info.dart';
@@ -26,13 +31,37 @@ class _AuthenticationState extends State<Authentication> {
   String deviceModel = '';
   String deviceVersion = '';
   String deviceId = '';
+  Timer? timer;
+  final etestingRepo = EtestingRepo();
 
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
+      checkUserLoginStatus();
+    });
 
     _getWsUrl();
     _setLocale();
+  }
+
+  checkUserLoginStatus() async {
+    String? userId = await localStorage.getUserId();
+    if (userId != null && userId.isNotEmpty) {
+      Response result = await etestingRepo.checkUserLoginStatus();
+      if (result.isSuccess) {
+        if (result.data[0].result == 'false') {
+          const snackBar = SnackBar(
+            content: Text('Your session has expired. Please login again.'),
+            behavior: SnackBarBehavior.floating,
+          );
+          navigatorKey.currentState!.showSnackBar(snackBar);
+          await localStorage.reset();
+          await getIt<AppRouter>()
+              .pushAndPopUntil(const Login(), predicate: (r) => false);
+        }
+      }
+    }
   }
 
   _getWsUrl() async {
@@ -82,16 +111,16 @@ class _AuthenticationState extends State<Authentication> {
           plateNo != null &&
           plateNo.isNotEmpty) {
         if (type == "RPK") {
-          context.router.replace(HomePageRpk());
+          context.router.replace(const HomePageRpk());
         } else {
-          context.router.replace(Home());
+          context.router.replace(const Home());
         }
       } else {
         // context.router.replace(GetVehicleInfo());
         context.router.replace(HomeSelect());
       }
     } else {
-      context.router.replace(Login());
+      context.router.replace(const Login());
     }
   }
 
@@ -99,7 +128,7 @@ class _AuthenticationState extends State<Authentication> {
   Widget build(BuildContext context) {
     ScreenUtil.init(
       context,
-      designSize: Size(1440, 2960),
+      designSize: const Size(1440, 2960),
     );
 
     return Scaffold(

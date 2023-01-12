@@ -8,6 +8,7 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,10 @@ import 'common_library/services/model/bill_model.dart';
 import 'common_library/services/model/kpp_model.dart';
 import 'common_library/utils/custom_dialog.dart';
 import 'router.gr.dart';
+
+final getIt = GetIt.instance;
+GlobalKey<ScaffoldMessengerState> navigatorKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +44,9 @@ void main() async {
             : 'https://56a93727ddd3442f9acc49762a68b78b@o354605.ingest.sentry.io/6749453';
       },
     );
+
+    getIt.registerSingleton<AppRouter>(AppRouter());
+    getIt.registerSingleton<NavigatorState>(NavigatorState());
 
     runApp(
       MultiProvider(
@@ -74,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   // String _homeScreenText = "Waiting for token...";
   final customDialog = CustomDialog();
   final _appRouter = AppRouter();
-
+  final router = getIt<AppRouter>();
   @override
   void initState() {
     super.initState();
@@ -101,6 +109,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: navigatorKey,
       title: 'eDriving QTI',
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -129,8 +139,8 @@ class _MyAppState extends State<MyApp> {
 
         FormBuilderLocalizations.delegate,
       ],
-      routerDelegate: _appRouter.delegate(initialRoutes: [Authentication()]),
-      routeInformationParser: _appRouter.defaultRouteParser(),
+      routerDelegate: router.delegate(initialRoutes: [const Authentication()]),
+      routeInformationParser: router.defaultRouteParser(),
       // initialRoute: AUTH,
       // onGenerateRoute: RouteGenerator.generateRoute,
       builder: EasyLoading.init(),

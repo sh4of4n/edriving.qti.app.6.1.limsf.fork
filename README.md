@@ -1,3 +1,9 @@
+12/01/2023 V.6.1.6
+ePandu ws 6.1.177.0
+Enhanced
+
+- Every 5 second check login status
+
 12/01/2023 V.6.1.5
 ePandu ws 6.1.176.0
 Enhanced

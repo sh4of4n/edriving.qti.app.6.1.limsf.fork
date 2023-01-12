@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

@@ -195,9 +195,9 @@ class _SettingsState extends State<Settings> {
                 await context.router.pop();
                 var result = await etestingRepo.qtiUjianLogout();
                 if (!result.isSuccess) {
-                  const snackBar = SnackBar(
+                  SnackBar snackBar = SnackBar(
                     behavior: SnackBarBehavior.floating,
-                    content: Text('Something went wrong'),
+                    content: Text(result.message!),
                   );
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -208,6 +208,7 @@ class _SettingsState extends State<Settings> {
 
                   return;
                 }
+                // await localStorage.reset();
                 await context.router
                     .pushAndPopUntil(const Login(), predicate: (r) => false);
 

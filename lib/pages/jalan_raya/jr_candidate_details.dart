@@ -68,19 +68,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
     getPart3AvailableToCallJpjTestList();
-  }
-
-  checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
-    }
   }
 
   getPart3AvailableToCallJpjTestList() async {
@@ -778,7 +766,6 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                     EasyLoading.show(
                                       maskType: EasyLoadingMaskType.black,
                                     );
-                                    await checkUserLoginStatus();
                                     vehNo = await localStorage.getPlateNo();
                                     var vehicleResult =
                                         await etestingRepo.isVehicleAvailable(
@@ -831,7 +818,6 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  await checkUserLoginStatus();
                                   customDialog.show(
                                     context: context,
                                     content: AppLocalizations.of(context)!

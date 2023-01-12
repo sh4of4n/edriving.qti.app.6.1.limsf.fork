@@ -113,8 +113,6 @@ class _CheckListPageState extends State<CheckListPage> {
         maskType: EasyLoadingMaskType.black,
       );
 
-      await checkUserLoginStatus();
-
       JpjCheckListRequest requestSkim = JpjCheckListRequest(
         jpjCheckList: checklistSkimArr,
       );
@@ -126,11 +124,13 @@ class _CheckListPageState extends State<CheckListPage> {
       try {
         if (!updateFuture.isSuccess) {
           await EasyLoading.dismiss();
-          const snackBar = SnackBar(
+          SnackBar snackBar = SnackBar(
             behavior: SnackBarBehavior.floating,
-            content: Text('Something went wrong'),
+            content: Text(updateFuture.message!),
           );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
           return;
         }
 
@@ -231,8 +231,6 @@ class _CheckListPageState extends State<CheckListPage> {
       maskType: EasyLoadingMaskType.black,
     );
 
-    await checkUserLoginStatus();
-
     JpjCheckListRequest requestLitar = JpjCheckListRequest(
       jpjCheckList: checklistLitarArr,
     );
@@ -243,11 +241,13 @@ class _CheckListPageState extends State<CheckListPage> {
       );
       EasyLoading.dismiss();
       if (!updateResult.isSuccess) {
-        const snackBar = SnackBar(
+        SnackBar snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text('Something went wrong'),
+          content: Text(updateResult.message!),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
         return;
       }
       if (mounted) {
@@ -322,8 +322,6 @@ class _CheckListPageState extends State<CheckListPage> {
       maskType: EasyLoadingMaskType.black,
     );
 
-    await checkUserLoginStatus();
-
     JpjCheckListRequest requestSystem = JpjCheckListRequest(
       jpjCheckList: checklistSystemArr,
     );
@@ -335,11 +333,13 @@ class _CheckListPageState extends State<CheckListPage> {
 
       if (!updateResult.isSuccess) {
         await EasyLoading.dismiss();
-        const snackBar = SnackBar(
+        SnackBar snackBar = SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text('Something went wrong'),
+          content: Text(updateResult.message!),
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
         return;
       }
       EasyLoading.dismiss();
@@ -409,7 +409,6 @@ class _CheckListPageState extends State<CheckListPage> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
     _checklistFuture = Future.wait([
       getCheclkListSkim(),
       getCheclkListLitar(),
@@ -417,17 +416,6 @@ class _CheckListPageState extends State<CheckListPage> {
       getMySikapVehicleListByStatus(),
     ]);
     storeChecklist();
-  }
-
-  Future checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
-    }
   }
 
   @override

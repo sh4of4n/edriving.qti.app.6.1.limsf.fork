@@ -110,18 +110,6 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
-  }
-
-  checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
-    }
   }
 
   Future<bool> _onWillPop() async {
@@ -252,7 +240,6 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
   }
 
   startTest() async {
-    await checkUserLoginStatus();
     vehNo = await localStorage.getPlateNo();
 
     if (widget.part3Type == 'RPK') {

@@ -71,22 +71,10 @@ class _JrPartIIIState extends State<JrPartIII> {
 
   @override
   void initState() {
-    checkUserLoginStatus();
     super.initState();
     getRule();
     if (!widget.skipUpdateJrJpjTestStart) {
       updatePart3JpjTestStart();
-    }
-  }
-
-  checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
     }
   }
 
@@ -126,14 +114,14 @@ class _JrPartIIIState extends State<JrPartIII> {
     } else {
       customDialog.show(
           context: context,
-          title: Icon(Icons.error_outline),
+          title: const Icon(Icons.error_outline),
           content: result.message,
           customActions: [
             TextButton(
               onPressed: () => context.router.popUntil(
                 ModalRoute.withName('ConfirmCandidateInfo'),
               ),
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
           type: DialogType.GENERAL);
@@ -145,7 +133,6 @@ class _JrPartIIIState extends State<JrPartIII> {
   }
 
   Future<void> updatePart3JpjTestResult(part3Type) async {
-    await checkUserLoginStatus();
     var a = {
       'Result': [{}]
     };
@@ -281,7 +268,7 @@ class _JrPartIIIState extends State<JrPartIII> {
         onPressed: () {
           Provider.of<JrSessionModel>(context, listen: false).reset();
 
-          context.router.pushAndPopUntil(Home(), predicate: (r) => false);
+          context.router.pushAndPopUntil(const Home(), predicate: (r) => false);
         },
         content: AppLocalizations.of(context)!.translate('test_submitted'),
         type: DialogType.SUCCESS,
@@ -352,7 +339,7 @@ class _JrPartIIIState extends State<JrPartIII> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Jalan Raya'),
+          title: const Text('Jalan Raya'),
           automaticallyImplyLeading: false,
           actions: [
             // IconButton(
@@ -382,7 +369,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
                         case ConnectionState.waiting:
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         default:
                           if (snapshot.hasData) {
                             if (snapshot.data.isSuccess) {
@@ -390,7 +377,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ProfileWidget(),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Text(
                                       'Tandakan ✖️ Untuk Demerit',
@@ -485,7 +472,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                               ),
                             );
                           } else {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
@@ -505,17 +492,17 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('session_lbl'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                         Center(
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('normal_mistake_mark'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                         Center(
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('mandatory_mistake_mark'),
-                                style: TextStyle(color: Colors.black))),
+                                style: const TextStyle(color: Colors.black))),
                       ]),
                       /* TableRow(children: [
                         Center(
@@ -536,7 +523,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 style: TextStyle(color: Colors.black))),
                       ]), */
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('A',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -544,9 +531,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/19',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -555,15 +542,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/1',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('B',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -571,9 +558,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -582,15 +569,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/3',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('C',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -598,9 +585,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/12',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -609,15 +596,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('D',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -625,9 +612,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/13',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -636,15 +623,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('E',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -652,9 +639,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -663,15 +650,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('F',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -679,9 +666,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -690,15 +677,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/3',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('G',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -706,9 +693,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -717,15 +704,15 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/4',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('H',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -733,9 +720,9 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -744,18 +731,18 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/4',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                       TableRow(children: [
-                        Center(
+                        const Center(
                             child: Text('I',
                                 style: TextStyle(color: Colors.black))),
-                        Center(
+                        const Center(
                             child: Text('-',
                                 style: TextStyle(color: Colors.black))),
                         Center(
@@ -763,20 +750,20 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 text: TextSpan(
                                     text:
                                         '${ruleJson['i']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     children: <TextSpan>[
-                              TextSpan(
+                              const TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
                       ]),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   totalScore(),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Container(
@@ -831,19 +818,21 @@ class _JrPartIIIState extends State<JrPartIII> {
                   header: Container(
                     color: ColorConstant.primaryColor,
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!
-                                .translate('jr_session_$code'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 14,
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .translate('jr_session_$code'),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          Spacer(),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
@@ -851,7 +840,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                               child: Container(
                                 child: Text(
                                   '${ruleJson[code]!.where((c) => c.isCheck == true).length}/${ruleJson[code]!.length}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -862,10 +851,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                       ),
                     ),
                   ),
-                  collapsed: SizedBox(),
+                  collapsed: const SizedBox(),
                   expanded: ListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       for (int i = 0; i < ruleJson[code]!.length; i++)
                         Container(
@@ -901,7 +890,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                                         child: ListBody(
                                           children: <Widget>[
                                             Text(message),
-                                            Text('Adakah Anda Pasti?'),
+                                            const Text('Adakah Anda Pasti?'),
                                           ],
                                         ),
                                       ),
@@ -979,7 +968,7 @@ class _JrPartIIIState extends State<JrPartIII> {
     }
     return Text(
       'Jumlah Markah: $score/$totalScore',
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 20,
       ),
@@ -1008,12 +997,12 @@ class _JrPartIIIState extends State<JrPartIII> {
               : Colors.white,
         ),
         child: (item.isCheck == null || item.isCheck == false)
-            ? Icon(
+            ? const Icon(
                 Icons.close,
                 size: 18,
                 color: Colors.white,
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 18,
                 width: 18,
               ),

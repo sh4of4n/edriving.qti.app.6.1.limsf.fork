@@ -47,7 +47,6 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
     localStorage.getPermitCode().then((value) {
       _formKey.currentState!.fields['permitNo']!.didChange(value);
     });
@@ -62,17 +61,6 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
       qrController?.pauseCamera();
     } else if (Platform.isIOS) {
       qrController?.resumeCamera();
-    }
-  }
-
-  Future checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
     }
   }
 

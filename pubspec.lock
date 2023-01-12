@@ -71,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.3"
+  back_button_interceptor:
+    dependency: transitive
+    description:
+      name: back_button_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.2"
   badges:
     dependency: "direct main"
     description:
@@ -574,6 +581,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.2.0"
   glob:
     dependency: transitive
     description:
@@ -826,6 +840,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  one_context:
+    dependency: "direct main"
+    description:
+      name: one_context
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   package_config:
     dependency: transitive
     description:

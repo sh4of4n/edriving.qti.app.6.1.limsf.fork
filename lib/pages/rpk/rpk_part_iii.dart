@@ -64,14 +64,12 @@ class _Part3MainState extends State<RpkPartIII> {
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    checkUserLoginStatus();
     List<Future> futures = [getRule()];
     if (!widget.skipUpdateRpkJpjTestStart) {
       futures.add(updateRpkJpjTestStart());
@@ -118,17 +116,6 @@ class _Part3MainState extends State<RpkPartIII> {
     controller.stop();
   }
 
-  checkUserLoginStatus() async {
-    Response result = await etestingRepo.checkUserLoginStatus();
-    if (result.isSuccess) {
-      if (result.data[0].result == 'false') {
-        await localStorage.reset();
-        await context.router
-            .pushAndPopUntil(const Login(), predicate: (r) => false);
-      }
-    }
-  }
-
   String format(int? num) {
     if (num == null) {
       return '00';
@@ -166,6 +153,7 @@ class _Part3MainState extends State<RpkPartIII> {
     } else {
       customDialog.show(
           context: context,
+          barrierDismissable: false,
           title: const Icon(Icons.error_outline),
           content: result.message,
           customActions: [
@@ -185,7 +173,6 @@ class _Part3MainState extends State<RpkPartIII> {
   }
 
   updateRpkJpjTestResult() async {
-    await checkUserLoginStatus();
     controller.stop();
     var a = {
       'Result': [{}]
@@ -404,16 +391,20 @@ class _Part3MainState extends State<RpkPartIII> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(10),
                                               child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  const Text(
-                                                    "1. Pemeriksaan Kenderaan Ujian",
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  const Flexible(
+                                                    child: Text(
+                                                      "1. Pemeriksaan Kenderaan Ujian",
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
-                                                  const Spacer(),
                                                   Align(
                                                     alignment:
                                                         Alignment.centerRight,
