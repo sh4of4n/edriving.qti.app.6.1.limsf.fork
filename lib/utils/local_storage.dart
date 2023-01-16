@@ -849,7 +849,7 @@ class LocalStorage {
     await Preference.remove(kBlacklisted);
     await Preference.remove(kUserLatitude);
     await Preference.remove(kUserLongitude);
-    await Preference.remove(kAppVersion);
+    // await Preference.remove(kAppVersion);
     await Preference.remove(kBirthDate);
     await Preference.remove(kNickName);
     await Preference.remove(kRace);
