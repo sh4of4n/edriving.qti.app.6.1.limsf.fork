@@ -882,7 +882,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 var wantContinue = await showDialog(
                                   context: context,
                                   barrierDismissible:
-                                      true, // user must tap button!
+                                      false, // user must tap button!
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: const Text('JPJ QTO APP'),

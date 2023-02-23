@@ -640,7 +640,7 @@
   "call_cancelled": "Panggilan telah dibatalkan.",
   "confirm_cancel_desc": "Adakah anda pasti mahu membatalkan panggilan calon ini?",
   "call_tooltip": "Tekan panggilan untuk memanggil calon pelajar seterusnya.",
-  "cancel_tooltip": "Tekan batal sekiranya pelajar belum sampai.",
+  "cancel_tooltip": "Tekan kembali sekiranya pelajar belum sampai.",
   "qr_candidate_not_found": "Maklumat calon tidak dalam barisan.",
   "checklist": "Senarai Semak",
   "checklist_result": "Hasil senarai semak",

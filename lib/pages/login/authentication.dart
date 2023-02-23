@@ -57,8 +57,13 @@ class _AuthenticationState extends State<Authentication> {
           );
           navigatorKey.currentState!.showSnackBar(snackBar);
           await localStorage.reset();
-          await getIt<AppRouter>()
-              .pushAndPopUntil(const Login(), predicate: (r) => false);
+          await getIt<AppRouter>().replaceAll([const Login()]);
+        } else {
+          // const snackBar = SnackBar(
+          //   content: Text('yes'),
+          //   behavior: SnackBarBehavior.floating,
+          // );
+          // navigatorKey.currentState!.showSnackBar(snackBar);
         }
       }
     }
@@ -103,24 +108,26 @@ class _AuthenticationState extends State<Authentication> {
     String? carNo = await localStorage.getCarNo();
     String? plateNo = await localStorage.getPlateNo();
     String? type = await localStorage.getType();
-    if (userId != null && userId.isNotEmpty) {
-      if (groupId != null &&
-          groupId.isNotEmpty &&
-          carNo != null &&
-          carNo.isNotEmpty &&
-          plateNo != null &&
-          plateNo.isNotEmpty) {
-        if (type == "RPK") {
-          context.router.replace(const HomePageRpk());
+    if (mounted) {
+      if (userId != null && userId.isNotEmpty) {
+        if (groupId != null &&
+            groupId.isNotEmpty &&
+            carNo != null &&
+            carNo.isNotEmpty &&
+            plateNo != null &&
+            plateNo.isNotEmpty) {
+          if (type == "RPK") {
+            context.router.replace(const HomePageRpk());
+          } else {
+            context.router.replace(const Home());
+          }
         } else {
-          context.router.replace(const Home());
+          // context.router.replace(GetVehicleInfo());
+          context.router.replace(HomeSelect());
         }
       } else {
-        // context.router.replace(GetVehicleInfo());
-        context.router.replace(HomeSelect());
+        context.router.replace(const Login());
       }
-    } else {
-      context.router.replace(const Login());
     }
   }
 

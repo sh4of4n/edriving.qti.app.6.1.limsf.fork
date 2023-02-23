@@ -87,6 +87,8 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
 
     var result2 = await etestingRepo.getOwnerIdCategoryList();
 
+    if (!mounted) return;
+
     if (result2.isSuccess) {
       owners = result2.data;
     }
@@ -269,6 +271,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                       await callPart3JpjTest(type: 'SKIP');
                     }
 
+                    if (!mounted) return;
                     context.router
                         .push(
                       ConfirmCandidateInfo(
@@ -343,7 +346,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       testCode: type == 'SKIP' ? this.testCode : testCode,
       icNo: nric,
     );
-
+    if (!mounted) return;
     if (result.isSuccess) {
       success += 1;
 
@@ -404,7 +407,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       testCode: type == 'SKIP' ? this.testCode : testCode,
       icNo: nric,
     );
-
+    if (!mounted) return;
     if (result.isSuccess) {
       // context.router.pop();
       if (type == 'MANUAL') {
@@ -479,8 +482,8 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     await qrController.resumeCamera();
     qrController.scannedDataStream.listen((scanData) async {
       await qrController.pauseCamera();
-      processQrCodeResult(
-          scanData: scanData, selectedCandidate: selectedCandidate, qNo: qNo!);
+      // processQrCodeResult(
+      //     scanData: scanData, selectedCandidate: selectedCandidate, qNo: qNo!);
       await qrController.resumeCamera();
     });
   }
@@ -551,15 +554,15 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   }
 
   void processQrCodeResult(
-      {required Barcode scanData,
+      {required String scanData,
       required selectedCandidate,
       required String qNo}) {
     setState(() {
       try {
-        merchantNo = jsonDecode(scanData.code!)['Table1'][0]['merchant_no'];
-        testCode = jsonDecode(scanData.code!)['Table1'][0]['test_code'];
-        groupId = jsonDecode(scanData.code!)['Table1'][0]['group_id'];
-        nric = jsonDecode(scanData.code!)['Table1'][0]['nric_no'];
+        merchantNo = jsonDecode(scanData)['Table1'][0]['merchant_no'];
+        testCode = jsonDecode(scanData)['Table1'][0]['test_code'];
+        groupId = jsonDecode(scanData)['Table1'][0]['group_id'];
+        nric = jsonDecode(scanData)['Table1'][0]['nric_no'];
         iconVisible = true;
         isVisible = false;
 
@@ -620,6 +623,20 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                   .translate('select_queue_tooltip'),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text('Scan QR Code'),
+          onPressed: () async {
+            var scanData = await context.router.push(QrScannerRoute());
+            if (scanData != null) {
+              processQrCodeResult(
+                scanData: scanData.toString(),
+                selectedCandidate: selectedCandidate,
+                qNo: qNo!,
+              );
+            }
+          },
+          icon: const Icon(Icons.qr_code_scanner),
         ),
         body: CustomScrollView(
           slivers: [
@@ -761,77 +778,6 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                           Row(
                             children: [
                               CustomButton(
-                                onPressed: () async {
-                                  if (selectedCandidate != null) {
-                                    EasyLoading.show(
-                                      maskType: EasyLoadingMaskType.black,
-                                    );
-                                    vehNo = await localStorage.getPlateNo();
-                                    var vehicleResult =
-                                        await etestingRepo.isVehicleAvailable(
-                                            plateNo: vehNo ?? '');
-
-                                    EasyLoading.dismiss();
-                                    if (vehicleResult.data != 'True') {
-                                      await showDialog(
-                                        context: context,
-                                        barrierDismissible:
-                                            false, // user must tap button!
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: const Text('JPJ QTP APP'),
-                                            content: SingleChildScrollView(
-                                              child: ListBody(
-                                                children: <Widget>[
-                                                  Text(vehicleResult.message ??
-                                                      ''),
-                                                ],
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text('OK'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    }
-
-                                    callPart3JpjTest(type: 'MANUAL');
-                                  } else {
-                                    customDialog.show(
-                                      context: context,
-                                      content: AppLocalizations.of(context)!
-                                          .translate('select_queue_no'),
-                                      type: DialogType.INFO,
-                                    );
-                                  }
-                                },
-                                buttonColor: Colors.blue,
-                                title: AppLocalizations.of(context)!
-                                    .translate('call_btn'),
-                              ),
-                              IconButton(
-                                onPressed: () async {
-                                  customDialog.show(
-                                    context: context,
-                                    content: AppLocalizations.of(context)!
-                                        .translate('call_tooltip'),
-                                    type: DialogType.INFO,
-                                  );
-                                },
-                                icon: const Icon(Icons.info_outline),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              CustomButton(
                                 // onPressed: () =>
                                 //     cancelCallPart3JpjTest(type: 'MANUAL'),
                                 onPressed: () {
@@ -890,6 +836,78 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                               ),
                             ],
                           ),
+                          Row(
+                            children: [
+                              CustomButton(
+                                onPressed: () async {
+                                  if (selectedCandidate != null) {
+                                    EasyLoading.show(
+                                      maskType: EasyLoadingMaskType.black,
+                                    );
+                                    vehNo = await localStorage.getPlateNo();
+                                    var vehicleResult =
+                                        await etestingRepo.isVehicleAvailable(
+                                            plateNo: vehNo ?? '');
+
+                                    EasyLoading.dismiss();
+                                    if (vehicleResult.data != 'True') {
+                                      if (!mounted) return;
+                                      await showDialog(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text('JPJ QTP APP'),
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text(vehicleResult.message ??
+                                                      ''),
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('OK'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+
+                                    callPart3JpjTest(type: 'MANUAL');
+                                  } else {
+                                    customDialog.show(
+                                      context: context,
+                                      content: AppLocalizations.of(context)!
+                                          .translate('select_queue_no'),
+                                      type: DialogType.INFO,
+                                    );
+                                  }
+                                },
+                                buttonColor: Colors.blue,
+                                title: AppLocalizations.of(context)!
+                                    .translate('call_btn'),
+                              ),
+                              IconButton(
+                                onPressed: () async {
+                                  customDialog.show(
+                                    context: context,
+                                    content: AppLocalizations.of(context)!
+                                        .translate('call_tooltip'),
+                                    type: DialogType.INFO,
+                                  );
+                                },
+                                icon: const Icon(Icons.info_outline),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ],
@@ -904,27 +922,27 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: iconVisible,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        color: Colors.grey.shade200,
-                        width: double.infinity,
-                        height: 500,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isVisible = true;
-                              iconVisible = false;
-                            });
-                          },
-                          iconSize: 150,
-                          icon: const Icon(Icons.camera_alt),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: iconVisible,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(16.0),
+                  //     child: Container(
+                  //       color: Colors.grey.shade200,
+                  //       width: double.infinity,
+                  //       height: 500,
+                  //       child: IconButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             isVisible = true;
+                  //             iconVisible = false;
+                  //           });
+                  //         },
+                  //         iconSize: 150,
+                  //         icon: const Icon(Icons.camera_alt),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

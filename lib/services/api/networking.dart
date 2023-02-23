@@ -94,7 +94,8 @@ class Networking extends BaseRepo {
     }
   }
 
-  Future<Response> postData({String? api, String? path, required body, headers}) async {
+  Future<Response> postData(
+      {String? api, String? path, required body, headers}) async {
     try {
       if (customUrl != null) {
         url = customUrl;

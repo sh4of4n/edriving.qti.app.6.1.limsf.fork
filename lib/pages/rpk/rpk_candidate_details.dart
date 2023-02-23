@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:edriving_qti_app/component/profile.dart';
+import 'package:edriving_qti_app/pages/qr_scanner.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -474,11 +475,11 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
     await qrController.resumeCamera();
     qrController.scannedDataStream.listen((scanData) async {
       await qrController.pauseCamera();
-      processQrCodeResult(
-        scanData: scanData,
-        selectedCandidate: selectedCandidate,
-        qNo: qNo!,
-      );
+      // processQrCodeResult(
+      //   scanData: scanData,
+      //   selectedCandidate: selectedCandidate,
+      //   qNo: qNo!,
+      // );
       await qrController.resumeCamera();
     });
   }
@@ -519,15 +520,15 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
   }
 
   void processQrCodeResult(
-      {required Barcode scanData,
+      {required String scanData,
       required selectedCandidate,
       required String qNo}) {
     setState(() {
       try {
-        merchantNo = jsonDecode(scanData.code!)['Table1'][0]['merchant_no'];
-        testCode = jsonDecode(scanData.code!)['Table1'][0]['test_code'];
-        groupId = jsonDecode(scanData.code!)['Table1'][0]['group_id'];
-        nric = jsonDecode(scanData.code!)['Table1'][0]['nric_no'];
+        merchantNo = jsonDecode(scanData)['Table1'][0]['merchant_no'];
+        testCode = jsonDecode(scanData)['Table1'][0]['test_code'];
+        groupId = jsonDecode(scanData)['Table1'][0]['group_id'];
+        nric = jsonDecode(scanData)['Table1'][0]['nric_no'];
         iconVisible = true;
         isVisible = false;
 
@@ -557,7 +558,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
               onPressed: () {
                 context.router.pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
           type: DialogType.GENERAL,
@@ -572,7 +573,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Calling'),
+          title: const Text('Calling'),
           actions: [
             IconButton(
               onPressed: () {
@@ -583,11 +584,25 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                   type: DialogType.INFO,
                 );
               },
-              icon: Icon(Icons.info_outline),
+              icon: const Icon(Icons.info_outline),
               tooltip: AppLocalizations.of(context)!
                   .translate('select_queue_tooltip'),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text('Scan QR Code'),
+          onPressed: () async {
+            var scanData = await context.router.push(QrScannerRoute());
+            if (scanData != null) {
+              processQrCodeResult(
+                scanData: scanData.toString(),
+                selectedCandidate: selectedCandidate,
+                qNo: qNo!,
+              );
+            }
+          },
+          icon: const Icon(Icons.qr_code_scanner),
         ),
         body: CustomScrollView(
           slivers: [
@@ -607,7 +622,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 50.w),
                             labelText: 'Q-NO',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 // fontSize: 80.sp,
                                 ),
                             // fillColor: Colors.grey.withOpacity(.25),
@@ -629,7 +644,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                     child: Center(
                                         child: Text(
                                       value.queueNo,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           // fontSize: 80.sp,
                                           ),
                                     )),
@@ -676,7 +691,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'No. ID',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -686,7 +701,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                     nric!,
                                     style: textStyle,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Nama',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -696,7 +711,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                     name!,
                                     style: textStyle,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Kategori ID',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -706,7 +721,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                     kewarganegaraan ?? '',
                                     style: textStyle,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Kelas',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -784,6 +799,66 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                           Row(
                             children: [
                               CustomButton(
+                                // onPressed: () =>
+                                //     cancelCallPart3JpjTest(type: 'MANUAL'),
+                                onPressed: () {
+                                  if (selectedCandidate != null) {
+                                    CustomDialog().show(
+                                      context: context,
+                                      title: Text(AppLocalizations.of(context)!
+                                          .translate('warning_title')),
+                                      content: AppLocalizations.of(context)!
+                                          .translate('confirm_cancel_desc'),
+                                      customActions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .translate('yes_lbl')),
+                                          onPressed: () async {
+                                            await context.router.pop();
+                                            cancelCallPart3RpkTest(
+                                                type: 'MANUAL');
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .translate('no_lbl')),
+                                          onPressed: () {
+                                            context.router.pop();
+                                          },
+                                        ),
+                                      ],
+                                      type: DialogType.GENERAL,
+                                    );
+                                  } else
+                                    customDialog.show(
+                                      context: context,
+                                      content: AppLocalizations.of(context)!
+                                          .translate('select_queue_no'),
+                                      type: DialogType.INFO,
+                                    );
+                                },
+                                buttonColor: Colors.blue,
+                                title: AppLocalizations.of(context)!
+                                    .translate('cancel_btn'),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  customDialog.show(
+                                    context: context,
+                                    content: AppLocalizations.of(context)!
+                                        .translate('cancel_tooltip'),
+                                    type: DialogType.INFO,
+                                  );
+                                },
+                                icon: const Icon(Icons.info_outline),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              CustomButton(
                                 onPressed: () async {
                                   if (selectedCandidate != null) {
                                     EasyLoading.show(
@@ -847,67 +922,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                     type: DialogType.INFO,
                                   );
                                 },
-                                icon: Icon(Icons.info_outline),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              CustomButton(
-                                // onPressed: () =>
-                                //     cancelCallPart3JpjTest(type: 'MANUAL'),
-                                onPressed: () {
-                                  if (selectedCandidate != null) {
-                                    CustomDialog().show(
-                                      context: context,
-                                      title: Text(AppLocalizations.of(context)!
-                                          .translate('warning_title')),
-                                      content: AppLocalizations.of(context)!
-                                          .translate('confirm_cancel_desc'),
-                                      customActions: <Widget>[
-                                        TextButton(
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .translate('yes_lbl')),
-                                          onPressed: () async {
-                                            await context.router.pop();
-                                            cancelCallPart3RpkTest(
-                                                type: 'MANUAL');
-                                          },
-                                        ),
-                                        TextButton(
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .translate('no_lbl')),
-                                          onPressed: () {
-                                            context.router.pop();
-                                          },
-                                        ),
-                                      ],
-                                      type: DialogType.GENERAL,
-                                    );
-                                  } else
-                                    customDialog.show(
-                                      context: context,
-                                      content: AppLocalizations.of(context)!
-                                          .translate('select_queue_no'),
-                                      type: DialogType.INFO,
-                                    );
-                                },
-                                buttonColor: Colors.blue,
-                                title: AppLocalizations.of(context)!
-                                    .translate('cancel_btn'),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  customDialog.show(
-                                    context: context,
-                                    content: AppLocalizations.of(context)!
-                                        .translate('cancel_tooltip'),
-                                    type: DialogType.INFO,
-                                  );
-                                },
-                                icon: Icon(Icons.info_outline),
+                                icon: const Icon(Icons.info_outline),
                               ),
                             ],
                           ),
@@ -925,27 +940,27 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: iconVisible,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        color: Colors.grey.shade200,
-                        width: double.infinity,
-                        height: 500,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isVisible = true;
-                              iconVisible = false;
-                            });
-                          },
-                          iconSize: 150,
-                          icon: const Icon(Icons.camera_alt),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Visibility(
+                  //   visible: iconVisible,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(16.0),
+                  //     child: Container(
+                  //       color: Colors.grey.shade200,
+                  //       width: double.infinity,
+                  //       height: 500,
+                  //       child: IconButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             isVisible = true;
+                  //             iconVisible = false;
+                  //           });
+                  //         },
+                  //         iconSize: 150,
+                  //         icon: const Icon(Icons.camera_alt),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

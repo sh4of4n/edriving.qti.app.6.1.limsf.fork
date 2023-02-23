@@ -111,6 +111,30 @@ class EtestingRepo {
     return Response(false, message: response.message, data: []);
   }
 
+  Future<Response> getMySikapVehicleListByStatusPart({
+    required String status,
+    required String part,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&status=$status&part=$part';
+
+    var response = await networking.getData(
+      path: 'GetMySikapVehicleListByStatusPart?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      MySikapVehicleListResponse ruleResponse =
+          MySikapVehicleListResponse.fromJson(response.data);
+
+      return Response(true, data: ruleResponse.mysikapVehicle);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
+
   Future<Response> isVehicleAvailable({
     required String plateNo,
   }) async {
