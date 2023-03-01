@@ -3,7 +3,6 @@ ePandu ws 6.1.186.0
 Enhanced
 
 - Maklumat Kenderaan
-  - Shows only RPK or BHG 3 car
   - Disable select plat no kenderaan
 - Move the scan button to right corner
 

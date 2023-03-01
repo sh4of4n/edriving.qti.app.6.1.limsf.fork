@@ -124,7 +124,7 @@ class _SettingsState extends State<Settings> {
                         ),
                       ],
                       type: DialogType.GENERAL,
-                      barrierDismissable: true,
+                      barrierDismissable: false,
                     );
                   }
                 },

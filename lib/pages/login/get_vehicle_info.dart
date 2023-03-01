@@ -124,7 +124,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
       } catch (e) {
         if (mounted) {
           customDialog.show(
-            barrierDismissable: true,
+            barrierDismissable: false,
             context: context,
             content: AppLocalizations.of(context)!.translate('invalid_qr'),
             customActions: [
@@ -228,7 +228,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                 } catch (e) {
                   if (mounted) {
                     customDialog.show(
-                      barrierDismissable: true,
+                      barrierDismissable: false,
                       context: context,
                       content:
                           AppLocalizations.of(context)!.translate('invalid_qr'),

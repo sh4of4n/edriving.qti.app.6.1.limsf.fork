@@ -162,7 +162,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
       );
     } catch (e) {
       customDialog.show(
-        barrierDismissable: true,
+        barrierDismissable: false,
         context: context,
         content: AppLocalizations.of(context)!.translate('invalid_qr'),
         customActions: [
@@ -339,7 +339,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                           } catch (e) {
                             await EasyLoading.dismiss();
                             customDialog.show(
-                              barrierDismissable: true,
+                              barrierDismissable: false,
                               context: context,
                               content: AppLocalizations.of(context)!
                                   .translate('invalid_qr'),
