@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:edriving_qti_app/common_library/services/model/epandu_model.dart';
 import 'package:edriving_qti_app/common_library/services/model/etesting_model.dart';
 
-import '../../../services/api/networking.dart';
-import '../../../services/response.dart';
 import '../../../utils/app_config.dart';
 import '../../../utils/local_storage.dart';
+import '../networking.dart';
+import '../response.dart';
 
 class EtestingRepo {
   final localStorage = LocalStorage();

@@ -10,7 +10,6 @@ import 'package:edriving_qti_app/common_library/services/repository/etesting_rep
 import 'package:edriving_qti_app/common_library/services/repository/kpp_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
-import 'package:edriving_qti_app/services/response.dart';
 import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
 import 'home_module.dart';
 

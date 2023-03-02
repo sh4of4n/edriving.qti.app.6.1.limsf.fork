@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:edriving_qti_app/services/api/model/eLearning_rating_model.dart';
-import 'package:edriving_qti_app/services/api/networking.dart';
 import 'package:edriving_qti_app/utils/app_config.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:intl/intl.dart';
 
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
-import '../response.dart';
+import '../../common_library/services/networking.dart';
+import '../../common_library/services/response.dart';
 
 class LearnRepo {
   final appConfig = AppConfig();
@@ -66,7 +66,8 @@ class LearnRepo {
     } else if (response.message != null &&
         response.message!.contains('timeout')) {
       return Response(false,
-          message: AppLocalizations.of(context)!.translate('timeout_exception'));
+          message:
+              AppLocalizations.of(context)!.translate('timeout_exception'));
     } else if (response.message != null &&
         response.message!.contains('socket')) {
       return Response(false,

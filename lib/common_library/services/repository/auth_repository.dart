@@ -23,7 +23,6 @@ class AuthRepo {
       RegExp("\\[(.*?)\\]", multiLine: true, caseSensitive: true);
 
   Future<Response> getWsUrl({
-    context,
     acctUid,
     required acctPwd,
     loginType,
@@ -92,7 +91,6 @@ class AuthRepo {
     } else if (response.message != null &&
         response.message!.contains('Connection timed out.')) {
       var callbackResult = await wsUrlCallback(
-          context: context,
           acctUid: acctUid,
           acctPwd: acctPwd,
           altWsUrl: altWsUrl,
@@ -109,7 +107,6 @@ class AuthRepo {
     } else if (response.message != null &&
         response.message!.contains('An error occurred.')) {
       var callbackResult = await wsUrlCallback(
-        context: context,
         acctUid: acctUid,
         acctPwd: acctPwd,
         altWsUrl: altWsUrl,
@@ -124,11 +121,11 @@ class AuthRepo {
       }
     }
 
-    return Response(false, message: 'No URL found with this client account.');
+    return Response(false,
+        message: response.message); //'No URL found with this client account.'
   }
 
   wsUrlCallback({
-    context,
     acctUid,
     acctPwd,
     altWsUrl,
@@ -149,7 +146,6 @@ class AuthRepo {
 
     // Call this function again with the altWsUrl.
     var callbackResult = await getWsUrl(
-      context: context,
       acctUid: acctUid,
       acctPwd: acctPwd,
       loginType: appConfig.wsCodeCrypt,
@@ -160,6 +156,8 @@ class AuthRepo {
     if (callbackResult.isSuccess) {
       return Response(true, data: callbackResult.data, message: '');
     }
+
+    return Response(false, message: message);
   }
 
   Future<Response> login({
@@ -1765,5 +1763,20 @@ class AuthRepo {
     }
 
     return Response(false, message: 'Update failed, please try again later.');
+  }
+
+  Future<Response> pingme({
+    String? wsUrl,
+    int? milliseconds,
+  }) async {
+    var response =
+        await Networking(customUrl: wsUrl, milliseconds: milliseconds)
+            .getData(path: 'pingme');
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: '');
   }
 }

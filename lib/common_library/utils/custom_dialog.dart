@@ -13,7 +13,7 @@ enum DialogType {
 class CustomDialog {
   final double _defIconSize = 120;
 
-  show({
+  Future show({
     required BuildContext context,
     required String? content,
     title,
@@ -97,6 +97,7 @@ class CustomDialog {
           barrierDismissable,
         );
       case DialogType.SIMPLE_DIALOG:
+      default:
         actions = customActions;
         return _simpleDialog(
           context,
@@ -107,14 +108,14 @@ class CustomDialog {
     }
   }
 
-  _dialog(
+  Future _dialog(
     context,
     title,
     content,
     actions,
     barrierDismissable,
   ) {
-    showDialog(
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -127,13 +128,13 @@ class CustomDialog {
     );
   }
 
-  _simpleDialog(
+  Future _simpleDialog(
     context,
     title,
     actions,
     barrierDismissible,
   ) {
-    showDialog(
+    return showDialog(
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(

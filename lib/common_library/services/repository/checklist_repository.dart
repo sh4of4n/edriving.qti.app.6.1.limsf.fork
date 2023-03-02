@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import '../../../services/api/networking.dart';
-import '../../../services/response.dart';
 import '../../../utils/app_config.dart';
 import '../../../utils/local_storage.dart';
 import '../model/checklist_model.dart';
+import '../networking.dart';
+import '../response.dart';
 
 class ChecklistRepo {
   final networking = Networking();

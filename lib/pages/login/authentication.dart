@@ -6,7 +6,6 @@ import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/main.dart';
-import 'package:edriving_qti_app/services/response.dart';
 import 'package:edriving_qti_app/utils/app_config.dart';
 
 import 'package:edriving_qti_app/utils/device_info.dart';
@@ -15,7 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
+import '../../utils/check_url.dart';
+import '../../utils/constants.dart';
 
 class Authentication extends StatefulWidget {
   @override
@@ -33,6 +35,7 @@ class _AuthenticationState extends State<Authentication> {
   String deviceId = '';
   Timer? timer;
   final etestingRepo = EtestingRepo();
+  CheckUrl checkUrl = CheckUrl();
 
   @override
   void initState() {
@@ -41,8 +44,9 @@ class _AuthenticationState extends State<Authentication> {
       checkUserLoginStatus();
     });
 
-    _getWsUrl();
+    // _getWsUrl();
     _setLocale();
+    checkUrl.checkUrl('', '').then((value) => _checkExistingLogin());
   }
 
   checkUserLoginStatus() async {
@@ -80,7 +84,6 @@ class _AuthenticationState extends State<Authentication> {
 
     // if (wsUrl == null) {
     await authRepo.getWsUrl(
-      context: context,
       acctUid: caUid,
       acctPwd: caPwd,
       loginType: appConfig.wsCodeCrypt,
@@ -138,8 +141,39 @@ class _AuthenticationState extends State<Authentication> {
       designSize: const Size(1440, 2960),
     );
 
-    return Scaffold(
-      body: Container(),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [
+            Colors.amber.shade50,
+            Colors.amber.shade100,
+            Colors.amber.shade200,
+            Colors.amber.shade300,
+            ColorConstant.primaryColor,
+          ],
+          stops: const [0.2, 0.4, 0.6, 0.7, 1],
+          radius: 0.7,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                ImagesConstant().logo,
+                width: 1000.w,
+                height: 600.h,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              const CircularProgressIndicator(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -296,10 +296,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              setState(() {
-                _isLoading = false;
-                _loginMessage = message;
-              });
               Navigator.pop(context, 'OK');
             },
             child: const Text('OK'),
@@ -307,6 +303,10 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         ],
       ),
     );
+    setState(() {
+      _isLoading = false;
+      _loginMessage = message;
+    });
   }
 
   _submitLogin() async {

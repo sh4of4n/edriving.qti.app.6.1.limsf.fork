@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:edriving_qti_app/utils/app_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -26,7 +27,7 @@ GlobalKey<ScaffoldMessengerState> navigatorKey =
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  EasyLoading.instance..userInteractions = false;
+  EasyLoading.instance.userInteractions = false;
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(KppExamDataAdapter());
@@ -35,6 +36,11 @@ void main() async {
   Hive.registerAdapter(BillAdapter());
   // _setupLogging();
   await Hive.openBox('ws_url');
+
+  await Hive.box('ws_url').put(
+      'defaultUrl',
+      'http://192.168.168.2:88/etesting.mainservice/_wsver_/mainservice.svc'
+          .replaceAll('_wsver_', AppConfig().wsVer));
 
   runZonedGuarded(() async {
     await SentryFlutter.init(

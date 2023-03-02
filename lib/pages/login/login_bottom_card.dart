@@ -70,7 +70,7 @@ class _LoginBottomCardState extends State<LoginBottomCard> {
                 count += 1;
 
                 if (count == 4) {
-                  customDialog.show(
+                  await customDialog.show(
                     context: context,
                     title: AppLocalizations.of(context)!
                         .translate('client_acc_title'),
@@ -79,12 +79,12 @@ class _LoginBottomCardState extends State<LoginBottomCard> {
                     type: DialogType.SUCCESS,
                     barrierDismissable: false,
                     onPressed: () async {
-                      count = 0;
                       context.router.popAndPush(
                         ClientAccount(data: ''),
                       );
                     },
                   );
+                  count = 0;
                 }
               },
               child: Row(

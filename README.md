@@ -1,3 +1,11 @@
+02/03/2023 V.6.1.8
+ePandu ws 6.1.187.0
+Enhanced
+-No Data & No Wifi - Can go to login page without stuck at logo page
+-Wifi (Local Area Network) - Connect Default URL
+-Data (Wide Area Network) - Connect CA URL
+-if key in custom url - Connect Custom URL
+
 23/02/2023 V.6.1.7
 ePandu ws 6.1.186.0
 Enhanced

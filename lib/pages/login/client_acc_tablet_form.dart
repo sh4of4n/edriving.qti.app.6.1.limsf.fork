@@ -384,7 +384,6 @@ class _ClientAccountTabletFormState extends State<ClientAccountTabletForm>
         });
 
         var result = await authRepo.getWsUrl(
-          context: context,
           acctUid: caUidController.text.replaceAll(' ', ''),
           acctPwd: caPwdController.text.replaceAll(' ', ''),
           loginType: appConfig.wsCodeCrypt,
