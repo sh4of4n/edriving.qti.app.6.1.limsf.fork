@@ -208,9 +208,10 @@ class _SettingsState extends State<Settings> {
 
                   return;
                 }
-                // await localStorage.reset();
-                await context.router
-                    .pushAndPopUntil(const Login(), predicate: (r) => false);
+                if (mounted) {
+                  await context.router
+                      .pushAndPopUntil(const Login(), predicate: (r) => false);
+                }
 
                 if (mounted) {
                   setState(() {

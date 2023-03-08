@@ -49,7 +49,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
     localStorage.getPermitCode().then((value) {
       _formKey.currentState!.fields['permitNo']!.didChange(value);
     });
-    getMySikapVehicleListByStatusPart();
+    // getMySikapVehicleListByStatusPart();
     //getSavedInfo();
   }
 
