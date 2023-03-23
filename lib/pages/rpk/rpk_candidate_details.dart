@@ -99,6 +99,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
     }
 
     if (result.isSuccess) {
+      if (!mounted) return;
       setState(() {
         candidateList = result.data;
       });
