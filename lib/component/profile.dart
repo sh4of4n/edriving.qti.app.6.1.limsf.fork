@@ -29,19 +29,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Card(
         color: Colors.yellow.shade50,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.account_circle_outlined),
+              const Icon(Icons.account_circle_outlined),
               Text(
                 firstName,
-                style: TextStyle(
-                  fontSize: 24,
+                style: const TextStyle(
+                  fontSize: 18,
                 ),
               ),
               Row(
@@ -52,7 +52,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     size: 16,
                     color: Colors.grey.shade700,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(loginTime),
                 ],
               ),

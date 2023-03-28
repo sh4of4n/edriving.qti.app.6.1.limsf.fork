@@ -1,3 +1,12 @@
+27/03/2023 V.6.1.9
+ePandu ws 6.1.193.0
+Enhanced
+
+- Remove \u000d\u000a error message
+- Adjust QTI profile font size
+- Show nama calon at top of page Penilaian RPK & Penilaian Bhg 3
+- Remove default URL
+
 02/03/2023 V.6.1.8
 ePandu ws 6.1.187.0
 Enhanced

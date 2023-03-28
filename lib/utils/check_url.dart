@@ -28,14 +28,14 @@ class CheckUrl {
       }
     }
 
-    print('Connecting to Default URL...');
-    var defaultUrlResult = await authRepo.pingme(
-        wsUrl: '${await wsUrlBox.get('defaultUrl')}/webapi',
-        milliseconds: 3000);
-    if (defaultUrlResult.isSuccess) {
-      await wsUrlBox.put('wsUrl', await wsUrlBox.get('defaultUrl'));
-      return 'Connection to Default URL is successful.';
-    }
+    // print('Connecting to Default URL...');
+    // var defaultUrlResult = await authRepo.pingme(
+    //     wsUrl: '${await wsUrlBox.get('defaultUrl')}/webapi',
+    //     milliseconds: 3000);
+    // if (defaultUrlResult.isSuccess) {
+    //   await wsUrlBox.put('wsUrl', await wsUrlBox.get('defaultUrl'));
+    //   return 'Connection to Default URL is successful.';
+    // }
 
     print('Connecting to CA URL...');
     var getWsUrlResult = await authRepo.getWsUrl(

@@ -285,6 +285,17 @@ class _Part3MainState extends State<RpkPartIII> {
               child: Column(
                 children: <Widget>[
                   ProfileWidget(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Nama: ${widget.rpkName ?? ''}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                   Container(
                     color: primaryColor,
                     padding:

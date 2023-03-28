@@ -376,6 +376,17 @@ class _JrPartIIIState extends State<JrPartIII> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ProfileWidget(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Nama: ${widget.jrName ?? ''}',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Text(
