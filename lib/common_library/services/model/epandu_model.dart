@@ -2738,8 +2738,12 @@ class GetRpkAvailableToCallJpjTestListResponse {
 class GetPart3AvailableToCallJpjTestTrn {
   String? iD;
   String? testDate;
+  String? bookNo;
   String? courseCode;
   String? groupId;
+  String? sesi;
+  String? part;
+  String? trnNricNo;
   String? nricNo;
   String? fullname;
   String? sex;
@@ -2752,17 +2756,111 @@ class GetPart3AvailableToCallJpjTestTrn {
   String? postcode;
   String? cityName;
   String? stateName;
-  String? icPhoto;
+  String? progressStatus;
   String? queueNo;
+  String? queuePrinted;
+  String? queuePrnCount;
+  String? queuePrintLog;
   String? regDate;
   String? registerPhoto;
+  String? queueStatus;
+  String? waiting;
+  String? firstWaitDatetime;
+  String? waitDatetime;
+  String? waitCount;
+  String? standby;
+  String? firstStandbyDatetime;
+  String? standbyDatetime;
+  String? standbyCount;
+  String? insertWait;
+  String? calling;
+  String? carNo;
+  String? plateNo1;
+  String? plateNo2;
+  String? firstCallDatetime;
+  String? calledDatetime;
+  String? callCount;
   String? testCode;
   String? startDate;
   String? startTime;
   String? endTime;
+  String? totalTime;
+  String? checkOutTime;
+  String? failTime;
+  String? failElementCode;
+  String? failRuleCode;
+  String? failRuleDesc;
+  String? mysikapFailElementCode;
+  String? mysikapFailRuleDesc;
+  String? mysikapFailRuleFullDesc;
+  String? emergencyStartDatetime;
+  String? emergencyEndDatetime;
+  String? resume;
+  String? changeCar;
+  String? result;
+  String? totalScore;
+  String? mysikapResult;
+  String? mysikapTotalScore;
   String? printed;
   String? prnCount;
   String? printLog;
+  String? rpkWaiting;
+  String? rpkFirstWaitDatetime;
+  String? rpkWaitDatetime;
+  String? rpkWaitCount;
+  String? rpkStandby;
+  String? rpkFirstStandbyDatetime;
+  String? rpkStandbyDatetime;
+  String? rpkStandbyCount;
+  String? rpkInsertWait;
+  String? rpkCalling;
+  String? rpkCarNo;
+  String? rpkPlateNo;
+  String? rpkFirstCallDatetime;
+  String? rpkCalledDatetime;
+  String? rpkCallCount;
+  String? rpkStartDate;
+  String? rpkStartTime;
+  String? rpkEndTime;
+  String? rpkTotalTime;
+  String? rpkUserId;
+  String? roadWaiting;
+  String? roadFirstWaitDatetime;
+  String? roadWaitDatetime;
+  String? roadWaitCount;
+  String? roadStandby;
+  String? roadFirstStandbyDatetime;
+  String? roadStandbyDatetime;
+  String? roadStandbyCount;
+  String? roadInsertWait;
+  String? roadCalling;
+  String? roadCarNo;
+  String? roadPlateNo;
+  String? roadFirstCallDatetime;
+  String? roadCalledDatetime;
+  String? roadCallCount;
+  String? roadStartDate;
+  String? roadStartTime;
+  String? roadEndTime;
+  String? roadTotalTime;
+  String? roadUserId;
+  String? roadCheckOutTime;
+  String? roadResult;
+  String? roadTotalScore;
+  String? mysikapRoadResult;
+  String? mysikapRoadTotalScore;
+  String? mysikapRoadFailElementCode;
+  String? mysikapRoadFailRuleDesc;
+  String? mysikapRoadFailRuleFullDesc;
+  String? overallResult;
+  String? mysikapOverallResult;
+  String? part2PracticalId;
+  String? part3PracticalId;
+  String? confirm;
+  String? part3Printed;
+  String? part3PrnCount;
+  String? part3PrintLog;
+  String? accidentUserId;
   String? createUser;
   String? createDate;
   String? editUser;
@@ -2773,62 +2871,153 @@ class GetPart3AvailableToCallJpjTestTrn {
   String? branchCode;
   String? deleted;
   String? icPhotoFilename;
-  String? ownerCat;
-  String? rpkStartDate;
-  String? rpkCalling;
-  String? roadStartDate;
-  String? roadCalling;
 
-  GetPart3AvailableToCallJpjTestTrn({
-    this.iD,
-    this.testDate,
-    this.courseCode,
-    this.groupId,
-    this.nricNo,
-    this.fullname,
-    this.sex,
-    this.race,
-    this.nationality,
-    this.birthDate,
-    this.add1,
-    this.add2,
-    this.add3,
-    this.postcode,
-    this.cityName,
-    this.stateName,
-    this.icPhoto,
-    this.queueNo,
-    this.regDate,
-    this.registerPhoto,
-    this.testCode,
-    this.startDate,
-    this.startTime,
-    this.endTime,
-    this.printed,
-    this.prnCount,
-    this.printLog,
-    this.createUser,
-    this.createDate,
-    this.editUser,
-    this.editDate,
-    this.transtamp,
-    this.lastupload,
-    this.compCode,
-    this.branchCode,
-    this.deleted,
-    this.icPhotoFilename,
-    this.ownerCat,
-    this.rpkStartDate,
-    this.rpkCalling,
-    this.roadStartDate,
-    this.roadCalling,
-  });
+  GetPart3AvailableToCallJpjTestTrn(
+      {this.iD,
+      this.testDate,
+      this.bookNo,
+      this.courseCode,
+      this.groupId,
+      this.sesi,
+      this.part,
+      this.trnNricNo,
+      this.nricNo,
+      this.fullname,
+      this.sex,
+      this.race,
+      this.nationality,
+      this.birthDate,
+      this.add1,
+      this.add2,
+      this.add3,
+      this.postcode,
+      this.cityName,
+      this.stateName,
+      this.progressStatus,
+      this.queueNo,
+      this.queuePrinted,
+      this.queuePrnCount,
+      this.queuePrintLog,
+      this.regDate,
+      this.registerPhoto,
+      this.queueStatus,
+      this.waiting,
+      this.firstWaitDatetime,
+      this.waitDatetime,
+      this.waitCount,
+      this.standby,
+      this.firstStandbyDatetime,
+      this.standbyDatetime,
+      this.standbyCount,
+      this.insertWait,
+      this.calling,
+      this.carNo,
+      this.plateNo1,
+      this.plateNo2,
+      this.firstCallDatetime,
+      this.calledDatetime,
+      this.callCount,
+      this.testCode,
+      this.startDate,
+      this.startTime,
+      this.endTime,
+      this.totalTime,
+      this.checkOutTime,
+      this.failTime,
+      this.failElementCode,
+      this.failRuleCode,
+      this.failRuleDesc,
+      this.mysikapFailElementCode,
+      this.mysikapFailRuleDesc,
+      this.mysikapFailRuleFullDesc,
+      this.emergencyStartDatetime,
+      this.emergencyEndDatetime,
+      this.resume,
+      this.changeCar,
+      this.result,
+      this.totalScore,
+      this.mysikapResult,
+      this.mysikapTotalScore,
+      this.printed,
+      this.prnCount,
+      this.printLog,
+      this.rpkWaiting,
+      this.rpkFirstWaitDatetime,
+      this.rpkWaitDatetime,
+      this.rpkWaitCount,
+      this.rpkStandby,
+      this.rpkFirstStandbyDatetime,
+      this.rpkStandbyDatetime,
+      this.rpkStandbyCount,
+      this.rpkInsertWait,
+      this.rpkCalling,
+      this.rpkCarNo,
+      this.rpkPlateNo,
+      this.rpkFirstCallDatetime,
+      this.rpkCalledDatetime,
+      this.rpkCallCount,
+      this.rpkStartDate,
+      this.rpkStartTime,
+      this.rpkEndTime,
+      this.rpkTotalTime,
+      this.rpkUserId,
+      this.roadWaiting,
+      this.roadFirstWaitDatetime,
+      this.roadWaitDatetime,
+      this.roadWaitCount,
+      this.roadStandby,
+      this.roadFirstStandbyDatetime,
+      this.roadStandbyDatetime,
+      this.roadStandbyCount,
+      this.roadInsertWait,
+      this.roadCalling,
+      this.roadCarNo,
+      this.roadPlateNo,
+      this.roadFirstCallDatetime,
+      this.roadCalledDatetime,
+      this.roadCallCount,
+      this.roadStartDate,
+      this.roadStartTime,
+      this.roadEndTime,
+      this.roadTotalTime,
+      this.roadUserId,
+      this.roadCheckOutTime,
+      this.roadResult,
+      this.roadTotalScore,
+      this.mysikapRoadResult,
+      this.mysikapRoadTotalScore,
+      this.mysikapRoadFailElementCode,
+      this.mysikapRoadFailRuleDesc,
+      this.mysikapRoadFailRuleFullDesc,
+      this.overallResult,
+      this.mysikapOverallResult,
+      this.part2PracticalId,
+      this.part3PracticalId,
+      this.confirm,
+      this.part3Printed,
+      this.part3PrnCount,
+      this.part3PrintLog,
+      this.accidentUserId,
+      this.createUser,
+      this.createDate,
+      this.editUser,
+      this.editDate,
+      this.transtamp,
+      this.lastupload,
+      this.compCode,
+      this.branchCode,
+      this.deleted,
+      this.icPhotoFilename});
 
   GetPart3AvailableToCallJpjTestTrn.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     testDate = json['test_date'];
+    bookNo = json['book_no'];
     courseCode = json['course_code'];
     groupId = json['group_id'];
+    sesi = json['sesi'];
+    part = json['part'];
+    trnNricNo = json['trn_nric_no'];
     nricNo = json['nric_no'];
     fullname = json['fullname'];
     sex = json['sex'];
@@ -2841,17 +3030,111 @@ class GetPart3AvailableToCallJpjTestTrn {
     postcode = json['postcode'];
     cityName = json['city_name'];
     stateName = json['state_name'];
-    icPhoto = json['ic_photo'];
+    progressStatus = json['progress_status'];
     queueNo = json['queue_no'];
+    queuePrinted = json['queue_printed'];
+    queuePrnCount = json['queue_prn_count'];
+    queuePrintLog = json['queue_print_log'];
     regDate = json['reg_date'];
     registerPhoto = json['register_photo'];
+    queueStatus = json['queue_status'];
+    waiting = json['waiting'];
+    firstWaitDatetime = json['first_wait_datetime'];
+    waitDatetime = json['wait_datetime'];
+    waitCount = json['wait_count'];
+    standby = json['standby'];
+    firstStandbyDatetime = json['first_standby_datetime'];
+    standbyDatetime = json['standby_datetime'];
+    standbyCount = json['standby_count'];
+    insertWait = json['insert_wait'];
+    calling = json['calling'];
+    carNo = json['car_no'];
+    plateNo1 = json['plate_no1'];
+    plateNo2 = json['plate_no2'];
+    firstCallDatetime = json['first_call_datetime'];
+    calledDatetime = json['called_datetime'];
+    callCount = json['call_count'];
     testCode = json['test_code'];
     startDate = json['start_date'];
     startTime = json['start_time'];
     endTime = json['end_time'];
+    totalTime = json['total_time'];
+    checkOutTime = json['check_out_time'];
+    failTime = json['fail_time'];
+    failElementCode = json['fail_element_code'];
+    failRuleCode = json['fail_rule_code'];
+    failRuleDesc = json['fail_rule_desc'];
+    mysikapFailElementCode = json['mysikap_fail_element_code'];
+    mysikapFailRuleDesc = json['mysikap_fail_rule_desc'];
+    mysikapFailRuleFullDesc = json['mysikap_fail_rule_full_desc'];
+    emergencyStartDatetime = json['emergency_start_datetime'];
+    emergencyEndDatetime = json['emergency_end_datetime'];
+    resume = json['resume'];
+    changeCar = json['change_car'];
+    result = json['result'];
+    totalScore = json['total_score'];
+    mysikapResult = json['mysikap_result'];
+    mysikapTotalScore = json['mysikap_total_score'];
     printed = json['printed'];
     prnCount = json['prn_count'];
     printLog = json['print_log'];
+    rpkWaiting = json['rpk_waiting'];
+    rpkFirstWaitDatetime = json['rpk_first_wait_datetime'];
+    rpkWaitDatetime = json['rpk_wait_datetime'];
+    rpkWaitCount = json['rpk_wait_count'];
+    rpkStandby = json['rpk_standby'];
+    rpkFirstStandbyDatetime = json['rpk_first_standby_datetime'];
+    rpkStandbyDatetime = json['rpk_standby_datetime'];
+    rpkStandbyCount = json['rpk_standby_count'];
+    rpkInsertWait = json['rpk_insert_wait'];
+    rpkCalling = json['rpk_calling'];
+    rpkCarNo = json['rpk_car_no'];
+    rpkPlateNo = json['rpk_plate_no'];
+    rpkFirstCallDatetime = json['rpk_first_call_datetime'];
+    rpkCalledDatetime = json['rpk_called_datetime'];
+    rpkCallCount = json['rpk_call_count'];
+    rpkStartDate = json['rpk_start_date'];
+    rpkStartTime = json['rpk_start_time'];
+    rpkEndTime = json['rpk_end_time'];
+    rpkTotalTime = json['rpk_total_time'];
+    rpkUserId = json['rpk_user_id'];
+    roadWaiting = json['road_waiting'];
+    roadFirstWaitDatetime = json['road_first_wait_datetime'];
+    roadWaitDatetime = json['road_wait_datetime'];
+    roadWaitCount = json['road_wait_count'];
+    roadStandby = json['road_standby'];
+    roadFirstStandbyDatetime = json['road_first_standby_datetime'];
+    roadStandbyDatetime = json['road_standby_datetime'];
+    roadStandbyCount = json['road_standby_count'];
+    roadInsertWait = json['road_insert_wait'];
+    roadCalling = json['road_calling'];
+    roadCarNo = json['road_car_no'];
+    roadPlateNo = json['road_plate_no'];
+    roadFirstCallDatetime = json['road_first_call_datetime'];
+    roadCalledDatetime = json['road_called_datetime'];
+    roadCallCount = json['road_call_count'];
+    roadStartDate = json['road_start_date'];
+    roadStartTime = json['road_start_time'];
+    roadEndTime = json['road_end_time'];
+    roadTotalTime = json['road_total_time'];
+    roadUserId = json['road_user_id'];
+    roadCheckOutTime = json['road_check_out_time'];
+    roadResult = json['road_result'];
+    roadTotalScore = json['road_total_score'];
+    mysikapRoadResult = json['mysikap_road_result'];
+    mysikapRoadTotalScore = json['mysikap_road_total_score'];
+    mysikapRoadFailElementCode = json['mysikap_road_fail_element_code'];
+    mysikapRoadFailRuleDesc = json['mysikap_road_fail_rule_desc'];
+    mysikapRoadFailRuleFullDesc = json['mysikap_road_fail_rule_full_desc'];
+    overallResult = json['overall_result'];
+    mysikapOverallResult = json['mysikap_overall_result'];
+    part2PracticalId = json['part2_practical_id'];
+    part3PracticalId = json['part3_practical_id'];
+    confirm = json['confirm'];
+    part3Printed = json['part3_printed'];
+    part3PrnCount = json['part3_prn_count'];
+    part3PrintLog = json['part3_print_log'];
+    accidentUserId = json['accident_user_id'];
     createUser = json['create_user'];
     createDate = json['create_date'];
     editUser = json['edit_user'];
@@ -2862,19 +3145,18 @@ class GetPart3AvailableToCallJpjTestTrn {
     branchCode = json['branch_code'];
     deleted = json['deleted'];
     icPhotoFilename = json['ic_photo_filename'];
-    ownerCat = json['owner_cat'];
-    rpkStartDate = json['rpk_start_date'];
-    rpkCalling = json['rpk_calling'];
-    roadStartDate = json['road_start_date'];
-    roadCalling = json['road_calling'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ID'] = this.iD;
     data['test_date'] = this.testDate;
+    data['book_no'] = this.bookNo;
     data['course_code'] = this.courseCode;
     data['group_id'] = this.groupId;
+    data['sesi'] = this.sesi;
+    data['part'] = this.part;
+    data['trn_nric_no'] = this.trnNricNo;
     data['nric_no'] = this.nricNo;
     data['fullname'] = this.fullname;
     data['sex'] = this.sex;
@@ -2887,17 +3169,111 @@ class GetPart3AvailableToCallJpjTestTrn {
     data['postcode'] = this.postcode;
     data['city_name'] = this.cityName;
     data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
+    data['progress_status'] = this.progressStatus;
     data['queue_no'] = this.queueNo;
+    data['queue_printed'] = this.queuePrinted;
+    data['queue_prn_count'] = this.queuePrnCount;
+    data['queue_print_log'] = this.queuePrintLog;
     data['reg_date'] = this.regDate;
     data['register_photo'] = this.registerPhoto;
+    data['queue_status'] = this.queueStatus;
+    data['waiting'] = this.waiting;
+    data['first_wait_datetime'] = this.firstWaitDatetime;
+    data['wait_datetime'] = this.waitDatetime;
+    data['wait_count'] = this.waitCount;
+    data['standby'] = this.standby;
+    data['first_standby_datetime'] = this.firstStandbyDatetime;
+    data['standby_datetime'] = this.standbyDatetime;
+    data['standby_count'] = this.standbyCount;
+    data['insert_wait'] = this.insertWait;
+    data['calling'] = this.calling;
+    data['car_no'] = this.carNo;
+    data['plate_no1'] = this.plateNo1;
+    data['plate_no2'] = this.plateNo2;
+    data['first_call_datetime'] = this.firstCallDatetime;
+    data['called_datetime'] = this.calledDatetime;
+    data['call_count'] = this.callCount;
     data['test_code'] = this.testCode;
     data['start_date'] = this.startDate;
     data['start_time'] = this.startTime;
     data['end_time'] = this.endTime;
+    data['total_time'] = this.totalTime;
+    data['check_out_time'] = this.checkOutTime;
+    data['fail_time'] = this.failTime;
+    data['fail_element_code'] = this.failElementCode;
+    data['fail_rule_code'] = this.failRuleCode;
+    data['fail_rule_desc'] = this.failRuleDesc;
+    data['mysikap_fail_element_code'] = this.mysikapFailElementCode;
+    data['mysikap_fail_rule_desc'] = this.mysikapFailRuleDesc;
+    data['mysikap_fail_rule_full_desc'] = this.mysikapFailRuleFullDesc;
+    data['emergency_start_datetime'] = this.emergencyStartDatetime;
+    data['emergency_end_datetime'] = this.emergencyEndDatetime;
+    data['resume'] = this.resume;
+    data['change_car'] = this.changeCar;
+    data['result'] = this.result;
+    data['total_score'] = this.totalScore;
+    data['mysikap_result'] = this.mysikapResult;
+    data['mysikap_total_score'] = this.mysikapTotalScore;
     data['printed'] = this.printed;
     data['prn_count'] = this.prnCount;
     data['print_log'] = this.printLog;
+    data['rpk_waiting'] = this.rpkWaiting;
+    data['rpk_first_wait_datetime'] = this.rpkFirstWaitDatetime;
+    data['rpk_wait_datetime'] = this.rpkWaitDatetime;
+    data['rpk_wait_count'] = this.rpkWaitCount;
+    data['rpk_standby'] = this.rpkStandby;
+    data['rpk_first_standby_datetime'] = this.rpkFirstStandbyDatetime;
+    data['rpk_standby_datetime'] = this.rpkStandbyDatetime;
+    data['rpk_standby_count'] = this.rpkStandbyCount;
+    data['rpk_insert_wait'] = this.rpkInsertWait;
+    data['rpk_calling'] = this.rpkCalling;
+    data['rpk_car_no'] = this.rpkCarNo;
+    data['rpk_plate_no'] = this.rpkPlateNo;
+    data['rpk_first_call_datetime'] = this.rpkFirstCallDatetime;
+    data['rpk_called_datetime'] = this.rpkCalledDatetime;
+    data['rpk_call_count'] = this.rpkCallCount;
+    data['rpk_start_date'] = this.rpkStartDate;
+    data['rpk_start_time'] = this.rpkStartTime;
+    data['rpk_end_time'] = this.rpkEndTime;
+    data['rpk_total_time'] = this.rpkTotalTime;
+    data['rpk_user_id'] = this.rpkUserId;
+    data['road_waiting'] = this.roadWaiting;
+    data['road_first_wait_datetime'] = this.roadFirstWaitDatetime;
+    data['road_wait_datetime'] = this.roadWaitDatetime;
+    data['road_wait_count'] = this.roadWaitCount;
+    data['road_standby'] = this.roadStandby;
+    data['road_first_standby_datetime'] = this.roadFirstStandbyDatetime;
+    data['road_standby_datetime'] = this.roadStandbyDatetime;
+    data['road_standby_count'] = this.roadStandbyCount;
+    data['road_insert_wait'] = this.roadInsertWait;
+    data['road_calling'] = this.roadCalling;
+    data['road_car_no'] = this.roadCarNo;
+    data['road_plate_no'] = this.roadPlateNo;
+    data['road_first_call_datetime'] = this.roadFirstCallDatetime;
+    data['road_called_datetime'] = this.roadCalledDatetime;
+    data['road_call_count'] = this.roadCallCount;
+    data['road_start_date'] = this.roadStartDate;
+    data['road_start_time'] = this.roadStartTime;
+    data['road_end_time'] = this.roadEndTime;
+    data['road_total_time'] = this.roadTotalTime;
+    data['road_user_id'] = this.roadUserId;
+    data['road_check_out_time'] = this.roadCheckOutTime;
+    data['road_result'] = this.roadResult;
+    data['road_total_score'] = this.roadTotalScore;
+    data['mysikap_road_result'] = this.mysikapRoadResult;
+    data['mysikap_road_total_score'] = this.mysikapRoadTotalScore;
+    data['mysikap_road_fail_element_code'] = this.mysikapRoadFailElementCode;
+    data['mysikap_road_fail_rule_desc'] = this.mysikapRoadFailRuleDesc;
+    data['mysikap_road_fail_rule_full_desc'] = this.mysikapRoadFailRuleFullDesc;
+    data['overall_result'] = this.overallResult;
+    data['mysikap_overall_result'] = this.mysikapOverallResult;
+    data['part2_practical_id'] = this.part2PracticalId;
+    data['part3_practical_id'] = this.part3PracticalId;
+    data['confirm'] = this.confirm;
+    data['part3_printed'] = this.part3Printed;
+    data['part3_prn_count'] = this.part3PrnCount;
+    data['part3_print_log'] = this.part3PrintLog;
+    data['accident_user_id'] = this.accidentUserId;
     data['create_user'] = this.createUser;
     data['create_date'] = this.createDate;
     data['edit_user'] = this.editUser;
@@ -2908,11 +3284,6 @@ class GetPart3AvailableToCallJpjTestTrn {
     data['branch_code'] = this.branchCode;
     data['deleted'] = this.deleted;
     data['ic_photo_filename'] = this.icPhotoFilename;
-    data['owner_cat'] = this.ownerCat;
-    data['rpk_start_date'] = this.rpkStartDate;
-    data['rpk_calling'] = this.rpkCalling;
-    data['road_start_date'] = this.roadStartDate;
-    data['road_calling'] = this.roadCalling;
     return data;
   }
 }

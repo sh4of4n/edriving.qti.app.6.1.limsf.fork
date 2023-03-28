@@ -121,7 +121,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
           return;
         }
 
-        if (element.rpkCalling == 'true') {
+        if (element.rpkCalling == 'true' && element.rpkPlateNo == vehNo) {
           EasyLoading.dismiss();
           await context.router.push(
             ConfirmCandidateInfo(
@@ -168,11 +168,11 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
         setState(() {
           nric = candidateList![i].nricNo;
           name = candidateList![i].fullname;
-          for (var owner in owners) {
-            if (owner.ownerCat == candidateList![i].ownerCat) {
-              kewarganegaraan = owner.ownerCatDesc;
-            }
-          }
+          // for (var owner in owners) {
+          //   if (owner.ownerCat == candidateList![i].ownerCat) {
+          //     kewarganegaraan = owner.ownerCatDesc;
+          //   }
+          // }
           icPhoto = candidateList![i].icPhotoFilename != null &&
                   candidateList![i].icPhotoFilename.isNotEmpty
               ? candidateList![i]
@@ -238,11 +238,11 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                     setState(() {
                       name = candidateList![i].fullname;
                       qNo = candidateList![i].queueNo;
-                      for (var owner in owners) {
-                        if (owner.ownerCat == candidateList![i].ownerCat) {
-                          kewarganegaraan = owner.ownerCatDesc;
-                        }
-                      }
+                      // for (var owner in owners) {
+                      //   if (owner.ownerCat == candidateList![i].ownerCat) {
+                      //     kewarganegaraan = owner.ownerCatDesc;
+                      //   }
+                      // }
                       icPhoto = candidateList![i].icPhotoFilename != null &&
                               candidateList![i].icPhotoFilename.isNotEmpty
                           ? candidateList![i]

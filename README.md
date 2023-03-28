@@ -1,3 +1,9 @@
+27/03/2023 V.6.1.10
+ePandu ws 6.1.196.0
+Fixed
+
+- Auto select another QTI's calon problem
+
 27/03/2023 V.6.1.9
 ePandu ws 6.1.193.0
 Enhanced
