@@ -155,6 +155,27 @@ class EtestingRepo {
     return Response(false, message: response.message, data: []);
   }
 
+  Future<Response> isVehicleAvailableByUserId({
+    required String plateNo,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? userId = await localStorage.getUserId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&plateNo=$plateNo&userId=$userId';
+
+    var response = await networking.getData(
+      path: 'IsVehicleAvailableByUserId?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: []);
+  }
+
   Future<Response> isCurrentCallingCalon({
     required String plateNo,
     required String partType,

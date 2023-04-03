@@ -2871,6 +2871,7 @@ class GetPart3AvailableToCallJpjTestTrn {
   String? branchCode;
   String? deleted;
   String? icPhotoFilename;
+  String? ownerCat;
 
   GetPart3AvailableToCallJpjTestTrn(
       {this.iD,
@@ -3007,7 +3008,8 @@ class GetPart3AvailableToCallJpjTestTrn {
       this.compCode,
       this.branchCode,
       this.deleted,
-      this.icPhotoFilename});
+      this.icPhotoFilename,
+      this.ownerCat});
 
   GetPart3AvailableToCallJpjTestTrn.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -3145,6 +3147,7 @@ class GetPart3AvailableToCallJpjTestTrn {
     branchCode = json['branch_code'];
     deleted = json['deleted'];
     icPhotoFilename = json['ic_photo_filename'];
+    ownerCat = json['owner_cat'];
   }
 
   Map<String, dynamic> toJson() {
@@ -3284,6 +3287,7 @@ class GetPart3AvailableToCallJpjTestTrn {
     data['branch_code'] = this.branchCode;
     data['deleted'] = this.deleted;
     data['ic_photo_filename'] = this.icPhotoFilename;
+    data['owner_cat'] = this.ownerCat;
     return data;
   }
 }

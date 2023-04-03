@@ -112,8 +112,47 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       });
 
       for (var element in result.data) {
-        if (element.roadStartDate != null) {
+        if ((element.roadStartDate != null && element.roadPlateNo == vehNo) ||
+            (element.roadCalling == 'true' && element.roadPlateNo == vehNo)) {
+          vehNo = await localStorage.getPlateNo();
+
+          var vehicleResult = await etestingRepo.isVehicleAvailableByUserId(
+              plateNo: vehNo ?? '');
+
+          if (vehicleResult.data != 'True') {
+            if (!mounted) return;
+            EasyLoading.dismiss();
+            await showDialog(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('JPJ QTP APP'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text(vehicleResult.message ?? ''),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+            return;
+          }
+        }
+
+        if (element.roadStartDate != null && element.roadPlateNo == vehNo) {
           EasyLoading.dismiss();
+          if (!mounted) return;
           await context.router.replace(
             JrPartIII(
               qNo: element.queueNo,
@@ -129,8 +168,9 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           return;
         }
 
-        if (element.roadCalling == 'true') {
+        if (element.roadCalling == 'true' && element.roadPlateNo == vehNo) {
           EasyLoading.dismiss();
+          if (!mounted) return;
           await context.router.push(
             ConfirmCandidateInfo(
               part3Type: 'JALAN RAYA',
@@ -396,7 +436,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     // setState(() {
     //   isLoading = true;
     // });
-    EasyLoading.show(
+    await EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
     );
 
@@ -412,6 +452,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       if (type == 'MANUAL') {
         customDialog.show(
           context: context,
+          barrierDismissable: false,
           content: AppLocalizations.of(context)!.translate('call_cancelled'),
           type: DialogType.SUCCESS,
         );
@@ -440,7 +481,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     //     isLoading = false;
     //   });
     // }
-    EasyLoading.dismiss();
+    await EasyLoading.dismiss();
   }
 
   @override
@@ -531,7 +572,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                     child: Text(
                         AppLocalizations.of(context)!.translate('yes_lbl')),
                     onPressed: () async {
-                      await context.router.pop(true);
+                      context.router.pop();
                       await cancelCallPart3JpjTest();
                     },
                   ),
@@ -841,7 +882,8 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                 );
                                 vehNo = await localStorage.getPlateNo();
                                 var vehicleResult = await etestingRepo
-                                    .isVehicleAvailable(plateNo: vehNo ?? '');
+                                    .isVehicleAvailableByUserId(
+                                        plateNo: vehNo ?? '');
 
                                 EasyLoading.dismiss();
                                 if (vehicleResult.data != 'True') {

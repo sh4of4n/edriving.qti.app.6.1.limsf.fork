@@ -104,8 +104,47 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
         candidateList = result.data;
       });
       for (var element in result.data) {
-        if (element.rpkStartDate != null) {
+        if ((element.rpkStartDate != null && element.rpkPlateNo == vehNo) ||
+            (element.rpkCalling == 'true' && element.rpkPlateNo == vehNo)) {
+          vehNo = await localStorage.getPlateNo();
+
+          var vehicleResult = await etestingRepo.isVehicleAvailableByUserId(
+              plateNo: vehNo ?? '');
+
+          if (vehicleResult.data != 'True') {
+            if (!mounted) return;
+            EasyLoading.dismiss();
+            await showDialog(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('JPJ QTI APP'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text(vehicleResult.message ?? ''),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+            return;
+          }
+        }
+
+        if (element.rpkStartDate != null && element.rpkPlateNo == vehNo) {
           EasyLoading.dismiss();
+          if (!mounted) return;
           await context.router.replace(
             RpkPartIII(
               qNo: element.queueNo,
@@ -123,6 +162,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
         if (element.rpkCalling == 'true' && element.rpkPlateNo == vehNo) {
           EasyLoading.dismiss();
+          if (!mounted) return;
           await context.router.push(
             ConfirmCandidateInfo(
               part3Type: 'RPK',
@@ -168,11 +208,11 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
         setState(() {
           nric = candidateList![i].nricNo;
           name = candidateList![i].fullname;
-          // for (var owner in owners) {
-          //   if (owner.ownerCat == candidateList![i].ownerCat) {
-          //     kewarganegaraan = owner.ownerCatDesc;
-          //   }
-          // }
+          for (var owner in owners) {
+            if (owner.ownerCat == candidateList![i].ownerCat) {
+              kewarganegaraan = owner.ownerCatDesc;
+            }
+          }
           icPhoto = candidateList![i].icPhotoFilename != null &&
                   candidateList![i].icPhotoFilename.isNotEmpty
               ? candidateList![i]
@@ -238,11 +278,11 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                     setState(() {
                       name = candidateList![i].fullname;
                       qNo = candidateList![i].queueNo;
-                      // for (var owner in owners) {
-                      //   if (owner.ownerCat == candidateList![i].ownerCat) {
-                      //     kewarganegaraan = owner.ownerCatDesc;
-                      //   }
-                      // }
+                      for (var owner in owners) {
+                        if (owner.ownerCat == candidateList![i].ownerCat) {
+                          kewarganegaraan = owner.ownerCatDesc;
+                        }
+                      }
                       icPhoto = candidateList![i].icPhotoFilename != null &&
                               candidateList![i].icPhotoFilename.isNotEmpty
                           ? candidateList![i]
@@ -865,7 +905,8 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                                 vehNo = await localStorage.getPlateNo();
 
                                 var vehicleResult = await etestingRepo
-                                    .isVehicleAvailable(plateNo: vehNo ?? '');
+                                    .isVehicleAvailableByUserId(
+                                        plateNo: vehNo ?? '');
                                 EasyLoading.dismiss();
                                 if (vehicleResult.data != 'True') {
                                   if (mounted) {

@@ -1,3 +1,9 @@
+03/04/2023 V.6.1.11
+ePandu ws 6.1.198.0
+Enhanced
+
+- QTI not allow choose same car
+
 27/03/2023 V.6.1.10
 ePandu ws 6.1.196.0
 Fixed
