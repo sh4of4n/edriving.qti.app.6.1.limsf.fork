@@ -337,4 +337,24 @@ class EtestingRepo {
 
     return Response(false, message: response.message, data: []);
   }
+
+  Future<Response> decryptQrcode({
+    required String qrcodeJson,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? userId = await localStorage.getUserId();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&&userId=$userId&diCode=$diCode&qrcodeJson=${Uri.encodeComponent(qrcodeJson)}';
+    var response = await networking.getData(
+      path: 'DecryptQrcode?$path',
+    );
+    if (response.isSuccess && response.data != null) {
+      DecryptQrcodeResponse ruleResponse =
+          DecryptQrcodeResponse.fromJson(response.data);
+      return Response(true, data: ruleResponse.table1);
+    }
+    return Response(false, message: response.message, data: []);
+  }
 }

@@ -245,6 +245,45 @@ class _HomePageRpkState extends State<HomePageRpk> {
                         backgroundColor: Colors.yellow[100],
                       ),
                       onPressed: () async {
+                        String? plateNo = await localStorage.getPlateNo();
+                        EasyLoading.show(
+                          maskType: EasyLoadingMaskType.black,
+                        );
+                        Response vehicleResult = await etestingRepo
+                            .isVehicleAvailableByUserId(plateNo: plateNo ?? '');
+                        EasyLoading.dismiss();
+                        if (vehicleResult.data != 'True') {
+                          if (!mounted) return;
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('JPJ QTO APP'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(vehicleResult.message ?? ''),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          if (!mounted) return;
+                          await context.router
+                              .push(GetVehicleInfo(type: 'RPK'));
+                          return;
+                        }
+                        if (!mounted) return;
                         var scanData =
                             await context.router.push(QrScannerRoute());
                         if (scanData != null) {
@@ -252,13 +291,46 @@ class _HomePageRpkState extends State<HomePageRpk> {
                             maskType: EasyLoadingMaskType.black,
                           );
                           try {
+                            Response decryptQrcode =
+                                await etestingRepo.decryptQrcode(
+                              qrcodeJson: scanData.toString(),
+                            );
+                            if (!decryptQrcode.isSuccess) {
+                              EasyLoading.dismiss();
+                              if (!mounted) return;
+                              await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('JPJ QTO APP'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Text(decryptQrcode.message ?? ''),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              EasyLoading.dismiss();
+                              return;
+                            }
                             String? plateNo = await localStorage.getPlateNo();
                             Response result =
                                 await etestingRepo.isCurrentCallingCalon(
                               plateNo: plateNo ?? '',
                               partType: 'RPK',
-                              nricNo: jsonDecode(scanData.toString())['Table1']
-                                  [0]['nric_no'],
+                              nricNo: decryptQrcode.data[0].nricNo,
                             );
                             await EasyLoading.dismiss();
                             if (!result.isSuccess) {
@@ -269,12 +341,11 @@ class _HomePageRpkState extends State<HomePageRpk> {
                                   await etestingRepo.isCurrentInProgressCalon(
                                 plateNo: plateNo ?? '',
                                 partType: 'RPK',
-                                nricNo:
-                                    jsonDecode(scanData.toString())['Table1'][0]
-                                        ['nric_no'],
+                                nricNo: decryptQrcode.data[0].nricNo,
                               );
                               await EasyLoading.dismiss();
                               if (!result2.isSuccess) {
+                                if (!mounted) return;
                                 await showDialog(
                                   context: context,
                                   barrierDismissible:
@@ -302,6 +373,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                                   },
                                 );
                               } else {
+                                if (!mounted) return;
                                 await context.router.push(
                                   RpkPartIII(
                                     qNo: result.data[0].queueNo,
@@ -316,6 +388,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                                 );
                               }
                             } else {
+                              if (!mounted) return;
                               await context.router.push(
                                 ConfirmCandidateInfo(
                                   part3Type: 'RPK',
@@ -338,6 +411,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                             }
                           } catch (e) {
                             await EasyLoading.dismiss();
+                            if (!mounted) return;
                             customDialog.show(
                               barrierDismissable: false,
                               context: context,

@@ -7,15 +7,15 @@ class RuleResponse {
     if (json['Rule'] != null) {
       rule = <Rule>[];
       json['Rule'].forEach((v) {
-        rule!.add(new Rule.fromJson(v));
+        rule!.add(Rule.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rule != null) {
-      data['Rule'] = this.rule!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rule != null) {
+      data['Rule'] = rule!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -80,24 +80,24 @@ class Rule {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['rule_code'] = this.ruleCode;
-    data['element_code'] = this.elementCode;
-    data['element_id'] = this.elementId;
-    data['seq_no'] = this.seqNo;
-    data['mandatory'] = this.mandatory;
-    data['rule_desc'] = this.ruleDesc;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
-    data['is_check'] = this.isCheck;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['rule_code'] = ruleCode;
+    data['element_code'] = elementCode;
+    data['element_id'] = elementId;
+    data['seq_no'] = seqNo;
+    data['mandatory'] = mandatory;
+    data['rule_desc'] = ruleDesc;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
+    data['is_check'] = isCheck;
     return data;
   }
 }
@@ -121,12 +121,12 @@ class ResultRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['userId'] = this.userId;
-    data['permitCode'] = this.permitCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['userId'] = userId;
+    data['permitCode'] = permitCode;
     return data;
   }
 }
@@ -140,16 +140,16 @@ class OwnerIdCategoryResponse {
     if (json['OwnerIdCategoryList'] != null) {
       ownerIdCategoryList = <OwnerIdCategoryList>[];
       json['OwnerIdCategoryList'].forEach((v) {
-        ownerIdCategoryList!.add(new OwnerIdCategoryList.fromJson(v));
+        ownerIdCategoryList!.add(OwnerIdCategoryList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.ownerIdCategoryList != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (ownerIdCategoryList != null) {
       data['OwnerIdCategoryList'] =
-          this.ownerIdCategoryList!.map((v) => v.toJson()).toList();
+          ownerIdCategoryList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -167,9 +167,9 @@ class OwnerIdCategoryList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['owner_cat'] = this.ownerCat;
-    data['owner_cat_desc'] = this.ownerCatDesc;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['owner_cat'] = ownerCat;
+    data['owner_cat_desc'] = ownerCatDesc;
     return data;
   }
 }
@@ -183,16 +183,15 @@ class MySikapVehicleListResponse {
     if (json['MysikapVehicle'] != null) {
       mysikapVehicle = <MysikapVehicle>[];
       json['MysikapVehicle'].forEach((v) {
-        mysikapVehicle!.add(new MysikapVehicle.fromJson(v));
+        mysikapVehicle!.add(MysikapVehicle.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.mysikapVehicle != null) {
-      data['MysikapVehicle'] =
-          this.mysikapVehicle!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (mysikapVehicle != null) {
+      data['MysikapVehicle'] = mysikapVehicle!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -248,21 +247,21 @@ class MysikapVehicle {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['plate_no'] = this.plateNo;
-    data['group_id'] = this.groupId;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
-    data['checked'] = this.checked;
-    data['car_no'] = this.carNo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['plate_no'] = plateNo;
+    data['group_id'] = groupId;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
+    data['checked'] = checked;
+    data['car_no'] = carNo;
     return data;
   }
 }
@@ -296,14 +295,14 @@ class QtiUjianLogoutRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['appId'] = this.appId;
-    data['appVersion'] = this.appVersion;
-    data['mySikapId'] = this.mySikapId;
-    data['permitCode'] = this.permitCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['appId'] = appId;
+    data['appVersion'] = appVersion;
+    data['mySikapId'] = mySikapId;
+    data['permitCode'] = permitCode;
     return data;
   }
 }
@@ -334,13 +333,13 @@ class Result2 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['mysikap_id'] = this.mysikapId;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['role_code'] = this.roleCode;
-    data['role_desc'] = this.roleDesc;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['mysikap_id'] = mysikapId;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['role_code'] = roleCode;
+    data['role_desc'] = roleDesc;
     return data;
   }
 }
@@ -354,15 +353,15 @@ class GetUserIdByMySikapIdResult {
     if (json['Result'] != null) {
       result = <Result2>[];
       json['Result'].forEach((v) {
-        result!.add(new Result2.fromJson(v));
+        result!.add(Result2.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['Result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (result != null) {
+      data['Result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -377,15 +376,15 @@ class CheckUserLoginStatusResponse {
     if (json['Result'] != null) {
       result = <ResultCheckUserLoginStatus>[];
       json['Result'].forEach((v) {
-        result!.add(new ResultCheckUserLoginStatus.fromJson(v));
+        result!.add(ResultCheckUserLoginStatus.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['Result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (result != null) {
+      data['Result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -403,9 +402,63 @@ class ResultCheckUserLoginStatus {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['result'] = this.result;
-    data['user_id'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['result'] = result;
+    data['user_id'] = userId;
+    return data;
+  }
+}
+
+class DecryptQrcodeResponse {
+  List<Table1>? table1;
+  DecryptQrcodeResponse({this.table1});
+  DecryptQrcodeResponse.fromJson(Map<String, dynamic> json) {
+    if (json['Table1'] != null) {
+      table1 = <Table1>[];
+      json['Table1'].forEach((v) {
+        table1!.add(Table1.fromJson(v));
+      });
+    }
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (table1 != null) {
+      data['Table1'] = table1!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Table1 {
+  String? groupId;
+  String? testCode;
+  String? nricNo;
+  String? merchantNo;
+  String? carNo;
+  String? plateNo;
+  Table1(
+      {this.groupId,
+      this.testCode,
+      this.nricNo,
+      this.merchantNo,
+      this.carNo,
+      this.plateNo});
+  Table1.fromJson(Map<String, dynamic> json) {
+    groupId = json['group_id'];
+    testCode = json['test_code'];
+    nricNo = json['nric_no'];
+    merchantNo = json['merchant_no'];
+    carNo = json['car_no'];
+    plateNo = json['plate_no'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['group_id'] = groupId;
+    data['test_code'] = testCode;
+    data['nric_no'] = nricNo;
+    data['merchant_no'] = merchantNo;
+    data['car_no'] = carNo;
+    data['plate_no'] = plateNo;
     return data;
   }
 }

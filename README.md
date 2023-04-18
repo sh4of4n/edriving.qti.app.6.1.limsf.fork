@@ -1,6 +1,12 @@
-03/04/2023 V.6.1.11
-ePandu ws 6.1.198.0
+17/04/2023 V.6.1.12
+ePandu ws 6.1.200.0
 Enhanced
+
+- Support scan encrypt QR Code
+
+  03/04/2023 V.6.1.11
+  ePandu ws 6.1.198.0
+  Enhanced
 
 - QTI not allow choose same car
 
