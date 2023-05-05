@@ -176,6 +176,15 @@ class _HomeState extends State<Home> {
     );
   }
 
+  bool isJson(String str) {
+    try {
+      json.decode(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -281,38 +290,77 @@ class _HomeState extends State<Home> {
                             maskType: EasyLoadingMaskType.black,
                           );
 
-                          Response decryptQrcode =
-                              await etestingRepo.decryptQrcode(
-                            qrcodeJson: scanData.toString(),
-                          );
-                          if (!decryptQrcode.isSuccess) {
-                            EasyLoading.dismiss();
-                            if (!mounted) return;
-                            await showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('JPJ QTO APP'),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        Text(decryptQrcode.message ?? ''),
+                          String carNo = '';
+                          String nricNo = '';
+                          String testCode = '';
+
+                          try {
+                            if (isJson(scanData.toString())) {
+                              groupId =
+                                  jsonDecode(scanData.toString())['Table1'][0]
+                                      ['group_id'];
+                              nricNo = jsonDecode(scanData.toString())['Table1']
+                                  [0]['nric_no'];
+                              testCode =
+                                  jsonDecode(scanData.toString())['Table1'][0]
+                                      ['test_code'];
+                            } else {
+                              Response decryptQrcode =
+                                  await etestingRepo.decryptQrcode(
+                                qrcodeJson: scanData.toString(),
+                              );
+                              if (!decryptQrcode.isSuccess) {
+                                EasyLoading.dismiss();
+                                if (!mounted) return;
+                                await showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('JPJ QTO APP'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(decryptQrcode.message ?? ''),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('OK'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
                                       ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 );
-                              },
+                                EasyLoading.dismiss();
+                                return;
+                              }
+                              groupId = decryptQrcode.data[0].groupId;
+                              nricNo = decryptQrcode.data[0].nricNo;
+                              testCode = decryptQrcode.data[0].testCode;
+                            }
+                          } catch (e) {
+                            await EasyLoading.dismiss();
+                            if (!mounted) return;
+                            customDialog.show(
+                              barrierDismissable: false,
+                              context: context,
+                              content: AppLocalizations.of(context)!
+                                  .translate('invalid_qr'),
+                              customActions: [
+                                TextButton(
+                                  onPressed: () {
+                                    context.router.pop();
+                                  },
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                              type: DialogType.GENERAL,
                             );
-                            EasyLoading.dismiss();
                             return;
                           }
 
@@ -322,7 +370,7 @@ class _HomeState extends State<Home> {
                                 await etestingRepo.isCurrentCallingCalon(
                               plateNo: plateNo ?? '',
                               partType: 'RPK',
-                              nricNo: decryptQrcode.data[0].nricNo,
+                              nricNo: nricNo,
                             );
                             await EasyLoading.dismiss();
                             if (!result.isSuccess) {
@@ -333,7 +381,7 @@ class _HomeState extends State<Home> {
                                   await etestingRepo.isCurrentInProgressCalon(
                                 plateNo: plateNo ?? '',
                                 partType: 'RPK',
-                                nricNo: decryptQrcode.data[0].nricNo,
+                                nricNo: nricNo,
                               );
                               await EasyLoading.dismiss();
                               if (!result2.isSuccess) {

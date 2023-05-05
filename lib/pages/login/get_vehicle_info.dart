@@ -109,6 +109,15 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
     }
   }
 
+  bool isJson(String str) {
+    try {
+      json.decode(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -138,43 +147,62 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                     maskType: EasyLoadingMaskType.black,
                   );
 
-                  Response decryptQrcode = await etestingRepo.decryptQrcode(
-                    qrcodeJson: scanData.toString(),
-                  );
-                  if (!decryptQrcode.isSuccess) {
-                    EasyLoading.dismiss();
-                    if (!mounted) return;
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('JPJ QTI APP'),
-                          content: SingleChildScrollView(
-                            child: ListBody(
-                              children: <Widget>[
-                                Text(decryptQrcode.message ?? ''),
-                              ],
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
+                  String plateNo = '';
+                  String groupId = '';
+                  String merchantNo = '';
+                  String carNo = '';
+                  if (isJson(scanData.toString())) {
+                    plateNo = jsonDecode(scanData.toString())['Table1'][0]
+                        ['plate_no'];
+                    groupId = jsonDecode(scanData.toString())['Table1'][0]
+                        ['group_id'];
+                    merchantNo = jsonDecode(scanData.toString())['Table1'][0]
+                        ['merchant_no'];
+                    carNo =
+                        jsonDecode(scanData.toString())['Table1'][0]['car_no'];
+                  } else {
+                    Response decryptQrcode = await etestingRepo.decryptQrcode(
+                      qrcodeJson: scanData.toString(),
                     );
-                    EasyLoading.dismiss();
-                    return;
+                    if (!decryptQrcode.isSuccess) {
+                      EasyLoading.dismiss();
+                      if (!mounted) return;
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('JPJ QTI APP'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text(decryptQrcode.message ?? ''),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      EasyLoading.dismiss();
+                      return;
+                    }
+                    plateNo = decryptQrcode.data[0].plateNo;
+                    groupId = decryptQrcode.data[0].groupId;
+                    merchantNo = decryptQrcode.data[0].merchantNo;
+                    carNo = decryptQrcode.data[0].carNo;
                   }
 
                   var vehicleResult =
                       await etestingRepo.isVehicleAvailableByUserId(
-                    plateNo: decryptQrcode.data[0].plateNo,
+                    plateNo: plateNo,
                   );
                   EasyLoading.dismiss();
                   if (vehicleResult.data != 'True') {
@@ -208,10 +236,10 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
 
                   setState(() {
                     _formKey.currentState!.patchValue({
-                      'groupId': decryptQrcode.data[0].groupId,
-                      'permitNo': decryptQrcode.data[0].merchantNo,
-                      'carNo': decryptQrcode.data[0].carNo,
-                      'plateNo': decryptQrcode.data[0].plateNo,
+                      'groupId': groupId,
+                      'permitNo': merchantNo,
+                      'carNo': carNo,
+                      'plateNo': plateNo,
                     });
 
                     showCameraIcon = true;

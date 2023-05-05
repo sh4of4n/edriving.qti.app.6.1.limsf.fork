@@ -178,6 +178,15 @@ class _HomePageRpkState extends State<HomePageRpk> {
     }
   }
 
+  bool isJson(String str) {
+    try {
+      json.decode(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -290,124 +299,57 @@ class _HomePageRpkState extends State<HomePageRpk> {
                           EasyLoading.show(
                             maskType: EasyLoadingMaskType.black,
                           );
+                          String groupId = '';
+                          String nricNo = '';
+                          String testCode = '';
                           try {
-                            Response decryptQrcode =
-                                await etestingRepo.decryptQrcode(
-                              qrcodeJson: scanData.toString(),
-                            );
-                            if (!decryptQrcode.isSuccess) {
-                              EasyLoading.dismiss();
-                              if (!mounted) return;
-                              await showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('JPJ QTO APP'),
-                                    content: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: <Widget>[
-                                          Text(decryptQrcode.message ?? ''),
-                                        ],
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
+                            if (isJson(scanData.toString())) {
+                              groupId =
+                                  jsonDecode(scanData.toString())['Table1'][0]
+                                      ['group_id'];
+                              nricNo = jsonDecode(scanData.toString())['Table1']
+                                  [0]['nric_no'];
+                              testCode =
+                                  jsonDecode(scanData.toString())['Table1'][0]
+                                      ['test_code'];
+                            } else {
+                              Response decryptQrcode =
+                                  await etestingRepo.decryptQrcode(
+                                qrcodeJson: scanData.toString(),
                               );
-                              EasyLoading.dismiss();
-                              return;
-                            }
-                            String? plateNo = await localStorage.getPlateNo();
-                            Response result =
-                                await etestingRepo.isCurrentCallingCalon(
-                              plateNo: plateNo ?? '',
-                              partType: 'RPK',
-                              nricNo: decryptQrcode.data[0].nricNo,
-                            );
-                            await EasyLoading.dismiss();
-                            if (!result.isSuccess) {
-                              EasyLoading.show(
-                                maskType: EasyLoadingMaskType.black,
-                              );
-                              Response result2 =
-                                  await etestingRepo.isCurrentInProgressCalon(
-                                plateNo: plateNo ?? '',
-                                partType: 'RPK',
-                                nricNo: decryptQrcode.data[0].nricNo,
-                              );
-                              await EasyLoading.dismiss();
-                              if (!result2.isSuccess) {
+                              if (!decryptQrcode.isSuccess) {
+                                EasyLoading.dismiss();
                                 if (!mounted) return;
                                 await showDialog(
                                   context: context,
-                                  barrierDismissible:
-                                      false, // user must tap button!
+                                  barrierDismissible: false,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('JPJ QTO'),
+                                      title: const Text('JPJ QTO APP'),
                                       content: SingleChildScrollView(
                                         child: ListBody(
-                                          children: const <Widget>[
-                                            Text(
-                                                'Calon ini tidak mengambil ujian'),
+                                          children: <Widget>[
+                                            Text(decryptQrcode.message ?? ''),
                                           ],
                                         ),
                                       ),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: const Text('Ok'),
+                                          child: const Text('OK'),
                                           onPressed: () {
-                                            context.router.pop();
+                                            Navigator.of(context).pop();
                                           },
                                         ),
                                       ],
                                     );
                                   },
                                 );
-                              } else {
-                                if (!mounted) return;
-                                await context.router.push(
-                                  RpkPartIII(
-                                    qNo: result.data[0].queueNo,
-                                    nric: result.data[0].nricNo,
-                                    rpkName: result.data[0].fullname,
-                                    testDate: result.data[0].testDate,
-                                    groupId: result.data[0].groupId,
-                                    testCode: result.data[0].testCode,
-                                    vehNo: await localStorage.getPlateNo(),
-                                    skipUpdateRpkJpjTestStart: true,
-                                  ),
-                                );
+                                EasyLoading.dismiss();
+                                return;
                               }
-                            } else {
-                              if (!mounted) return;
-                              await context.router.push(
-                                ConfirmCandidateInfo(
-                                  part3Type: 'RPK',
-                                  nric: result.data[0].nricNo,
-                                  candidateName: result.data[0].fullname,
-                                  qNo: result.data[0].queueNo,
-                                  groupId: result.data[0].groupId,
-                                  testDate: result.data[0].testDate,
-                                  testCode: result.data[0].testCode,
-                                  icPhoto:
-                                      result.data[0].icPhotoFilename != null &&
-                                              result.data[0].icPhotoFilename
-                                                  .isNotEmpty
-                                          ? result.data[0].icPhotoFilename
-                                              .replaceAll(removeBracket, '')
-                                              .split('\r\n')[0]
-                                          : '',
-                                ),
-                              );
+                              groupId = decryptQrcode.data[0].groupId;
+                              nricNo = decryptQrcode.data[0].nricNo;
+                              testCode = decryptQrcode.data[0].testCode;
                             }
                           } catch (e) {
                             await EasyLoading.dismiss();
@@ -429,6 +371,90 @@ class _HomePageRpkState extends State<HomePageRpk> {
                             );
 
                             return;
+                          }
+
+                          Response result =
+                              await etestingRepo.isCurrentCallingCalon(
+                            plateNo: plateNo ?? '',
+                            partType: 'RPK',
+                            nricNo: nricNo,
+                          );
+                          await EasyLoading.dismiss();
+                          if (!result.isSuccess) {
+                            EasyLoading.show(
+                              maskType: EasyLoadingMaskType.black,
+                            );
+                            Response result2 =
+                                await etestingRepo.isCurrentInProgressCalon(
+                              plateNo: plateNo ?? '',
+                              partType: 'RPK',
+                              nricNo: nricNo,
+                            );
+                            await EasyLoading.dismiss();
+                            if (!result2.isSuccess) {
+                              if (!mounted) return;
+                              await showDialog(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('JPJ QTO'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: const <Widget>[
+                                          Text(
+                                              'Calon ini tidak mengambil ujian'),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Ok'),
+                                        onPressed: () {
+                                          context.router.pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              if (!mounted) return;
+                              await context.router.push(
+                                RpkPartIII(
+                                  qNo: result.data[0].queueNo,
+                                  nric: result.data[0].nricNo,
+                                  rpkName: result.data[0].fullname,
+                                  testDate: result.data[0].testDate,
+                                  groupId: result.data[0].groupId,
+                                  testCode: result.data[0].testCode,
+                                  vehNo: await localStorage.getPlateNo(),
+                                  skipUpdateRpkJpjTestStart: true,
+                                ),
+                              );
+                            }
+                          } else {
+                            if (!mounted) return;
+                            await context.router.push(
+                              ConfirmCandidateInfo(
+                                part3Type: 'RPK',
+                                nric: result.data[0].nricNo,
+                                candidateName: result.data[0].fullname,
+                                qNo: result.data[0].queueNo,
+                                groupId: result.data[0].groupId,
+                                testDate: result.data[0].testDate,
+                                testCode: result.data[0].testCode,
+                                icPhoto:
+                                    result.data[0].icPhotoFilename != null &&
+                                            result.data[0].icPhotoFilename
+                                                .isNotEmpty
+                                        ? result.data[0].icPhotoFilename
+                                            .replaceAll(removeBracket, '')
+                                            .split('\r\n')[0]
+                                        : '',
+                              ),
+                            );
                           }
                         }
                       },

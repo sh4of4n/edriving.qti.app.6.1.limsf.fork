@@ -1,3 +1,9 @@
+05/05/2023 V.6.1.13
+ePandu ws 6.1.200.0
+Enhanced
+
+- Support both encrypted and non encrypted format qrcode
+
 17/04/2023 V.6.1.12
 ePandu ws 6.1.200.0
 Enhanced

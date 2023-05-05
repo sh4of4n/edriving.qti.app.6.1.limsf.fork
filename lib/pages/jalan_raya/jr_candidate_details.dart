@@ -553,45 +553,49 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       EasyLoading.show(
         maskType: EasyLoadingMaskType.black,
       );
-      Response decryptQrcode = await etestingRepo.decryptQrcode(
-        qrcodeJson: scanData.toString(),
-      );
-      if (!decryptQrcode.isSuccess) {
-        EasyLoading.dismiss();
-        if (!mounted) return;
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('JPJ QTO APP'),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text(decryptQrcode.message ?? ''),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
+      if (isJson(scanData.toString())) {
+        groupId = jsonDecode(scanData.toString())['Table1'][0]['group_id'];
+        nric = jsonDecode(scanData.toString())['Table1'][0]['nric_no'];
+        testCode = jsonDecode(scanData.toString())['Table1'][0]['test_code'];
+      } else {
+        Response decryptQrcode = await etestingRepo.decryptQrcode(
+          qrcodeJson: scanData.toString(),
         );
         EasyLoading.dismiss();
-        return;
-      }
-
-      setState(() {
-        merchantNo = decryptQrcode.data[0].merchantNo;
+        if (!decryptQrcode.isSuccess) {
+          if (!mounted) return;
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('JPJ QTO APP'),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text(decryptQrcode.message ?? ''),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return;
+        }
         testCode = decryptQrcode.data[0].testCode;
         groupId = decryptQrcode.data[0].groupId;
         nric = decryptQrcode.data[0].nricNo;
+      }
+
+      setState(() {
         iconVisible = true;
 
         if (qNo.isNotEmpty) {
@@ -602,7 +606,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
           );
         } else {
           nric = '';
-
+          EasyLoading.dismiss();
           customDialog.show(
             barrierDismissable: false,
             context: context,
@@ -626,6 +630,15 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         ],
         type: DialogType.GENERAL,
       );
+    }
+  }
+
+  bool isJson(String str) {
+    try {
+      json.decode(str);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
