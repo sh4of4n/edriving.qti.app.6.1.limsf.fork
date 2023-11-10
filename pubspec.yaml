@@ -93,6 +93,7 @@ dependencies:
   cached_network_image: ^3.2.3
   get_it: ^7.2.0
   one_context: ^2.1.0
+  connectivity_plus:
 
 dev_dependencies:
   flutter_test:

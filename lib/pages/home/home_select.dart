@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -31,6 +32,9 @@ class _HomeSelectState extends State<HomeSelect> {
   void initState() {
     super.initState();
     checkMySikapVehicle();
+    Connectivity().checkConnectivity().then((value) {
+      print(value);
+    });
   }
 
   Future<void> checkMySikapVehicle() async {
