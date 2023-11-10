@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:edriving_qti_app/utils/app_config.dart';
+import 'package:edriving_qti_app/router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -19,7 +19,6 @@ import 'application.dart';
 import 'common_library/services/model/bill_model.dart';
 import 'common_library/services/model/kpp_model.dart';
 import 'common_library/utils/custom_dialog.dart';
-import 'router.gr.dart';
 
 final getIt = GetIt.instance;
 GlobalKey<ScaffoldMessengerState> navigatorKey =
@@ -67,7 +66,7 @@ void main() async {
             create: (context) => RpkSessionModel(),
           ),
         ],
-        child: MyApp(),
+        child: const MyApp(),
       ),
     );
   }, (exception, stackTrace) async {
@@ -77,6 +76,8 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -94,7 +95,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    _newLocaleDelegate = AppLocalizationsDelegate(newLocale: null);
+    _newLocaleDelegate = const AppLocalizationsDelegate(newLocale: null);
     application.onLocaleChanged = onLocaleChange;
     _loadSavedLocale();
   }
@@ -125,7 +126,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Myriad',
         textTheme: FontTheme().primaryFont,
         primaryTextTheme: FontTheme().primaryFont,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: ColorConstant.primaryColor,
         ),
       ),
@@ -143,14 +144,12 @@ class _MyAppState extends State<MyApp> {
         // Built-in localization for text direction LTR/RTL
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-
         FormBuilderLocalizations.delegate,
       ],
-      routerDelegate: router.delegate(initialRoutes: [const Authentication()]),
-      routeInformationParser: router.defaultRouteParser(),
       // initialRoute: AUTH,
       // onGenerateRoute: RouteGenerator.generateRoute,
       builder: EasyLoading.init(),
+      routerConfig: _appRouter.config(),
     );
   }
 

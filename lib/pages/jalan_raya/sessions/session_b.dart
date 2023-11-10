@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class SessionB extends StatefulWidget {
   final Function()? notifyParent;
-  SessionB({Key? key, this.notifyParent}) : super(key: key);
+  const SessionB({super.key, this.notifyParent});
 
   @override
   _SessionBState createState() => _SessionBState();
@@ -44,15 +44,15 @@ class _SessionBState extends State<SessionB> {
             child: Text(
               AppLocalizations.of(context)!.translate('jr_session_b'),
               style:
-                  (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                  (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             ),
           ),
           headerBackgroundColor: ColorConstant.primaryColor,
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -71,7 +71,7 @@ class _SessionBState extends State<SessionB> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -447,7 +447,7 @@ class _SessionBState extends State<SessionB> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part3_session_b8_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -500,7 +500,7 @@ class _SessionBState extends State<SessionB> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part3_session_b9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -553,7 +553,7 @@ class _SessionBState extends State<SessionB> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_b10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -663,7 +663,7 @@ class _SessionBState extends State<SessionB> {
               child: Text(
                 '${bMark + bMandatoryMark}/10',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),

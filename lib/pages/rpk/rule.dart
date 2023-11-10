@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 
+@RoutePage()
 class RulePage extends StatefulWidget {
-  RulePage({Key? key}) : super(key: key);
+  const RulePage({super.key});
 
   @override
   State<RulePage> createState() => _RulePageState();
@@ -40,13 +42,13 @@ class _RulePageState extends State<RulePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('data'),
+        title: const Text('data'),
         actions: [
           IconButton(
             onPressed: () {
               updatePart3JpjTestResult();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.save,
             ),
           ),
@@ -76,7 +78,7 @@ class _RulePageState extends State<RulePage> {
                                     ExpandablePanelHeaderAlignment.center,
                                 tapBodyToCollapse: true,
                               ),
-                              header: Padding(
+                              header: const Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
                                   "SKIM",
@@ -86,10 +88,10 @@ class _RulePageState extends State<RulePage> {
                                   ),
                                 ),
                               ),
-                              collapsed: SizedBox(),
+                              collapsed: const SizedBox(),
                               expanded: ListView(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [
                                   for (var item in snapshot.data.data)
                                     Container(
@@ -165,7 +167,7 @@ class _RulePageState extends State<RulePage> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

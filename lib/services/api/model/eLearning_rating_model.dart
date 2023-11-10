@@ -49,21 +49,21 @@ class AddLearnResult {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['userId'] = this.userId;
-    data['appId'] = this.appId;
-    data['diCode'] = this.diCode;
-    data['icNo'] = this.icNo;
-    data['groupId'] = this.groupId;
-    data['courseCode'] = this.courseCode;
-    data['part'] = this.part;
-    data['dateTimeFromString'] = this.dateTimeFromString;
-    data['dateTimeToString'] = this.dateTimeToString;
-    data['remark'] = this.remark;
-    data['detlInJson'] = this.detlInJson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['userId'] = userId;
+    data['appId'] = appId;
+    data['diCode'] = diCode;
+    data['icNo'] = icNo;
+    data['groupId'] = groupId;
+    data['courseCode'] = courseCode;
+    data['part'] = part;
+    data['dateTimeFromString'] = dateTimeFromString;
+    data['dateTimeToString'] = dateTimeToString;
+    data['remark'] = remark;
+    data['detlInJson'] = detlInJson;
     return data;
   }
 }
@@ -75,18 +75,18 @@ class DetlInJson {
 
   DetlInJson.fromJson(Map<String, dynamic> json) {
     if (json['LearnResultDetl'] != null) {
-      learnResultDetl = new List<DetailInJson>.empty(growable: true);
+      learnResultDetl = List<DetailInJson>.empty(growable: true);
       json['LearnResultDetl'].forEach((v) {
-        learnResultDetl!.add(new DetailInJson.fromJson(v));
+        learnResultDetl!.add(DetailInJson.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.learnResultDetl != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (learnResultDetl != null) {
       data['LearnResultDetl'] =
-          this.learnResultDetl!.map((v) => v.toJson()).toList();
+          learnResultDetl!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -106,10 +106,10 @@ class DetailInJson {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, String?>();
-    data['ruleCode'] = this.ruleCode;
-    data['ruleGrade'] = this.ruleGrade;
-    data['remark'] = this.remark;
+    final Map<String, dynamic> data = <String, String?>{};
+    data['ruleCode'] = ruleCode;
+    data['ruleGrade'] = ruleGrade;
+    data['remark'] = remark;
     return data;
   }
 }

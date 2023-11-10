@@ -23,13 +23,16 @@ import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
 import 'home_icon.dart';
 
+@RoutePage(name: 'HomePageRpk')
 class HomePageRpk extends StatefulWidget {
+  const HomePageRpk({super.key});
+
   @override
   _HomePageRpkState createState() => _HomePageRpkState();
 }
 
 class _HomePageRpkState extends State<HomePageRpk> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final authRepo = AuthRepo();
   final kppRepo = KppRepo();
@@ -196,7 +199,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
             Colors.white,
             primaryColor,
           ],
-          stops: [0.45, 0.65],
+          stops: const [0.45, 0.65],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -223,7 +226,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                ProfileWidget(),
+                const ProfileWidget(),
                 const Text(
                   'Ujian Memandu Bahagian II',
                   style: TextStyle(
@@ -400,9 +403,9 @@ class _HomePageRpkState extends State<HomePageRpk> {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: const Text('JPJ QTO'),
-                                    content: SingleChildScrollView(
+                                    content: const SingleChildScrollView(
                                       child: ListBody(
-                                        children: const <Widget>[
+                                        children: <Widget>[
                                           Text(
                                               'Calon ini tidak mengambil ujian'),
                                         ],
@@ -543,6 +546,8 @@ class _HomePageRpkState extends State<HomePageRpk> {
 
 class HomeModule extends StatelessWidget {
   final imageConstant = ImagesConstant();
+
+  HomeModule({super.key});
 
   @override
   Widget build(BuildContext context) {

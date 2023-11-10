@@ -11,11 +11,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 
 import '../../router.gr.dart';
-import '../rpk/list_part_iii.dart';
 import 'home_icon.dart';
 
+@RoutePage(name: 'HomeSelect')
 class HomeSelect extends StatefulWidget {
-  HomeSelect({Key? key}) : super(key: key);
+  const HomeSelect({super.key});
 
   @override
   _HomeSelectState createState() => _HomeSelectState();
@@ -24,7 +24,7 @@ class HomeSelect extends StatefulWidget {
 class _HomeSelectState extends State<HomeSelect> {
   final imageConstant = ImagesConstant();
   final primaryColor = ColorConstant.primaryColor;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final localStorage = LocalStorage();
   final etestingRepo = EtestingRepo();
 
@@ -76,7 +76,7 @@ class _HomeSelectState extends State<HomeSelect> {
             Colors.white,
             primaryColor,
           ],
-          stops: [0.45, 0.65],
+          stops: const [0.45, 0.65],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -108,7 +108,7 @@ class _HomeSelectState extends State<HomeSelect> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              ProfileWidget(),
+              const ProfileWidget(),
               Column(
                 children: [
                   HomeIcon(

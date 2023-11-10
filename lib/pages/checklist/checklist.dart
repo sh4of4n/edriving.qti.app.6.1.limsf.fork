@@ -17,10 +17,10 @@ import '../../common_library/services/model/checklist_model.dart';
 import '../../common_library/services/repository/checklist_repository.dart';
 import '../../common_library/utils/app_localizations.dart';
 import '../../common_library/utils/custom_dialog.dart';
-import '../../utils/constants.dart';
 
+@RoutePage()
 class CheckListPage extends StatefulWidget {
-  CheckListPage({Key? key}) : super(key: key);
+  const CheckListPage({super.key});
 
   @override
   State<CheckListPage> createState() => _CheckListPageState();
@@ -455,7 +455,7 @@ class _CheckListPageState extends State<CheckListPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        ProfileWidget(),
+                        const ProfileWidget(),
                         const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
@@ -579,8 +579,9 @@ class _CheckListPageState extends State<CheckListPage> {
                                                   ),
                                                   validator:
                                                       (MysikapVehicle? i) {
-                                                    if (i == null)
+                                                    if (i == null) {
                                                       return field.errorText;
+                                                    }
                                                     return null;
                                                   },
 

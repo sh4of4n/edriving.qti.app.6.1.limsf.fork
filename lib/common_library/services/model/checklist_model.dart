@@ -7,15 +7,15 @@ class GetCheckListResponse {
     if (json['CheckList'] != null) {
       checkList = <CheckList>[];
       json['CheckList'].forEach((v) {
-        checkList!.add(new CheckList.fromJson(v));
+        checkList!.add(CheckList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.checkList != null) {
-      data['CheckList'] = this.checkList!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (checkList != null) {
+      data['CheckList'] = checkList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -74,22 +74,22 @@ class CheckList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['check_type'] = this.checkType;
-    data['check_code'] = this.checkCode;
-    data['mandatory'] = this.mandatory;
-    data['check_desc'] = this.checkDesc;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
-    data['is_check'] = this.isCheck;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['check_type'] = checkType;
+    data['check_code'] = checkCode;
+    data['mandatory'] = mandatory;
+    data['check_desc'] = checkDesc;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
+    data['is_check'] = isCheck;
     return data;
   }
 }
@@ -123,14 +123,14 @@ class GetCheckListRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['plateNo'] = this.plateNo;
-    data['checkListJson'] = this.checkListJson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['plateNo'] = plateNo;
+    data['checkListJson'] = checkListJson;
     return data;
   }
 }
@@ -144,15 +144,15 @@ class JpjCheckListRequest {
     if (json['JpjCheckList'] != null) {
       jpjCheckList = <JpjCheckListJson>[];
       json['JpjCheckList'].forEach((v) {
-        jpjCheckList!.add(new JpjCheckListJson.fromJson(v));
+        jpjCheckList!.add(JpjCheckListJson.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjCheckList != null) {
-      data['JpjCheckList'] = this.jpjCheckList!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjCheckList != null) {
+      data['JpjCheckList'] = jpjCheckList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -172,10 +172,10 @@ class JpjCheckListJson {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['check_code'] = this.checkCode;
-    data['status'] = this.status;
-    data['remark'] = this.remark;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['check_code'] = checkCode;
+    data['status'] = status;
+    data['remark'] = remark;
     return data;
   }
 }
@@ -189,15 +189,15 @@ class JpjCheckListResponse {
     if (json['JpjCheckList'] != null) {
       jpjCheckList = <JpjCheckList>[];
       json['JpjCheckList'].forEach((v) {
-        jpjCheckList!.add(new JpjCheckList.fromJson(v));
+        jpjCheckList!.add(JpjCheckList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjCheckList != null) {
-      data['JpjCheckList'] = this.jpjCheckList!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjCheckList != null) {
+      data['JpjCheckList'] = jpjCheckList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -265,25 +265,25 @@ class JpjCheckList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['check_date'] = this.checkDate;
-    data['check_type'] = this.checkType;
-    data['plate_no'] = this.plateNo;
-    data['check_code'] = this.checkCode;
-    data['mandatory'] = this.mandatory;
-    data['check_desc'] = this.checkDesc;
-    data['status'] = this.status;
-    data['remark'] = this.remark;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['check_date'] = checkDate;
+    data['check_type'] = checkType;
+    data['plate_no'] = plateNo;
+    data['check_code'] = checkCode;
+    data['mandatory'] = mandatory;
+    data['check_desc'] = checkDesc;
+    data['status'] = status;
+    data['remark'] = remark;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }

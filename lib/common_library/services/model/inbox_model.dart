@@ -9,17 +9,17 @@ class GetNotificationListByUserIdResponse {
 
   GetNotificationListByUserIdResponse.fromJson(Map<String, dynamic> json) {
     if (json['Table1'] != null) {
-      table1 = new List<MsgOutBox>.empty(growable: true);
+      table1 = List<MsgOutBox>.empty(growable: true);
       json['Table1'].forEach((v) {
-        table1!.add(new MsgOutBox.fromJson(v));
+        table1!.add(MsgOutBox.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.table1 != null) {
-      data['Table1'] = this.table1!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (table1 != null) {
+      data['Table1'] = table1!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -46,11 +46,11 @@ class MsgOutBox {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg_doc'] = this.msgDoc;
-    data['msg_ref'] = this.msgRef;
-    data['msg_type'] = this.msgType;
-    data['send_msg'] = this.sendMsg;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['msg_doc'] = msgDoc;
+    data['msg_ref'] = msgRef;
+    data['msg_type'] = msgType;
+    data['send_msg'] = sendMsg;
     return data;
   }
 }
@@ -62,17 +62,17 @@ class GetUnreadNotificationCountResponse {
 
   GetUnreadNotificationCountResponse.fromJson(Map<String, dynamic> json) {
     if (json['MsgCount'] != null) {
-      msgCount = new List<MsgCount>.empty(growable: true);
+      msgCount = List<MsgCount>.empty(growable: true);
       json['MsgCount'].forEach((v) {
-        msgCount!.add(new MsgCount.fromJson(v));
+        msgCount!.add(MsgCount.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.msgCount != null) {
-      data['MsgCount'] = this.msgCount!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (msgCount != null) {
+      data['MsgCount'] = msgCount!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -88,8 +88,8 @@ class MsgCount {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg_count'] = this.msgCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['msg_count'] = msgCount;
     return data;
   }
 }

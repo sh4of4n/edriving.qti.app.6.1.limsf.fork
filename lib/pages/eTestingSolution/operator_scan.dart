@@ -9,7 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'OperatorScanQR')
 class OperatorScanQR extends StatefulWidget {
+  const OperatorScanQR({super.key});
+
   @override
   _OperatorScanQRState createState() => _OperatorScanQRState();
 }
@@ -50,23 +53,23 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text(''),
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
+              SizedBox(
                 width: ScreenUtil().setWidth(1000),
                 child: DropdownButton<String>(
                   value: dropdownValue,
-                  icon: Padding(
-                    padding: const EdgeInsets.only(left: 120),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(left: 120),
                     child: Icon(Icons.arrow_downward),
                   ),
                   iconSize: 24,
                   elevation: 16,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   underline: Container(
                     height: 2,
                     color: primaryColor,
@@ -95,16 +98,16 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
               SizedBox(
                 height: ScreenUtil().setHeight(200),
               ),
-              Container(
+              SizedBox(
                 width: ScreenUtil().setWidth(1000),
                 child: ElevatedButton(
                   onPressed: () {
-                    context.router.push(RpkDrawer());
+                    context.router.push(const RpkDrawer());
                     //Navigator.pushNamed(context, RsmRpkTab);
                   },
                   child: Text(
                     AppLocalizations.of(context)!.translate('scan_lbl'),
-                    style: (TextStyle(
+                    style: (const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -112,19 +115,19 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
               SizedBox(
                 height: ScreenUtil().setHeight(50),
               ),
-              Text('OR'),
+              const Text('OR'),
               SizedBox(
                 height: ScreenUtil().setHeight(50),
               ),
               Center(
                 child: Wrap(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: ScreenUtil().setWidth(800),
                       height: ScreenUtil().setHeight(400),
                       child: TextFormField(
-                        decoration: new InputDecoration(
-                          contentPadding: EdgeInsets.only(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
                               left: 15, bottom: 11, top: 11, right: 15),
                           hintText: AppLocalizations.of(context)!
                               .translate('enter_student_ic'),
@@ -136,10 +139,10 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
                         color: Colors.grey[300],
                         child: IconButton(
                           onPressed: () {
-                            context.router.push(RpkDrawer());
+                            context.router.push(const RpkDrawer());
                             //Navigator.pushNamed(context, RsmRpkTab);
                           },
-                          icon: Icon(Icons.arrow_forward),
+                          icon: const Icon(Icons.arrow_forward),
                         ),
                       ),
                     )

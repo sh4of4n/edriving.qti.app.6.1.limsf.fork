@@ -10,7 +10,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../router.gr.dart';
 
+@RoutePage(name: 'RegisterMobile')
 class RegisterMobile extends StatefulWidget {
+  const RegisterMobile({super.key});
+
   @override
   _RegisterMobileState createState() => _RegisterMobileState();
 }
@@ -53,7 +56,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.45, 0.85],
+            stops: const [0.45, 0.85],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -97,7 +100,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               },
                               padding: EdgeInsets.only(top: 62.h),
                               initialSelection: 'MY',
-                              favorite: ['+60', 'MY'],
+                              favorite: const ['+60', 'MY'],
                               showFlagMain: true,
                               alignLeft: false,
                               enabled: false,
@@ -232,7 +235,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.45, 0.85],
+            stops: const [0.45, 0.85],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -276,7 +279,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                               },
                               padding: EdgeInsets.only(top: 62.h),
                               initialSelection: 'MY',
-                              favorite: ['+60', 'MY'],
+                              favorite: const ['+60', 'MY'],
                               showFlagMain: true,
                               alignLeft: false,
                               enabled: false,
@@ -401,15 +404,16 @@ class _RegisterMobileState extends State<RegisterMobile> {
   _next() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       String mobileNo = '';
 
       // print(_phone.substring(0, 1));
-      if (_phone.substring(0, 1) == '0')
+      if (_phone.substring(0, 1) == '0') {
         mobileNo = _phone.substring(1);
-      else
+      } else {
         mobileNo = _phone;
+      }
 
       // print(_countryCode + mobileNo);
 

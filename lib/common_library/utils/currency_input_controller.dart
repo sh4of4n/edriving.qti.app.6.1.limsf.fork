@@ -11,7 +11,7 @@ class CurrencyInputController extends TextEditingController {
   final String _thousandSymbol;
   String _previewsText = '';
 
-  final _onlyNumbersRegex = new RegExp(r"[^\d]");
+  final _onlyNumbersRegex = RegExp(r"[^\d]");
 
   double _value = 0.0;
 

@@ -6,8 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'RpkDrawer')
 class RpkDrawer extends StatelessWidget {
   final image = ImagesConstant();
+
+  RpkDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +28,19 @@ class RpkDrawer extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context)!.translate('instructor_name'),
                   ),
-                  Text('YEOH SAN JIEK'),
+                  const Text('YEOH SAN JIEK'),
                 ],
               ),
-              Wrap(
+              const Wrap(
                 children: <Widget>[
                   Text('    IC NO : '),
                   Text('960529075175'),
                 ],
               ),
-              Divider(),
+              const Divider(),
               SizedBox(height: ScreenUtil().setHeight(40)),
               Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(1),
                   1: FlexColumnWidth(2),
                 },
@@ -63,9 +66,9 @@ class RpkDrawer extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Column(
                           children: <Widget>[
-                            Text('YEOH SAN JIEK '),
+                            const Text('YEOH SAN JIEK '),
                             SizedBox(height: ScreenUtil().setHeight(20)),
-                            Text('960529075175'),
+                            const Text('960529075175'),
                           ],
                         ),
                       ),
@@ -74,7 +77,7 @@ class RpkDrawer extends StatelessWidget {
                 ],
               ),
               SizedBox(height: ScreenUtil().setHeight(30)),
-              Divider(),
+              const Divider(),
               SizedBox(height: ScreenUtil().setHeight(30)),
               Align(
                 alignment: Alignment.centerLeft,
@@ -82,13 +85,13 @@ class RpkDrawer extends StatelessWidget {
                   padding: const EdgeInsets.all(12),
                   child: Column(
                     children: <Widget>[
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text('PBH 5555')),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text('Permit No')),
-                      Align(
+                      const Align(
                           alignment: Alignment.centerLeft,
                           child: Text('Route No')),
                       Align(
@@ -106,7 +109,7 @@ class RpkDrawer extends StatelessWidget {
               AppLocalizations.of(context)!.translate('start_lbl'),
             ),
             onPressed: () {
-              context.router.push(RsmRpkTabs());
+              context.router.push(const RsmRpkTabs());
             },
           ),
         ],

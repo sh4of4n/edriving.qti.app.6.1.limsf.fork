@@ -4,8 +4,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+@RoutePage()
 class QrScannerPage extends StatefulWidget {
-  QrScannerPage({Key? key}) : super(key: key);
+  const QrScannerPage({super.key});
 
   @override
   State<QrScannerPage> createState() => _QrScannerPageState();
@@ -72,7 +73,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Scanner'),
+        title: const Text('QR Code Scanner'),
       ),
       body: _buildQrView(context),
     );

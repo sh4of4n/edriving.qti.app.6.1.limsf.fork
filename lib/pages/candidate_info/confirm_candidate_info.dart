@@ -15,6 +15,7 @@ import 'package:edriving_qti_app/utils/local_storage.dart';
 
 import '../../router.gr.dart';
 
+@RoutePage(name: 'ConfirmCandidateInfo')
 class ConfirmCandidateInfo extends StatefulWidget {
   final String? part3Type;
   final String? nric;
@@ -25,7 +26,7 @@ class ConfirmCandidateInfo extends StatefulWidget {
   final String? testCode;
   final String icPhoto;
 
-  ConfirmCandidateInfo({
+  const ConfirmCandidateInfo({super.key, 
     required this.part3Type,
     required this.nric,
     required this.candidateName,
@@ -300,7 +301,7 @@ class _ConfirmCandidateInfoState extends State<ConfirmCandidateInfo> {
                 margin: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Column(
                   children: [
-                    ProfileWidget(),
+                    const ProfileWidget(),
                     Text('Q-NO', style: TextStyle(fontSize: 100.sp)),
                     widget.icPhoto == ''
                         ? const SizedBox()

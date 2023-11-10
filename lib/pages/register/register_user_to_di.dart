@@ -8,10 +8,11 @@ import 'package:edriving_qti_app/common_library/services/repository/auth_reposit
 
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 
+@RoutePage(name: 'RegisterUserToDi')
 class RegisterUserToDi extends StatelessWidget {
   final data;
 
-  RegisterUserToDi(this.data);
+  RegisterUserToDi(this.data, {super.key});
 
   final authRepo = AuthRepo();
   final customDialog = CustomDialog();
@@ -34,7 +35,7 @@ class RegisterUserToDi extends StatelessWidget {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.45, 0.85],
+            stops: const [0.45, 0.85],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -52,21 +53,15 @@ class RegisterUserToDi extends StatelessWidget {
               children: <Widget>[
                 data.status == 'success'
                     ? Text(
-                        AppLocalizations.of(context)!
-                                .translate('scan_success') +
-                            ' ' +
-                            data.barcode.qRCode[0].name +
-                            ' ' +
-                            AppLocalizations.of(context)!
-                                .translate('organisation'),
+                        '${'${AppLocalizations.of(context)!
+                                .translate('scan_success')} ' +
+                            data.barcode.qRCode[0].name} ${AppLocalizations.of(context)!
+                                .translate('organisation')}',
                         style: inputStyle)
                     : Text(
-                        AppLocalizations.of(context)!.translate('scan_fail') +
-                            ' ' +
-                            data.barcode.qRCode[0].name +
-                            ' ' +
-                            AppLocalizations.of(context)!
-                                .translate('organisation'),
+                        '${'${AppLocalizations.of(context)!.translate('scan_fail')} ' +
+                            data.barcode.qRCode[0].name} ${AppLocalizations.of(context)!
+                                .translate('organisation')}',
                         style: inputStyle),
                 CustomButton(
                   onPressed: () => context.router.popUntil(

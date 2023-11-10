@@ -9,7 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'LearningEnterStudentIC')
 class LearningEnterStudentIC extends StatefulWidget {
+  const LearningEnterStudentIC({super.key});
+
   @override
   _LearningEnterStudentICState createState() => _LearningEnterStudentICState();
 }
@@ -51,7 +54,7 @@ class _LearningEnterStudentICState extends State<LearningEnterStudentIC> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text(''),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -59,7 +62,7 @@ class _LearningEnterStudentICState extends State<LearningEnterStudentIC> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                Container(
+                SizedBox(
                   width: ScreenUtil().setWidth(1000),
                   child: ElevatedButton(
                     onPressed: () {
@@ -70,7 +73,7 @@ class _LearningEnterStudentICState extends State<LearningEnterStudentIC> {
                     },
                     child: Text(
                       AppLocalizations.of(context)!.translate('scan_lbl'),
-                      style: (TextStyle(
+                      style: (const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -78,20 +81,20 @@ class _LearningEnterStudentICState extends State<LearningEnterStudentIC> {
                 SizedBox(
                   height: ScreenUtil().setHeight(50),
                 ),
-                Text('OR'),
+                const Text('OR'),
                 SizedBox(
                   height: ScreenUtil().setHeight(50),
                 ),
                 Center(
                   child: Wrap(
                     children: <Widget>[
-                      Container(
+                      SizedBox(
                         width: ScreenUtil().setWidth(800),
                         height: ScreenUtil().setHeight(400),
                         child: TextFormField(
                           controller: _ic,
-                          decoration: new InputDecoration(
-                            contentPadding: EdgeInsets.only(
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.only(
                                 left: 15, bottom: 11, top: 11, right: 15),
                             hintText: AppLocalizations.of(context)!
                                 .translate('ic_lbl'),
@@ -122,7 +125,7 @@ class _LearningEnterStudentICState extends State<LearningEnterStudentIC> {
                                 );
                               }
                             },
-                            icon: Icon(Icons.arrow_forward),
+                            icon: const Icon(Icons.arrow_forward),
                           ),
                         ),
                       )

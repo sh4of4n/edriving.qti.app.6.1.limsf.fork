@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../router.gr.dart';
-import 'sessions/session.dart';
 
 // ignore: must_be_immutable
+@RoutePage(name: 'JrPartIII')
 class JrPartIII extends StatefulWidget {
   final String? qNo;
   final String? nric;
@@ -28,7 +28,7 @@ class JrPartIII extends StatefulWidget {
   final String? vehNo;
   final bool skipUpdateJrJpjTestStart;
 
-  JrPartIII(
+  const JrPartIII(
     this.qNo,
     this.nric,
     this.jrName,
@@ -36,7 +36,7 @@ class JrPartIII extends StatefulWidget {
     this.groupId,
     this.testCode,
     this.vehNo,
-    this.skipUpdateJrJpjTestStart,
+    this.skipUpdateJrJpjTestStart, {super.key}
   );
 
   @override
@@ -155,9 +155,9 @@ class _JrPartIIIState extends State<JrPartIII> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('JPJ QTO APP'),
-            content: SingleChildScrollView(
+            content: const SingleChildScrollView(
               child: ListBody(
-                children: const <Widget>[
+                children: <Widget>[
                   Text('Calon Ini Telah Gagal Kerana Kesalahan Mandatori.'),
                   Text('Adakah Anda Pasti?'),
                 ],
@@ -211,9 +211,9 @@ class _JrPartIIIState extends State<JrPartIII> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('eDriving QTI App'),
-            content: SingleChildScrollView(
+            content: const SingleChildScrollView(
               child: ListBody(
-                children: const <Widget>[
+                children: <Widget>[
                   Text(
                       'Calon Gagal Kerana Markah Kurang Dari 80%. Ujian Akan Ditamatkan.'),
                 ],
@@ -340,7 +340,7 @@ class _JrPartIIIState extends State<JrPartIII> {
         appBar: AppBar(
           title: const Text('Jalan Raya'),
           automaticallyImplyLeading: false,
-          actions: [
+          actions: const [
             // IconButton(
             //   onPressed: () {
             //     setState(() {
@@ -375,7 +375,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ProfileWidget(),
+                                  const ProfileWidget(),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -540,10 +540,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/19',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -551,10 +551,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['a']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/1',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -567,10 +567,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -578,10 +578,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['b']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/3',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -594,10 +594,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/12',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -605,10 +605,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['c']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -621,10 +621,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/13',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -632,10 +632,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['d']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -648,10 +648,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -659,10 +659,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['e']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -675,10 +675,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/7',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -686,10 +686,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['f']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/3',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -702,10 +702,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -713,10 +713,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['g']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/4',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -729,10 +729,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString()}',
+                                        ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'false').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/6',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -740,10 +740,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['h']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/4',
                                   style: TextStyle(color: Colors.black)),
                             ]))),
@@ -759,10 +759,10 @@ class _JrPartIIIState extends State<JrPartIII> {
                             child: RichText(
                                 text: TextSpan(
                                     text:
-                                        '${ruleJson['i']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString()}',
+                                        ruleJson['i']!.where((c) => c.isCheck && c.mandatory == 'true').length.toString(),
                                     style: const TextStyle(color: Colors.black),
-                                    children: <TextSpan>[
-                              const TextSpan(
+                                    children: const <TextSpan>[
+                              TextSpan(
                                   text: '/8',
                                   style: TextStyle(color: Colors.black)),
                             ]))),

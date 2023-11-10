@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 final localStorage = LocalStorage();
 
 class SessionA extends StatefulWidget {
-  SessionA({Key? key}) : super(key: key);
+  const SessionA({super.key});
 
   @override
   _SessionAState createState() => _SessionAState();
@@ -54,7 +54,7 @@ class _SessionAState extends State<SessionA> {
             child: Text(
               AppLocalizations.of(context)!.translate('jr_session_a'),
               style:
-                  (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                  (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             ),
           ),
           headerBackgroundColor: ColorConstant.primaryColor,
@@ -74,7 +74,7 @@ class _SessionAState extends State<SessionA> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 }, //part3_session_b
@@ -125,7 +125,7 @@ class _SessionAState extends State<SessionA> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -270,7 +270,7 @@ class _SessionAState extends State<SessionA> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part3_session_a_bold_lbl1'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -643,7 +643,7 @@ class _SessionAState extends State<SessionA> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part3_session_a_bold_lbl2'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -1090,7 +1090,7 @@ class _SessionAState extends State<SessionA> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_a20_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -1240,7 +1240,7 @@ class _SessionAState extends State<SessionA> {
               child: Text(
                 '${aMark + aMandatoryMark}/20',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),

@@ -14,7 +14,7 @@ import '../../common_library/services/repository/etesting_repository.dart';
 final localStorage = LocalStorage();
 
 class NewSessionA extends StatefulWidget {
-  NewSessionA({Key? key}) : super(key: key);
+  const NewSessionA({super.key});
 
   @override
   _NewSessionAState createState() => _NewSessionAState();
@@ -90,17 +90,17 @@ class _NewSessionAState extends State<NewSessionA> {
                               tapBodyToCollapse: true,
                             ),
                             header: Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "SKIM",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Padding(
@@ -152,7 +152,7 @@ class _NewSessionAState extends State<NewSessionA> {
                                       child: Container(
                                         child: Text(
                                           '${ruleList.data.where((c) => c.isCheck == true).length}/24',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -162,10 +162,10 @@ class _NewSessionAState extends State<NewSessionA> {
                                 ],
                               ),
                             ),
-                            collapsed: SizedBox(),
+                            collapsed: const SizedBox(),
                             expanded: ListView(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               children: [
                                 for (int i = 0; i < ruleList.data.length; i++)
                                   Container(
@@ -187,7 +187,7 @@ class _NewSessionAState extends State<NewSessionA> {
                                         });
                                       },
                                       child: Table(
-                                        columnWidths: {
+                                        columnWidths: const {
                                           0: FlexColumnWidth(10.0),
                                           1: FlexColumnWidth(1.5),
                                         },
@@ -295,7 +295,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 onPressed: () {
                   setState(() {});
                 },
-                child: Text('data')),
+                child: const Text('data')),
           );
         }
       },
@@ -308,7 +308,7 @@ class _NewSessionAState extends State<NewSessionA> {
             child: Text(
               AppLocalizations.of(context)!.translate('jr_session_r'),
               style:
-                  (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                  (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             ),
           ),
           headerBackgroundColor: ColorConstant.primaryColor,
@@ -320,7 +320,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part3_session_r_bold_lbl1'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -344,7 +344,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -395,7 +395,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -948,7 +948,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part3_session_r_bold_lbl2'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -1372,7 +1372,7 @@ class _NewSessionAState extends State<NewSessionA> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part3_session_r_bold_lbl3'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -1729,7 +1729,7 @@ class _NewSessionAState extends State<NewSessionA> {
               child: Text(
                 '$mark/24',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,12 +14,14 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'RpkCandidateDetails')
 class RpkCandidateDetails extends StatefulWidget {
+  const RpkCandidateDetails({super.key});
+
   @override
   _RpkCandidateDetailsState createState() => _RpkCandidateDetailsState();
 }
@@ -658,7 +659,7 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
             children: [
               Column(
                 children: [
-                  ProfileWidget(),
+                  const ProfileWidget(),
                   Container(
                     width: 1300.h,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -10,6 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ChangePasswordForm extends StatefulWidget {
+  const ChangePasswordForm({super.key});
+
   @override
   _ChangePasswordFormState createState() => _ChangePasswordFormState();
 }
@@ -51,13 +53,13 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             offset: Offset(0.0, 15.0),
             blurRadius: 15.0,
           ),
-          const BoxShadow(
+          BoxShadow(
             color: Colors.black12,
             offset: Offset(0.0, -10.0),
             blurRadius: 10.0,
@@ -271,7 +273,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm>
   _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       // check if new password and confirm new password matches
       if (_newPassword == _confirmNewPassword) {

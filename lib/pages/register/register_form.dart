@@ -23,10 +23,11 @@ import '../../router.gr.dart';
 
 enum AppState { free, picked, cropped }
 
+@RoutePage(name: 'RegisterForm')
 class RegisterForm extends StatefulWidget {
   final data;
 
-  RegisterForm(this.data);
+  const RegisterForm(this.data, {super.key});
 
   @override
   _RegisterFormState createState() => _RegisterFormState();
@@ -65,8 +66,8 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
   String _password = '';
   String _confirmPassword = '';
   String _message = '';
-  String _latitude = '';
-  String _longitude = '';
+  final String _latitude = '';
+  final String _longitude = '';
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
@@ -222,7 +223,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
               TakeProfilePicture(camera: cameras),
             );
 
-            if (newProfilePic != null)
+            if (newProfilePic != null) {
               setState(() {
                 profilePic = '';
                 _image = File(newProfilePic as String);
@@ -230,6 +231,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
                 // profilePicBase64 =
                 //     base64Encode(File(newProfilePic).readAsBytesSync());
               });
+            }
           },
         ),
         SimpleDialogOption(
@@ -309,7 +311,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.60, 0.90],
+            stops: const [0.60, 0.90],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -804,7 +806,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.60, 0.90],
+            stops: const [0.60, 0.90],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -1274,7 +1276,7 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
   _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       setState(() {
         _isLoading = true;
@@ -1319,9 +1321,9 @@ class _RegisterFormState extends State<RegisterForm> with PageBaseClass {
             customActions: <Widget>[
               _loginLoading == false
                   ? TextButton(
+                      onPressed: _login,
                       child: Text(
                           AppLocalizations.of(context)!.translate('ok_btn')),
-                      onPressed: _login,
                     )
                   : SpinKitFoldingCube(
                       color: primaryColor,

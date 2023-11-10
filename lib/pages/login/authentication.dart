@@ -6,6 +6,7 @@ import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/main.dart';
+import 'package:edriving_qti_app/router.dart';
 import 'package:edriving_qti_app/utils/app_config.dart';
 
 import 'package:edriving_qti_app/utils/device_info.dart';
@@ -19,7 +20,10 @@ import '../../router.gr.dart';
 import '../../utils/check_url.dart';
 import '../../utils/constants.dart';
 
+@RoutePage(name: 'Authentication')
 class Authentication extends StatefulWidget {
+  const Authentication({super.key});
+
   @override
   _AuthenticationState createState() => _AuthenticationState();
 }

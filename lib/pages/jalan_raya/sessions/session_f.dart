@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class SessionF extends StatefulWidget {
   final Function()? notifyParent;
-  SessionF({Key? key, this.notifyParent}) : super(key: key);
+  const SessionF({super.key, this.notifyParent});
 
   @override
   _SessionFState createState() => _SessionFState();
@@ -49,14 +49,14 @@ class _SessionFState extends State<SessionF> {
             child: Text(
               AppLocalizations.of(context)!.translate('jr_session_f'),
               style:
-                  (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                  (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
             ),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -85,7 +85,7 @@ class _SessionFState extends State<SessionF> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -545,7 +545,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_f8_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -613,7 +613,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part3_session_f9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -680,7 +680,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_f10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -790,7 +790,7 @@ class _SessionFState extends State<SessionF> {
               child: Text(
                 '${fMark + fMandatoryMark}/10',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),

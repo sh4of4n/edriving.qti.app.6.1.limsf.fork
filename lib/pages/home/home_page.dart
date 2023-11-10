@@ -22,13 +22,16 @@ import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
 import 'home_module.dart';
 
+@RoutePage(name: 'Home')
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final authRepo = AuthRepo();
   final kppRepo = KppRepo();
@@ -221,7 +224,7 @@ class _HomeState extends State<Home> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                ProfileWidget(),
+                const ProfileWidget(),
                 const Text(
                   'Ujian Memandu Bahagian III',
                   style: TextStyle(
@@ -393,9 +396,9 @@ class _HomeState extends State<Home> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: const Text('JPJ QTO'),
-                                      content: SingleChildScrollView(
+                                      content: const SingleChildScrollView(
                                         child: ListBody(
-                                          children: const <Widget>[
+                                          children: <Widget>[
                                             Text(
                                                 'Calon ini tidak mengambil ujian'),
                                           ],

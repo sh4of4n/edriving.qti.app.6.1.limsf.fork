@@ -43,9 +43,7 @@ class LearnRepo {
       part: part, //
       dateTimeFromString: DateFormat('yyyy/MM/dd HH:mm:ss')
           .format(DateTime.parse(dateTimeFromString)),
-      dateTimeToString: DateFormat('yyyy/MM/dd').format(DateTime.now()) +
-          ' ' +
-          dateTimeToString,
+      dateTimeToString: '${DateFormat('yyyy/MM/dd').format(DateTime.now())} $dateTimeToString',
       remark: remark,
       detlInJson: detlInJson,
     );

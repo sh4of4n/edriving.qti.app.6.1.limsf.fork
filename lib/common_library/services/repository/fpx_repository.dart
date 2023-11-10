@@ -248,8 +248,7 @@ class FpxRepo {
     String? userId = await localStorage.getUserId();
     String? email = await localStorage.getEmail();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' +
-        '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef&email=$email&bankId=$bankId&callbackUrl=${callbackUrl ?? ''}';
+    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef&email=$email&bankId=$bankId&callbackUrl=${callbackUrl ?? ''}';
 
     var response = await networking.getData(
       path: 'FPX_SendB2CAuthRequest?$path',
@@ -282,8 +281,7 @@ class FpxRepo {
     String? userId = await localStorage.getUserId();
     String? email = await localStorage.getEmail();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' +
-        '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef&email=$email&bankId=$bankId&callbackUrl=${callbackUrl ?? ''}&appCode=${appConfig.appCode}&amountString=$amountString';
+    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef&email=$email&bankId=$bankId&callbackUrl=${callbackUrl ?? ''}&appCode=${appConfig.appCode}&amountString=$amountString';
 
     var response = await networking.getData(
       path: 'FPX_SendB2CAuthRequestWithAmt?$path',
@@ -311,8 +309,7 @@ class FpxRepo {
     String? caPwd = await localStorage.getCaPwdEncode();
     String? userId = await localStorage.getUserId();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' +
-        '&userId=$userId&icNo=$icNo&startIndex=$startIndex&noOfRecords=$noOfRecords';
+    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' '&userId=$userId&icNo=$icNo&startIndex=$startIndex&noOfRecords=$noOfRecords';
 
     var response = await networking.getData(
       path: 'GetOnlinePaymentListByIcNo?$path',
@@ -340,8 +337,7 @@ class FpxRepo {
     String? caPwd = await localStorage.getCaPwdEncode();
     String? userId = await localStorage.getUserId();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' +
-        '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef';
+    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd' '&diCode=$diCode&userId=$userId&icNo=$icNo&docDoc=$docDoc&docRef=$docRef';
 
     var response = await networking.getData(
       path: 'GetOnlinePaymentByOrderNo?$path',

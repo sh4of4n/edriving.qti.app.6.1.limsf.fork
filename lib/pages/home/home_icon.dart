@@ -9,7 +9,7 @@ class HomeIcon extends StatelessWidget {
   final image;
   final component;
 
-  HomeIcon({
+  const HomeIcon({super.key, 
     this.name,
     this.index,
     this.image,
@@ -22,7 +22,7 @@ class HomeIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             offset: Offset(1.0, 2.0),
@@ -36,9 +36,9 @@ class HomeIcon extends StatelessWidget {
         onTap: () {
           component != null
               ? context.router.push(component)
-              : SizedBox.shrink();
+              : const SizedBox.shrink();
         },
-        child: Container(
+        child: SizedBox(
           // padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
           width: ScreenUtil().setWidth(650),
           height: ScreenUtil().setHeight(650),
@@ -52,7 +52,7 @@ class HomeIcon extends StatelessWidget {
                   height: ScreenUtil().setHeight(450),
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               Text(
                 name,
                 style: TextStyle(

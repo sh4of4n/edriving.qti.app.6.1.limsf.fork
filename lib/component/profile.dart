@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 
 class ProfileWidget extends StatefulWidget {
-  ProfileWidget({Key? key}) : super(key: key);
+  const ProfileWidget({super.key});
 
   @override
   State<ProfileWidget> createState() => _ProfileWidgetState();

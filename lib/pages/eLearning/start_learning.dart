@@ -6,10 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'StartLearning')
 class StartLearning extends StatefulWidget {
   final studentIC;
 
-  StartLearning(this.studentIC);
+  const StartLearning(this.studentIC, {super.key});
 
   @override
   _StartLearningState createState() => _StartLearningState();
@@ -68,19 +69,19 @@ class _StartLearningState extends State<StartLearning> {
                 ),
                 Wrap(
                   children: <Widget>[
-                    Text('    IC NO : '),
+                    const Text('    IC NO : '),
                     Text(_ic!),
                   ],
                 ),
-                Divider(),
-                Text(
+                const Divider(),
+                const Text(
                   'Student Info',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 SizedBox(height: ScreenUtil().setHeight(40)),
                 Table(
-                  columnWidths: {
+                  columnWidths: const {
                     0: FlexColumnWidth(1),
                     1: FlexColumnWidth(2),
                   },
@@ -114,7 +115,7 @@ class _StartLearningState extends State<StartLearning> {
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: <Widget>[
-                              Text('YEOH SAN JIEK '),
+                              const Text('YEOH SAN JIEK '),
                               SizedBox(height: ScreenUtil().setHeight(20)),
                               Text(widget.studentIC),
                             ],
@@ -125,7 +126,7 @@ class _StartLearningState extends State<StartLearning> {
                   ],
                 ),
                 SizedBox(height: ScreenUtil().setHeight(30)),
-                Divider(),
+                const Divider(),
                 SizedBox(height: ScreenUtil().setHeight(30)),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -133,11 +134,11 @@ class _StartLearningState extends State<StartLearning> {
                     padding: const EdgeInsets.all(12),
                     child: Column(
                       children: <Widget>[
-                        Align(
+                        const Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
                             'Group :',
-                            style: new TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -158,8 +159,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'MANUAL',
                                   ),
@@ -179,8 +180,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'AUTO',
                                   ),
@@ -189,11 +190,11 @@ class _StartLearningState extends State<StartLearning> {
                             ),
                           ],
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
                             'Course :',
-                            style: new TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -214,8 +215,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'E-LEARNING',
                                   ),
@@ -235,8 +236,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'QTI',
                                   ),
@@ -256,8 +257,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'JPJ',
                                   ),
@@ -266,11 +267,11 @@ class _StartLearningState extends State<StartLearning> {
                             ),
                           ],
                         ),
-                        Align(
+                        const Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
                             'part :',
-                            style: new TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -291,8 +292,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'PART II',
                                   ),
@@ -312,8 +313,8 @@ class _StartLearningState extends State<StartLearning> {
                                     });
                                   },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 16),
                                   child: Text(
                                     'PART III',
                                   ),

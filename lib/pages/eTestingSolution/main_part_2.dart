@@ -7,6 +7,8 @@ import 'list_part_2.dart';
 
 // ignore: must_be_immutable
 class Part2Main extends StatefulWidget {
+  const Part2Main({super.key});
+
   @override
   _Part2MainState createState() => _Part2MainState();
 }
@@ -32,34 +34,34 @@ class _Part2MainState extends State<Part2Main>
   int? marksB = 0;
 
   _getBMark() async {
-    int? _markB = await localStorage.getPart2MarkSessionB();
-    int? _markCM = await localStorage.getPart2MarkCM();
-    int? _markDM = await localStorage.getPart2MarkDM();
-    int? _markEM = await localStorage.getPart2MarkEM();
-    int? _markFM = await localStorage.getPart2MarkFM();
-    int? _markGM = await localStorage.getPart2MarkGM();
-    int? _markHM = await localStorage.getPart2MarkHM();
+    int? markB = await localStorage.getPart2MarkSessionB();
+    int? markCM = await localStorage.getPart2MarkCM();
+    int? markDM = await localStorage.getPart2MarkDM();
+    int? markEM = await localStorage.getPart2MarkEM();
+    int? markFM = await localStorage.getPart2MarkFM();
+    int? markGM = await localStorage.getPart2MarkGM();
+    int? markHM = await localStorage.getPart2MarkHM();
 
-    int? _deductMarkC = await localStorage.getCountMarkC();
-    int? _deductMarkD = await localStorage.getCountMarkD();
-    int? _deductMarkE = await localStorage.getCountMarkE();
-    int? _deductMarkF = await localStorage.getCountMarkF();
-    int? _deductMarkG = await localStorage.getCountMarkG();
+    int? deductMarkC = await localStorage.getCountMarkC();
+    int? deductMarkD = await localStorage.getCountMarkD();
+    int? deductMarkE = await localStorage.getCountMarkE();
+    int? deductMarkF = await localStorage.getCountMarkF();
+    int? deductMarkG = await localStorage.getCountMarkG();
 
     setState(() {
-      marksB = _markB;
-      marksC = _deductMarkC;
-      marksD = _deductMarkD;
-      marksE = _deductMarkE;
-      marksF = _deductMarkF;
-      marksG = _deductMarkG;
+      marksB = markB;
+      marksC = deductMarkC;
+      marksD = deductMarkD;
+      marksE = deductMarkE;
+      marksF = deductMarkF;
+      marksG = deductMarkG;
 
-      marksCM = _markCM;
-      marksDM = _markDM;
-      marksEM = _markEM;
-      marksFM = _markFM;
-      marksGM = _markGM;
-      marksHM = _markHM;
+      marksCM = markCM;
+      marksDM = markDM;
+      marksEM = markEM;
+      marksFM = markFM;
+      marksGM = markGM;
+      marksHM = markHM;
     });
   }
 
@@ -142,42 +144,42 @@ class _Part2MainState extends State<Part2Main>
                       child: Text(
                           AppLocalizations.of(context)!
                               .translate('session_lbl'),
-                          style: TextStyle(color: Colors.black))),
+                          style: const TextStyle(color: Colors.black))),
                   Center(
                       child: Text(
                           AppLocalizations.of(context)!
                               .translate('normal_mistake_mark'),
-                          style: TextStyle(color: Colors.black))),
+                          style: const TextStyle(color: Colors.black))),
                   Center(
                       child: Text(
                           AppLocalizations.of(context)!
                               .translate('mandatory_mistake_mark'),
-                          style: TextStyle(color: Colors.black))),
+                          style: const TextStyle(color: Colors.black))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('B', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksB',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/20', style: TextStyle(color: Colors.black)),
                       ]))),
-                  Center(
+                  const Center(
                       child: Text('-', style: TextStyle(color: Colors.black))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('C', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksC',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/6', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -185,21 +187,21 @@ class _Part2MainState extends State<Part2Main>
                       child: RichText(
                           text: TextSpan(
                               text: '$marksCM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/4', style: TextStyle(color: Colors.black)),
                       ]))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('D', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksD',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/6', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -207,21 +209,21 @@ class _Part2MainState extends State<Part2Main>
                       child: RichText(
                           text: TextSpan(
                               text: '$marksDM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/4', style: TextStyle(color: Colors.black)),
                       ]))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('E', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksE',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/6', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -229,21 +231,21 @@ class _Part2MainState extends State<Part2Main>
                       child: RichText(
                           text: TextSpan(
                               text: '$marksEM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/5', style: TextStyle(color: Colors.black)),
                       ]))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('F', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksF',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/8', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -251,21 +253,21 @@ class _Part2MainState extends State<Part2Main>
                       child: RichText(
                           text: TextSpan(
                               text: '$marksFM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/5', style: TextStyle(color: Colors.black)),
                       ]))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('G', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksG',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/5', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -273,23 +275,23 @@ class _Part2MainState extends State<Part2Main>
                       child: RichText(
                           text: TextSpan(
                               text: '$marksGM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/7', style: TextStyle(color: Colors.black)),
                       ]))),
                 ]),
                 TableRow(children: [
-                  Center(
+                  const Center(
                       child: Text('H', style: TextStyle(color: Colors.black))),
-                  Center(
+                  const Center(
                       child: Text('-', style: TextStyle(color: Colors.black))),
                   Center(
                       child: RichText(
                           text: TextSpan(
                               text: '$marksHM',
-                              style: TextStyle(color: Colors.black),
-                              children: <TextSpan>[
+                              style: const TextStyle(color: Colors.black),
+                              children: const <TextSpan>[
                         TextSpan(
                             text: '/5', style: TextStyle(color: Colors.black)),
                       ]))),
@@ -331,8 +333,8 @@ class _Part2MainState extends State<Part2Main>
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black87,
                   backgroundColor: ColorConstant.primaryColor,
-                  minimumSize: Size(88, 36),
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  minimumSize: const Size(88, 36),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                   ),

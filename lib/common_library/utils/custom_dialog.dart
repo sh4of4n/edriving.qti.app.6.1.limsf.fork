@@ -24,8 +24,8 @@ class CustomDialog {
   }) {
     List<Widget>? actions = <Widget>[
       TextButton(
-        child: Text("Ok"),
         onPressed: onPressed ?? () => context.router.pop(),
+        child: const Text("Ok"),
       )
     ];
 

@@ -9,10 +9,11 @@ import 'package:quiver/async.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'RegisterVerification')
 class RegisterVerification extends StatefulWidget {
   final data;
 
-  RegisterVerification(this.data);
+  const RegisterVerification(this.data, {super.key});
 
   @override
   _RegisterVerificationState createState() => _RegisterVerificationState();
@@ -28,7 +29,7 @@ class _RegisterVerificationState extends State<RegisterVerification> {
   String? _correctVerificationCode = '';
   String? _message = '';
   TextStyle? _messageStyle;
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool _resend = false;
 
   int _time = 60;
@@ -138,7 +139,7 @@ class _RegisterVerificationState extends State<RegisterVerification> {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.45, 0.85],
+            stops: const [0.45, 0.85],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -276,7 +277,7 @@ class _RegisterVerificationState extends State<RegisterVerification> {
               Colors.white,
               primaryColor,
             ],
-            stops: [0.45, 0.85],
+            stops: const [0.45, 0.85],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -404,7 +405,7 @@ class _RegisterVerificationState extends State<RegisterVerification> {
   _next() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       if (_verificationCode == _correctVerificationCode) {
         context.router.push(
@@ -414,12 +415,13 @@ class _RegisterVerificationState extends State<RegisterVerification> {
         setState(() {
           _message = '';
         });
-      } else
+      } else {
         setState(() {
           _message = AppLocalizations.of(context)!
               .translate('incorrect_verification_code');
           _messageStyle = const TextStyle(color: Colors.red);
         });
+      }
     }
 
     // Navigator.push(context, SIGN_UP_FORM, arguments: widget.data);

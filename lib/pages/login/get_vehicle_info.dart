@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:edriving_qti_app/component/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -16,14 +14,14 @@ import 'package:edriving_qti_app/common_library/utils/custom_button.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
 import 'package:edriving_qti_app/common_library/utils/uppercase_formatter.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'GetVehicleInfo')
 class GetVehicleInfo extends StatefulWidget {
   final String type;
-  GetVehicleInfo({Key? key, required this.type}) : super(key: key);
+  const GetVehicleInfo({super.key, required this.type});
 
   @override
   _GetVehicleInfoState createState() => _GetVehicleInfoState();
@@ -275,7 +273,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    ProfileWidget(),
+                    const ProfileWidget(),
                     // Container(
                     //   width: 1300.w,
                     //   margin: EdgeInsets.symmetric(vertical: 30.h),

@@ -13,7 +13,10 @@ import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../common_library/services/repository/etesting_repository.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'Settings')
 class Settings extends StatefulWidget {
+  const Settings({super.key});
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -24,7 +27,7 @@ class _SettingsState extends State<Settings> {
   final authRepo = AuthRepo();
   final etestingRepo = EtestingRepo();
   final customDialog = CustomDialog();
-  double _defIconSize = 30;
+  final double _defIconSize = 30;
   final primaryColor = ColorConstant.primaryColor;
   final localStorage = LocalStorage();
   String? _clientAcc = '';
@@ -110,9 +113,9 @@ class _SettingsState extends State<Settings> {
                           .translate('confirm_delete_account'),
                       customActions: <Widget>[
                         TextButton(
+                          onPressed: _deleteAccount,
                           child: Text(AppLocalizations.of(context)!
                               .translate('yes_lbl')),
-                          onPressed: _deleteAccount,
                         ),
                         TextButton(
                           child: Text(AppLocalizations.of(context)!

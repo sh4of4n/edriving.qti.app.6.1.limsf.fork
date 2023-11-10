@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:edriving_qti_app/component/profile.dart';
 import 'package:expandable/expandable.dart';
@@ -11,8 +12,9 @@ import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../common_library/services/repository/checklist_repository.dart';
 import '../../utils/constants.dart';
 
+@RoutePage()
 class ChecklistResultPage extends StatefulWidget {
-  ChecklistResultPage({Key? key}) : super(key: key);
+  const ChecklistResultPage({super.key});
 
   @override
   State<ChecklistResultPage> createState() => _ChecklistResultPageState();
@@ -84,13 +86,13 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             default:
               if (snapshot.hasData) {
                 return SingleChildScrollView(
                   child: Column(
                     children: [
-                      ProfileWidget(),
+                      const ProfileWidget(),
                       ExpandableNotifier(
                         initialExpanded: true,
                         child: Padding(
@@ -110,7 +112,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                           ExpandablePanelHeaderAlignment.center,
                                       tapBodyToCollapse: true,
                                     ),
-                                    header: Padding(
+                                    header: const Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         "1. Pemeriksaan Kenderaan Ujian",
@@ -120,10 +122,10 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                         ),
                                       ),
                                     ),
-                                    collapsed: SizedBox(),
+                                    collapsed: const SizedBox(),
                                     expanded: ListView(
                                       shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(16.0),
@@ -153,9 +155,10 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                       ),
                                                       validator:
                                                           (MysikapVehicle? i) {
-                                                        if (i == null)
+                                                        if (i == null) {
                                                           return field
                                                               .errorText;
+                                                        }
                                                         return null;
                                                       },
 
@@ -183,7 +186,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                         itemBuilder: (context,
                                                             item, isSelected) {
                                                           return Container(
-                                                            margin: EdgeInsets
+                                                            margin: const EdgeInsets
                                                                 .symmetric(
                                                                     horizontal:
                                                                         8),
@@ -210,9 +213,9 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                               trailing: item
                                                                           .checked ==
                                                                       'true'
-                                                                  ? Icon(Icons
+                                                                  ? const Icon(Icons
                                                                       .check)
-                                                                  : SizedBox(),
+                                                                  : const SizedBox(),
                                                             ),
                                                           );
                                                         },
@@ -259,10 +262,10 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                               AsyncSnapshot snapshot2) {
                                             switch (snapshot2.connectionState) {
                                               case ConnectionState.waiting:
-                                                return Center(
+                                                return const Center(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
+                                                        EdgeInsets.all(
                                                             16.0),
                                                     child:
                                                         CircularProgressIndicator(),
@@ -278,14 +281,14 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                       ListView.separated(
                                                         shrinkWrap: true,
                                                         physics:
-                                                            NeverScrollableScrollPhysics(),
+                                                            const NeverScrollableScrollPhysics(),
                                                         itemCount: snapshot2
                                                             .data.data.length,
                                                         separatorBuilder:
                                                             (BuildContext
                                                                     context,
                                                                 int index) {
-                                                          return Divider(
+                                                          return const Divider(
                                                             height: 1,
                                                           );
                                                         },
@@ -325,7 +328,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                                     ),
                                                   );
                                                 } else {
-                                                  return SizedBox();
+                                                  return const SizedBox();
                                                 }
                                             }
                                           },
@@ -366,7 +369,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                           ExpandablePanelHeaderAlignment.center,
                                       tapBodyToCollapse: true,
                                     ),
-                                    header: Padding(
+                                    header: const Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         "2. LITAR",
@@ -376,7 +379,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                         ),
                                       ),
                                     ),
-                                    collapsed: SizedBox(),
+                                    collapsed: const SizedBox(),
                                     expanded: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -384,12 +387,12 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                         ListView.separated(
                                           shrinkWrap: true,
                                           physics:
-                                              NeverScrollableScrollPhysics(),
+                                              const NeverScrollableScrollPhysics(),
                                           itemCount: checklist[0].data.length,
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
-                                            return Divider(
+                                            return const Divider(
                                               height: 1,
                                             );
                                           },
@@ -436,7 +439,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                           ExpandablePanelHeaderAlignment.center,
                                       tapBodyToCollapse: true,
                                     ),
-                                    header: Padding(
+                                    header: const Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         "3. Bilik kawalan",
@@ -446,7 +449,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                         ),
                                       ),
                                     ),
-                                    collapsed: SizedBox(),
+                                    collapsed: const SizedBox(),
                                     expanded: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -454,12 +457,12 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                                         ListView.separated(
                                           shrinkWrap: true,
                                           physics:
-                                              NeverScrollableScrollPhysics(),
+                                              const NeverScrollableScrollPhysics(),
                                           itemCount: checklist[1].data.length,
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
-                                            return Divider(
+                                            return const Divider(
                                               height: 1,
                                             );
                                           },
@@ -487,7 +490,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16.0,
                       ),
                     ],
@@ -511,7 +514,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                   ),
                 );
               } else {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
@@ -536,7 +539,7 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
                   name: 'skimLain',
                   readOnly: true,
                   initialValue: item.remark,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     filled: true,
                     labelText: 'Remark',
                   ),
@@ -551,12 +554,12 @@ class _ChecklistResultPageState extends State<ChecklistResultPage> {
           color: item.status == 'false' ? Colors.blue : Colors.white,
         ),
         child: item.status == 'false'
-            ? Icon(
+            ? const Icon(
                 Icons.close,
                 size: 18,
                 color: Colors.white,
               )
-            : SizedBox(
+            : const SizedBox(
                 height: 18,
                 width: 18,
               ),

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/component/profile.dart';
-import 'package:edriving_qti_app/router.gr.dart';
 import 'package:expandable/expandable.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -19,6 +18,7 @@ import 'package:provider/provider.dart';
 import '../../common_library/services/repository/etesting_repository.dart';
 
 // ignore: must_be_immutable
+@RoutePage(name: 'RpkPartIII')
 class RpkPartIII extends StatefulWidget {
   final String? qNo;
   final String? nric;
@@ -29,7 +29,7 @@ class RpkPartIII extends StatefulWidget {
   final String? vehNo;
   final bool skipUpdateRpkJpjTestStart;
 
-  RpkPartIII(
+  const RpkPartIII(
     this.qNo,
     this.nric,
     this.rpkName,
@@ -37,7 +37,7 @@ class RpkPartIII extends StatefulWidget {
     this.groupId,
     this.testCode,
     this.vehNo,
-    this.skipUpdateRpkJpjTestStart,
+    this.skipUpdateRpkJpjTestStart, {super.key}
   );
 
   @override
@@ -87,9 +87,9 @@ class _Part3MainState extends State<RpkPartIII> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text('JPJ QTO'),
-              content: SingleChildScrollView(
+              content: const SingleChildScrollView(
                 child: ListBody(
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
                         'Masa Ujian Calon Telah Melebihi 7 Minit. Markah Ujian Calon Akan Dihantar'),
                   ],
@@ -284,7 +284,7 @@ class _Part3MainState extends State<RpkPartIII> {
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  ProfileWidget(),
+                  const ProfileWidget(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -2,7 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 class TestPage extends StatefulWidget {
-  TestPage({Key? key}) : super(key: key);
+  const TestPage({super.key});
 
   @override
   State<TestPage> createState() => _TestPageState();
@@ -46,51 +46,51 @@ class _TestPageState extends State<TestPage> {
     _handleCheckBoxState(updateState: false);
 
     return Scaffold(
-      appBar: AppBar(title: Text("DropdownSearch Demo")),
+      appBar: AppBar(title: const Text("DropdownSearch Demo")),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: ListView(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             children: <Widget>[
               ///************************[simple examples for single and multi selection]************///
-              Text("[simple examples for single and multi selection]"),
-              Divider(),
+              const Text("[simple examples for single and multi selection]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>.multiSelection(
-                      clearButtonProps: ClearButtonProps(isVisible: true),
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      clearButtonProps: const ClearButtonProps(isVisible: true),
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                     ),
                   )
                 ],
               ),
 
               ///************************[simple examples for each mode]*************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[simple examples for each mode]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[simple examples for each mode]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>.multiSelection(
                       key: _popupCustomValidationKey,
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                       popupProps: PopupPropsMultiSelection.dialog(
                         validationWidgetBuilder: (ctx, selectedItems) {
                           return Container(
@@ -99,7 +99,7 @@ class _TestPageState extends State<TestPage> {
                             child: Align(
                               alignment: Alignment.center,
                               child: MaterialButton(
-                                child: Text('OK'),
+                                child: const Text('OK'),
                                 onPressed: () {
                                   _popupCustomValidationKey.currentState
                                       ?.popupOnValidate();
@@ -113,29 +113,29 @@ class _TestPageState extends State<TestPage> {
                   )
                 ],
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              const Padding(padding: EdgeInsets.all(4)),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
-                      items: [1, 2, 3, 4, 5, 6, 7],
-                      dropdownDecoratorProps: DropDownDecoratorProps(
+                      items: const [1, 2, 3, 4, 5, 6, 7],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
                           labelText: "BottomSheet mode",
                           hintText: "Select an Int",
                         ),
                       ),
-                      popupProps: PopupProps.bottomSheet(
+                      popupProps: const PopupProps.bottomSheet(
                           bottomSheetProps: BottomSheetProps(
                               elevation: 16,
                               backgroundColor: Color(0xFFAADCEE))),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>(
-                      items: [1, 2, 3, 4, 5, 6, 7],
-                      dropdownDecoratorProps: DropDownDecoratorProps(
+                      items: const [1, 2, 3, 4, 5, 6, 7],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
                           labelText: "Modal mode",
                           hintText: "Select an Int",
@@ -151,9 +151,9 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[Favorites examples]**********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[Favorites examples]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[Favorites examples]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
@@ -176,7 +176,7 @@ class _TestPageState extends State<TestPage> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<UserModel>.multiSelection(
                       asyncItems: (filter) => getData(filter),
@@ -193,7 +193,7 @@ class _TestPageState extends State<TestPage> {
                           },
                           favoriteItemBuilder: (context, item, isSelected) {
                             return Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 6),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
@@ -202,14 +202,14 @@ class _TestPageState extends State<TestPage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "${item.name}",
+                                    item.name,
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(color: Colors.indigo),
+                                    style: const TextStyle(color: Colors.indigo),
                                   ),
-                                  Padding(padding: EdgeInsets.only(left: 8)),
+                                  const Padding(padding: EdgeInsets.only(left: 8)),
                                   isSelected
-                                      ? Icon(Icons.check_box_outlined)
-                                      : SizedBox.shrink(),
+                                      ? const Icon(Icons.check_box_outlined)
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                             );
@@ -222,32 +222,32 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[validation examples]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[validation examples]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[validation examples]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                       autoValidateMode: AutovalidateMode.onUserInteraction,
                       validator: (int? i) {
-                        if (i == null)
+                        if (i == null) {
                           return 'required filed';
-                        else if (i >= 5) return 'value should be < 5';
+                        } else if (i >= 5) return 'value should be < 5';
                         return null;
                       },
-                      clearButtonProps: ClearButtonProps(isVisible: true),
+                      clearButtonProps: const ClearButtonProps(isVisible: true),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>.multiSelection(
-                      items: [1, 2, 3, 4, 5, 6, 7],
+                      items: const [1, 2, 3, 4, 5, 6, 7],
                       validator: (List<int>? items) {
-                        if (items == null || items.isEmpty)
+                        if (items == null || items.isEmpty) {
                           return 'required filed';
-                        else if (items.length > 3)
+                        } else if (items.length > 3)
                           return 'only 1 to 3 items are allowed';
                         return null;
                       },
@@ -257,14 +257,14 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[custom popup background examples]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[custom popup background examples]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[custom popup background examples]"),
+              const Divider(),
               DropdownSearch<String>(
                 items: List.generate(5, (index) => "$index"),
                 popupProps: PopupProps.menu(
                   fit: FlexFit.loose,
-                  menuProps: MenuProps(
+                  menuProps: const MenuProps(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                   ),
@@ -277,14 +277,14 @@ class _TestPageState extends State<TestPage> {
                           padding: const EdgeInsets.only(right: 12),
                           child: Image.asset(
                             'assets/images/arrow-up.png',
-                            color: Color(0xFF2F772A),
+                            color: const Color(0xFF2F772A),
                             height: 12,
                           ),
                         ),
                         Flexible(
                           child: Container(
+                            color: const Color(0xFF2F772A),
                             child: popupWidget,
-                            color: Color(0xFF2F772A),
                           ),
                         ),
                       ],
@@ -292,7 +292,7 @@ class _TestPageState extends State<TestPage> {
                   },
                 ),
               ),
-              Padding(padding: EdgeInsets.all(8)),
+              const Padding(padding: EdgeInsets.all(8)),
               Row(
                 children: [
                   Expanded(
@@ -305,23 +305,23 @@ class _TestPageState extends State<TestPage> {
                         showSearchBox: true,
                         containerBuilder: (ctx, popupWidget) {
                           return _CheckBoxWidget(
-                            child: popupWidget,
                             isSelected: _popupBuilderSelection,
                             onChanged: (v) {
-                              if (v == true)
+                              if (v == true) {
                                 _popupBuilderKey.currentState!
                                     .popupSelectAllItems();
-                              else if (v == false)
+                              } else if (v == false)
                                 _popupBuilderKey.currentState!
                                     .popupDeselectAllItems();
                               _handleCheckBoxState();
                             },
+                            child: popupWidget,
                           );
                         },
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<String>.multiSelection(
                       key: _multiKey,
@@ -338,7 +338,7 @@ class _TestPageState extends State<TestPage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: OutlinedButton(
                                       onPressed: () {
                                         // How should I unselect all items in the list?
@@ -349,7 +349,7 @@ class _TestPageState extends State<TestPage> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: OutlinedButton(
                                       onPressed: () {
                                         // How should I select all items in the list?
@@ -360,7 +360,7 @@ class _TestPageState extends State<TestPage> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     child: OutlinedButton(
                                       onPressed: () {
                                         // How should I unselect all items in the list?
@@ -383,15 +383,15 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[dropdownBuilder examples]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[DropDownSearch builder examples]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[DropDownSearch builder examples]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<UserModel>.multiSelection(
                       asyncItems: (String? filter) => getData(filter),
-                      clearButtonProps: ClearButtonProps(isVisible: true),
+                      clearButtonProps: const ClearButtonProps(isVisible: true),
                       popupProps: PopupPropsMultiSelection.modalBottomSheet(
                         showSelectedItems: true,
                         itemBuilder: _customPopupItemBuilderExample2,
@@ -400,7 +400,7 @@ class _TestPageState extends State<TestPage> {
                           controller: _userEditTextController,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
+                              icon: const Icon(Icons.clear),
                               onPressed: () {
                                 _userEditTextController.clear();
                               },
@@ -421,7 +421,7 @@ class _TestPageState extends State<TestPage> {
                       dropdownBuilder: _customDropDownExampleMultiSelection,
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<UserModel>(
                       asyncItems: (String? filter) => getData(filter),
@@ -445,25 +445,25 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[Dynamic height depending on items number]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[popup dynamic height examples]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[popup dynamic height examples]"),
+              const Divider(),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
                       items: List.generate(50, (i) => i),
-                      popupProps: PopupProps.menu(
+                      popupProps: const PopupProps.menu(
                         showSearchBox: true,
                         title: Text('default fit'),
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>(
                       items: List.generate(50, (i) => i),
-                      popupProps: PopupProps.menu(
+                      popupProps: const PopupProps.menu(
                         title: Text('With fit to loose and no constraints'),
                         showSearchBox: true,
                         fit: FlexFit.loose,
@@ -474,13 +474,13 @@ class _TestPageState extends State<TestPage> {
                   )
                 ],
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              const Padding(padding: EdgeInsets.all(4)),
               Row(
                 children: [
                   Expanded(
                     child: DropdownSearch<int>(
                       items: List.generate(50, (i) => i),
-                      popupProps: PopupProps.menu(
+                      popupProps: const PopupProps.menu(
                         showSearchBox: true,
                         fit: FlexFit.loose,
                         title: Text('fit to a specific max height'),
@@ -488,11 +488,11 @@ class _TestPageState extends State<TestPage> {
                       ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.all(4)),
+                  const Padding(padding: EdgeInsets.all(4)),
                   Expanded(
                     child: DropdownSearch<int>(
                       items: List.generate(50, (i) => i),
-                      popupProps: PopupProps.menu(
+                      popupProps: const PopupProps.menu(
                         title: Text('fit to a specific width and height'),
                         showSearchBox: true,
                         fit: FlexFit.loose,
@@ -507,32 +507,32 @@ class _TestPageState extends State<TestPage> {
               ),
 
               ///************************[Handle dropdown programmatically]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[handle dropdown programmatically]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[handle dropdown programmatically]"),
+              const Divider(),
               DropdownSearch<int>(
                 key: _openDropDownProgKey,
-                items: [1, 2, 3],
+                items: const [1, 2, 3],
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              const Padding(padding: EdgeInsets.all(4)),
               ElevatedButton(
                 onPressed: () {
                   _openDropDownProgKey.currentState?.changeSelectedItem(100);
                 },
-                child: Text('set to 100'),
+                child: const Text('set to 100'),
               ),
-              Padding(padding: EdgeInsets.all(4)),
+              const Padding(padding: EdgeInsets.all(4)),
               ElevatedButton(
                 onPressed: () {
                   _openDropDownProgKey.currentState?.openDropDownSearch();
                 },
-                child: Text('open popup'),
+                child: const Text('open popup'),
               ),
 
               ///************************[multiLevel items example]********************************///
-              Padding(padding: EdgeInsets.all(8)),
-              Text("[multiLevel items example]"),
-              Divider(),
+              const Padding(padding: EdgeInsets.all(8)),
+              const Text("[multiLevel items example]"),
+              const Divider(),
               DropdownSearch<MultiLevelString>(
                 key: myKey,
                 items: myItems,
@@ -548,21 +548,21 @@ class _TestPageState extends State<TestPage> {
                           ? null
                           : (item.isExpanded
                               ? IconButton(
-                                  icon: Icon(Icons.arrow_drop_down),
+                                  icon: const Icon(Icons.arrow_drop_down),
                                   onPressed: () {
                                     item.isExpanded = !item.isExpanded;
                                     myKey.currentState?.updatePopupState();
                                   },
                                 )
                               : IconButton(
-                                  icon: Icon(Icons.arrow_right),
+                                  icon: const Icon(Icons.arrow_right),
                                   onPressed: () {
                                     item.isExpanded = !item.isExpanded;
                                     myKey.currentState?.updatePopupState();
                                   },
                                 )),
                       subtitle: item.subLevel.isNotEmpty && item.isExpanded
-                          ? Container(
+                          ? SizedBox(
                               height: item.subLevel.length * 50,
                               child: ListView(
                                 children: item.subLevel
@@ -597,7 +597,7 @@ class _TestPageState extends State<TestPage> {
   Widget _customDropDownExampleMultiSelection(
       BuildContext context, List<UserModel?> selectedItems) {
     if (selectedItems.isEmpty) {
-      return ListTile(
+      return const ListTile(
         contentPadding: EdgeInsets.all(0),
         leading: CircleAvatar(),
         title: Text("No item selected"),
@@ -610,8 +610,8 @@ class _TestPageState extends State<TestPage> {
           padding: const EdgeInsets.all(4.0),
           child: Container(
             child: ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: CircleAvatar(
+              contentPadding: const EdgeInsets.all(0),
+              leading: const CircleAvatar(
                   // this does not work - throws 404 error
                   // backgroundImage: NetworkImage(item.avatar ?? ''),
                   ),
@@ -632,7 +632,7 @@ class _TestPageState extends State<TestPage> {
     bool isSelected,
   ) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: !isSelected
           ? null
           : BoxDecoration(
@@ -644,7 +644,7 @@ class _TestPageState extends State<TestPage> {
         selected: isSelected,
         title: Text(item?.name ?? ''),
         subtitle: Text(item?.createdAt?.toString() ?? ''),
-        leading: CircleAvatar(
+        leading: const CircleAvatar(
             // this does not work - throws 404 error
             // backgroundImage: NetworkImage(item.avatar ?? ''),
             ),
@@ -668,10 +668,8 @@ class _TestPageState extends State<TestPage> {
             "https://s3.amazonaws.com/uifaces/faces/twitter/duck4fuck/128.jpg"
       }
     ];
-    if (data != null) {
-      return UserModel.fromJsonList(data);
-    }
-
+    return UserModel.fromJsonList(data);
+  
     return [];
   }
 }
@@ -681,7 +679,7 @@ class _CheckBoxWidget extends StatefulWidget {
   final bool? isSelected;
   final ValueChanged<bool?>? onChanged;
 
-  _CheckBoxWidget({required this.child, this.isSelected, this.onChanged});
+  const _CheckBoxWidget({required this.child, this.isSelected, this.onChanged});
 
   @override
   CheckBoxState createState() => CheckBoxState();
@@ -705,7 +703,7 @@ class CheckBoxState extends State<_CheckBoxWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
@@ -721,12 +719,12 @@ class CheckBoxState extends State<_CheckBoxWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Select: '),
+              const Text('Select: '),
               Checkbox(
                   value: isSelected,
                   tristate: true,
                   onChanged: (bool? v) {
-                    if (v == null) v = false;
+                    v ??= false;
                     setState(() {
                       isSelected = v;
                       if (widget.onChanged != null) widget.onChanged!(v);
@@ -792,17 +790,17 @@ class UserModel {
 
   ///this method will prevent the override of toString
   String userAsString() {
-    return '#${this.id} ${this.name}';
+    return '#$id $name';
   }
 
   ///this method will prevent the override of toString
   bool userFilterByCreationDate(String filter) {
-    return this.createdAt?.toString().contains(filter) ?? false;
+    return createdAt?.toString().contains(filter) ?? false;
   }
 
   ///custom comparing function to check if two users are equal
   bool isEqual(UserModel model) {
-    return this.id == model.id;
+    return id == model.id;
   }
 
   @override

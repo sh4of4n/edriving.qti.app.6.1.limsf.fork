@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
 import 'package:edriving_qti_app/pages/login/new_login_form.dart';
 import 'package:edriving_qti_app/pages/login/new_login_tablet_form.dart';
@@ -6,11 +7,12 @@ import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'login_bottom_card.dart';
-import 'login_form.dart';
 import 'login_tablet_bottom_card.dart';
-import 'login_tablet_form.dart';
 
+@RoutePage(name: 'Login')
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -41,7 +43,7 @@ class _LoginState extends State<Login> {
               Colors.amber.shade300,
               primaryColor
             ],
-            stops: [0.2, 0.4, 0.6, 0.7, 1],
+            stops: const [0.2, 0.4, 0.6, 0.7, 1],
             radius: 0.7,
           ),
         ),
@@ -49,7 +51,7 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Column(
                 children: <Widget>[
@@ -80,11 +82,11 @@ class _LoginState extends State<Login> {
                           height: 120.h,
                         ),
                         // LoginForm(),
-                        NewLoginForm()
+                        const NewLoginForm()
                       ],
                     ),
                   ),
-                  LoginBottomCard(),
+                  const LoginBottomCard(),
                 ],
               ),
             ),
@@ -109,7 +111,7 @@ class _LoginState extends State<Login> {
               Colors.amber.shade300,
               primaryColor
             ],
-            stops: [0.2, 0.4, 0.6, 0.7, 1],
+            stops: const [0.2, 0.4, 0.6, 0.7, 1],
             radius: 0.7,
           ),
         ),
@@ -117,7 +119,7 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Column(
                 children: <Widget>[
@@ -148,11 +150,11 @@ class _LoginState extends State<Login> {
                           height: 120.h,
                         ),
                         // LoginTabletForm(),
-                        NewLoginTabletForm(),
+                        const NewLoginTabletForm(),
                       ],
                     ),
                   ),
-                  LoginTabletBottomCard(),
+                  const LoginTabletBottomCard(),
                 ],
               ),
             ),

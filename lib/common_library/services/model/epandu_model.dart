@@ -5,17 +5,17 @@ class GetEnrollmentResponse {
 
   GetEnrollmentResponse.fromJson(Map<String, dynamic> json) {
     if (json['Enroll'] != null) {
-      enroll = new List<Enroll>.empty(growable: true);
+      enroll = List<Enroll>.empty(growable: true);
       json['Enroll'].forEach((v) {
-        enroll!.add(new Enroll.fromJson(v));
+        enroll!.add(Enroll.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.enroll != null) {
-      data['Enroll'] = this.enroll!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (enroll != null) {
+      data['Enroll'] = enroll!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -164,52 +164,52 @@ class Enroll {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['trandate'] = this.trandate;
-    data['ic_no'] = this.icNo;
-    data['group_id'] = this.groupId;
-    data['kpp_group_id'] = this.kppGroupId;
-    data['kpp_group_id_2'] = this.kppGroupId2;
-    data['kpp_group_id_3'] = this.kppGroupId3;
-    data['blacklisted'] = this.blacklisted;
-    data['stu_no'] = this.stuNo;
-    data['ds_code'] = this.dsCode;
-    data['employe_no'] = this.employeNo;
-    data['intro_by'] = this.introBy;
-    data['comm_type'] = this.commType;
-    data['fees_agree'] = this.feesAgree;
-    data['hrs_agree'] = this.hrsAgree;
-    data['addhr_chrg'] = this.addhrChrg;
-    data['prompt_tes'] = this.promptTes;
-    data['total_paid'] = this.totalPaid;
-    data['retest'] = this.retest;
-    data['cert_no'] = this.certNo;
-    data['kpp02_cert_no'] = this.kpp02CertNo;
-    data['remark'] = this.remark;
-    data['tl_hrs_tak'] = this.tlHrsTak;
-    data['excl_incml'] = this.exclIncml;
-    data['sm4_no'] = this.sm4No;
-    data['pickup_point'] = this.pickupPoint;
-    data['transtamp'] = this.transtamp;
-    data['epret_code'] = this.epretCode;
-    data['epret_reqid'] = this.epretReqid;
-    data['ekpp_code'] = this.ekppCode;
-    data['ekpp_reqid'] = this.ekppReqid;
-    data['ej2b_stat'] = this.ej2bStat;
-    data['ej2b_tick'] = this.ej2bTick;
-    data['ej2a_tick'] = this.ej2aTick;
-    data['add_class'] = this.addClass;
-    data['l2a_prn_count'] = this.l2aPrnCount;
-    data['l2b_prn_count'] = this.l2bPrnCount;
-    data['sm4_prn_count'] = this.sm4PrnCount;
-    data['user_id'] = this.userId;
-    data['kpp02_cert_path'] = this.kpp02CertPath;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['lastupload'] = this.lastupload;
-    data['deleted'] = this.deleted;
-    data['di_code'] = this.diCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['trandate'] = trandate;
+    data['ic_no'] = icNo;
+    data['group_id'] = groupId;
+    data['kpp_group_id'] = kppGroupId;
+    data['kpp_group_id_2'] = kppGroupId2;
+    data['kpp_group_id_3'] = kppGroupId3;
+    data['blacklisted'] = blacklisted;
+    data['stu_no'] = stuNo;
+    data['ds_code'] = dsCode;
+    data['employe_no'] = employeNo;
+    data['intro_by'] = introBy;
+    data['comm_type'] = commType;
+    data['fees_agree'] = feesAgree;
+    data['hrs_agree'] = hrsAgree;
+    data['addhr_chrg'] = addhrChrg;
+    data['prompt_tes'] = promptTes;
+    data['total_paid'] = totalPaid;
+    data['retest'] = retest;
+    data['cert_no'] = certNo;
+    data['kpp02_cert_no'] = kpp02CertNo;
+    data['remark'] = remark;
+    data['tl_hrs_tak'] = tlHrsTak;
+    data['excl_incml'] = exclIncml;
+    data['sm4_no'] = sm4No;
+    data['pickup_point'] = pickupPoint;
+    data['transtamp'] = transtamp;
+    data['epret_code'] = epretCode;
+    data['epret_reqid'] = epretReqid;
+    data['ekpp_code'] = ekppCode;
+    data['ekpp_reqid'] = ekppReqid;
+    data['ej2b_stat'] = ej2bStat;
+    data['ej2b_tick'] = ej2bTick;
+    data['ej2a_tick'] = ej2aTick;
+    data['add_class'] = addClass;
+    data['l2a_prn_count'] = l2aPrnCount;
+    data['l2b_prn_count'] = l2bPrnCount;
+    data['sm4_prn_count'] = sm4PrnCount;
+    data['user_id'] = userId;
+    data['kpp02_cert_path'] = kpp02CertPath;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['lastupload'] = lastupload;
+    data['deleted'] = deleted;
+    data['di_code'] = diCode;
     return data;
   }
 }
@@ -241,13 +241,13 @@ class EnrolledClassesRequest {
   }
 
   Map<String, String?> toJson() {
-    final Map<String, String?> data = new Map<String, String?>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['icNo'] = this.icNo;
-    data['groupId'] = this.groupId;
+    final Map<String, String?> data = <String, String?>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['icNo'] = icNo;
+    data['groupId'] = groupId;
     return data;
   }
 }
@@ -259,17 +259,17 @@ class EnrolledClassesResponse {
 
   EnrolledClassesResponse.fromJson(Map<String, dynamic> json) {
     if (json['StuPrac'] != null) {
-      stuPrac = new List<StuPrac>.empty(growable: true);
+      stuPrac = List<StuPrac>.empty(growable: true);
       json['StuPrac'].forEach((v) {
-        stuPrac!.add(new StuPrac.fromJson(v));
+        stuPrac!.add(StuPrac.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.stuPrac != null) {
-      data['StuPrac'] = this.stuPrac!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (stuPrac != null) {
+      data['StuPrac'] = stuPrac!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -445,61 +445,61 @@ class StuPrac {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ic_no'] = this.icNo;
-    data['stu_no'] = this.stuNo;
-    data['trandate'] = this.trandate;
-    data['veh_no'] = this.vehNo;
-    data['trn_code'] = this.trnCode;
-    data['slip_no'] = this.slipNo;
-    data['sm4_no'] = this.sm4No;
-    data['cert_no'] = this.certNo;
-    data['kpp02_cert_no'] = this.kpp02CertNo;
-    data['group_id'] = this.groupId;
-    data['kpp_group_id'] = this.kppGroupId;
-    data['kpp_group_id_2'] = this.kppGroupId2;
-    data['kpp_group_id_3'] = this.kppGroupId3;
-    data['class'] = this.classes;
-    data['bg_time'] = this.bgTime;
-    data['end_time'] = this.endTime;
-    data['employe_no'] = this.employeNo;
-    data['remark'] = this.remark;
-    data['ds_code'] = this.dsCode;
-    data['prac_type'] = this.pracType;
-    data['sys_time'] = this.sysTime;
-    data['close_user'] = this.closeUser;
-    data['close_date'] = this.closeDate;
-    data['epret_code'] = this.epretCode;
-    data['epret_reqid'] = this.epretReqid;
-    data['ekpp_code'] = this.ekppCode;
-    data['ekpp_reqid'] = this.ekppReqid;
-    data['transtamp'] = this.transtamp;
-    data['act_bg_time'] = this.actBgTime;
-    data['act_end_time'] = this.actEndTime;
-    data['by_fingerprn'] = this.byFingerprn;
-    data['admin_id1'] = this.adminId1;
-    data['act_bg_time2'] = this.actBgTime2;
-    data['act_end_time2'] = this.actEndTime2;
-    data['class_code'] = this.classCode;
-    data['verify_trncode'] = this.verifyTrncode;
-    data['entry_type'] = this.entryType;
-    data['ej2a_tick'] = this.ej2aTick;
-    data['ej2a_ind'] = this.ej2aInd;
-    data['ej2a_stat'] = this.ej2aStat;
-    data['ej2b_tick'] = this.ej2bTick;
-    data['ej2b_ind'] = this.ej2bInd;
-    data['ej2b_stat'] = this.ej2bStat;
-    data['location'] = this.location;
-    data['course_code'] = this.courseCode;
-    data['theory_type'] = this.theoryType;
-    data['session_total_time'] = this.sessionTotalTime;
-    data['total_time'] = this.totalTime;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['lastupload'] = this.lastupload;
-    data['deleted'] = this.deleted;
-    data['di_code'] = this.diCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ic_no'] = icNo;
+    data['stu_no'] = stuNo;
+    data['trandate'] = trandate;
+    data['veh_no'] = vehNo;
+    data['trn_code'] = trnCode;
+    data['slip_no'] = slipNo;
+    data['sm4_no'] = sm4No;
+    data['cert_no'] = certNo;
+    data['kpp02_cert_no'] = kpp02CertNo;
+    data['group_id'] = groupId;
+    data['kpp_group_id'] = kppGroupId;
+    data['kpp_group_id_2'] = kppGroupId2;
+    data['kpp_group_id_3'] = kppGroupId3;
+    data['class'] = classes;
+    data['bg_time'] = bgTime;
+    data['end_time'] = endTime;
+    data['employe_no'] = employeNo;
+    data['remark'] = remark;
+    data['ds_code'] = dsCode;
+    data['prac_type'] = pracType;
+    data['sys_time'] = sysTime;
+    data['close_user'] = closeUser;
+    data['close_date'] = closeDate;
+    data['epret_code'] = epretCode;
+    data['epret_reqid'] = epretReqid;
+    data['ekpp_code'] = ekppCode;
+    data['ekpp_reqid'] = ekppReqid;
+    data['transtamp'] = transtamp;
+    data['act_bg_time'] = actBgTime;
+    data['act_end_time'] = actEndTime;
+    data['by_fingerprn'] = byFingerprn;
+    data['admin_id1'] = adminId1;
+    data['act_bg_time2'] = actBgTime2;
+    data['act_end_time2'] = actEndTime2;
+    data['class_code'] = classCode;
+    data['verify_trncode'] = verifyTrncode;
+    data['entry_type'] = entryType;
+    data['ej2a_tick'] = ej2aTick;
+    data['ej2a_ind'] = ej2aInd;
+    data['ej2a_stat'] = ej2aStat;
+    data['ej2b_tick'] = ej2bTick;
+    data['ej2b_ind'] = ej2bInd;
+    data['ej2b_stat'] = ej2bStat;
+    data['location'] = location;
+    data['course_code'] = courseCode;
+    data['theory_type'] = theoryType;
+    data['session_total_time'] = sessionTotalTime;
+    data['total_time'] = totalTime;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['lastupload'] = lastupload;
+    data['deleted'] = deleted;
+    data['di_code'] = diCode;
     return data;
   }
 }
@@ -541,17 +541,17 @@ class StudentPaymentResponse {
 
   StudentPaymentResponse.fromJson(Map<String, dynamic> json) {
     if (json['CollectTrn'] != null) {
-      collectTrn = new List<CollectTrn>.empty(growable: true);
+      collectTrn = List<CollectTrn>.empty(growable: true);
       json['CollectTrn'].forEach((v) {
-        collectTrn!.add(new CollectTrn.fromJson(v));
+        collectTrn!.add(CollectTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.collectTrn != null) {
-      data['CollectTrn'] = this.collectTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (collectTrn != null) {
+      data['CollectTrn'] = collectTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -805,87 +805,87 @@ class CollectTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['job_no'] = this.jobNo;
-    data['recp_no'] = this.recpNo;
-    data['serial_type'] = this.serialType;
-    data['trandate'] = this.trandate;
-    data['trantime'] = this.trantime;
-    data['veh_no'] = this.vehNo;
-    data['ic_no'] = this.icNo;
-    data['ds_code'] = this.dsCode;
-    data['tdefa_amt'] = this.tdefaAmt;
-    data['thand_chrg'] = this.thandChrg;
-    data['tserv_chrg'] = this.tservChrg;
-    data['tserv_tax'] = this.tservTax;
-    data['tran_total'] = this.tranTotal;
-    data['round_amt'] = this.roundAmt;
-    data['tran_user'] = this.tranUser;
-    data['pay_amount'] = this.payAmount;
-    data['pay_mode'] = this.payMode;
-    data['crd_type'] = this.crdType;
-    data['pay_refno'] = this.payRefno;
-    data['bal_amount'] = this.balAmount;
-    data['tl_tax_amt'] = this.tlTaxAmt;
-    data['cancel_user'] = this.cancelUser;
-    data['cancel_on'] = this.cancelOn;
-    data['cancel'] = this.cancel;
-    data['transtamp'] = this.transtamp;
-    data['batch_no'] = this.batchNo;
-    data['cash_amount'] = this.cashAmount;
-    data['chq_amount'] = this.chqAmount;
-    data['cc_amount'] = this.ccAmount;
-    data['package_code'] = this.packageCode;
-    data['comm_amount'] = this.commAmount;
-    data['ori_recpno'] = this.oriRecpno;
-    data['ori_stype'] = this.oriStype;
-    data['tcomm_amt'] = this.tcommAmt;
-    data['tagent_comm_amt'] = this.tagentCommAmt;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['lastupload'] = this.lastupload;
-    data['deleted'] = this.deleted;
-    data['di_code'] = this.diCode;
-    data['id'] = this.id;
-    data['ctrl_no'] = this.ctrlNo;
-    data['job_no1'] = this.jobNo1;
-    data['recp_no1'] = this.recpNo1;
-    data['book_no'] = this.bookNo;
-    data['trandate1'] = this.trandate1;
-    data['trantime1'] = this.trantime1;
-    data['veh_no1'] = this.vehNo1;
-    data['ic_no1'] = this.icNo1;
-    data['group_id'] = this.groupId;
-    data['grp_desc'] = this.grpDesc;
-    data['tran_categ'] = this.tranCateg;
-    data['package_code1'] = this.packageCode1;
-    data['item_qty'] = this.itemQty;
-    data['item_price'] = this.itemPrice;
-    data['tax_code'] = this.taxCode;
-    data['tax_rate'] = this.taxRate;
-    data['tax_amt'] = this.taxAmt;
-    data['price_include_gst'] = this.priceIncludeGst;
-    data['defa_amt'] = this.defaAmt;
-    data['unit_hand_chrg'] = this.unitHandChrg;
-    data['hand_chrg'] = this.handChrg;
-    data['unit_serv_chrg'] = this.unitServChrg;
-    data['serv_chrg'] = this.servChrg;
-    data['unit_serv_tax'] = this.unitServTax;
-    data['serv_tax'] = this.servTax;
-    data['tran_total1'] = this.tranTotal1;
-    data['nett_amt'] = this.nettAmt;
-    data['unit_comm_amt'] = this.unitCommAmt;
-    data['transtamp1'] = this.transtamp1;
-    data['comm_amt'] = this.commAmt;
-    data['unit_agent_comm'] = this.unitAgentComm;
-    data['agent_comm_amt'] = this.agentCommAmt;
-    data['trn_code'] = this.trnCode;
-    data['trn_desc'] = this.trnDesc;
-    data['comp_code1'] = this.compCode1;
-    data['branch_code1'] = this.branchCode1;
-    data['lastupload1'] = this.lastupload1;
-    data['deleted1'] = this.deleted1;
-    data['di_code1'] = this.diCode1;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['job_no'] = jobNo;
+    data['recp_no'] = recpNo;
+    data['serial_type'] = serialType;
+    data['trandate'] = trandate;
+    data['trantime'] = trantime;
+    data['veh_no'] = vehNo;
+    data['ic_no'] = icNo;
+    data['ds_code'] = dsCode;
+    data['tdefa_amt'] = tdefaAmt;
+    data['thand_chrg'] = thandChrg;
+    data['tserv_chrg'] = tservChrg;
+    data['tserv_tax'] = tservTax;
+    data['tran_total'] = tranTotal;
+    data['round_amt'] = roundAmt;
+    data['tran_user'] = tranUser;
+    data['pay_amount'] = payAmount;
+    data['pay_mode'] = payMode;
+    data['crd_type'] = crdType;
+    data['pay_refno'] = payRefno;
+    data['bal_amount'] = balAmount;
+    data['tl_tax_amt'] = tlTaxAmt;
+    data['cancel_user'] = cancelUser;
+    data['cancel_on'] = cancelOn;
+    data['cancel'] = cancel;
+    data['transtamp'] = transtamp;
+    data['batch_no'] = batchNo;
+    data['cash_amount'] = cashAmount;
+    data['chq_amount'] = chqAmount;
+    data['cc_amount'] = ccAmount;
+    data['package_code'] = packageCode;
+    data['comm_amount'] = commAmount;
+    data['ori_recpno'] = oriRecpno;
+    data['ori_stype'] = oriStype;
+    data['tcomm_amt'] = tcommAmt;
+    data['tagent_comm_amt'] = tagentCommAmt;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['lastupload'] = lastupload;
+    data['deleted'] = deleted;
+    data['di_code'] = diCode;
+    data['id'] = id;
+    data['ctrl_no'] = ctrlNo;
+    data['job_no1'] = jobNo1;
+    data['recp_no1'] = recpNo1;
+    data['book_no'] = bookNo;
+    data['trandate1'] = trandate1;
+    data['trantime1'] = trantime1;
+    data['veh_no1'] = vehNo1;
+    data['ic_no1'] = icNo1;
+    data['group_id'] = groupId;
+    data['grp_desc'] = grpDesc;
+    data['tran_categ'] = tranCateg;
+    data['package_code1'] = packageCode1;
+    data['item_qty'] = itemQty;
+    data['item_price'] = itemPrice;
+    data['tax_code'] = taxCode;
+    data['tax_rate'] = taxRate;
+    data['tax_amt'] = taxAmt;
+    data['price_include_gst'] = priceIncludeGst;
+    data['defa_amt'] = defaAmt;
+    data['unit_hand_chrg'] = unitHandChrg;
+    data['hand_chrg'] = handChrg;
+    data['unit_serv_chrg'] = unitServChrg;
+    data['serv_chrg'] = servChrg;
+    data['unit_serv_tax'] = unitServTax;
+    data['serv_tax'] = servTax;
+    data['tran_total1'] = tranTotal1;
+    data['nett_amt'] = nettAmt;
+    data['unit_comm_amt'] = unitCommAmt;
+    data['transtamp1'] = transtamp1;
+    data['comm_amt'] = commAmt;
+    data['unit_agent_comm'] = unitAgentComm;
+    data['agent_comm_amt'] = agentCommAmt;
+    data['trn_code'] = trnCode;
+    data['trn_desc'] = trnDesc;
+    data['comp_code1'] = compCode1;
+    data['branch_code1'] = branchCode1;
+    data['lastupload1'] = lastupload1;
+    data['deleted1'] = deleted1;
+    data['di_code1'] = diCode1;
     return data;
   }
 }
@@ -936,17 +936,17 @@ class GetDTestByCodeResponse {
 
   GetDTestByCodeResponse.fromJson(Map<String, dynamic> json) {
     if (json['DTest'] != null) {
-      dTest = new List<DTest>.empty(growable: true);
+      dTest = List<DTest>.empty(growable: true);
       json['DTest'].forEach((v) {
-        dTest!.add(new DTest.fromJson(v));
+        dTest!.add(DTest.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.dTest != null) {
-      data['DTest'] = this.dTest!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (dTest != null) {
+      data['DTest'] = dTest!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1146,69 +1146,69 @@ class DTest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ic_no'] = this.icNo;
-    data['nric'] = this.nric;
-    data['stu_no'] = this.stuNo;
-    data['ds_code'] = this.dsCode;
-    data['class'] = this.classes;
-    data['test_date'] = this.testDate;
-    data['test_type'] = this.testType;
-    data['group_id'] = this.groupId;
-    data['hrs_agree'] = this.hrsAgree;
-    data['card_no'] = this.cardNo;
-    data['sijil_no'] = this.sijilNo;
-    data['table_no'] = this.tableNo;
-    data['time'] = this.time;
-    data['no_correct'] = this.noCorrect;
-    data['part_ii'] = this.partIi;
-    data['part_i'] = this.partI;
-    data['part_iii'] = this.partIii;
-    data['result'] = this.result;
-    data['part_iv'] = this.partIv;
-    data['test_part'] = this.testPart;
-    data['repeat'] = this.repeat;
-    data['amount'] = this.amount;
-    data['pas_crt_no'] = this.pasCrtNo;
-    data['remark'] = this.remark;
-    data['rec_no'] = this.recNo;
-    data['sm4_no'] = this.sm4No;
-    data['attempt'] = this.attempt;
-    data['cancel'] = this.cancel;
-    data['closed'] = this.closed;
-    data['book_no'] = this.bookNo;
-    data['ctrl_no'] = this.ctrlNo;
-    data['ereq_code'] = this.ereqCode;
-    data['ereq_id'] = this.ereqId;
-    data['ebook_date'] = this.ebookDate;
-    data['etest_time'] = this.etestTime;
-    data['eattempt'] = this.eattempt;
-    data['ereq_recp'] = this.ereqRecp;
-    data['ereq_bookid'] = this.ereqBookid;
-    data['ereq_amtpd'] = this.ereqAmtpd;
-    data['eref_no'] = this.erefNo;
-    data['esent'] = this.esent;
-    data['eaccept'] = this.eaccept;
-    data['erej_reason'] = this.erejReason;
-    data['site_code'] = this.siteCode;
-    data['transtamp'] = this.transtamp;
-    data['class_code'] = this.classCode;
-    data['recp_no'] = this.recpNo;
-    data['card_date'] = this.cardDate;
-    data['aprv_date'] = this.aprvDate;
-    data['p_remark'] = this.pRemark;
-    data['p_amount'] = this.pAmount;
-    data['sesi'] = this.sesi;
-    data['test_loc'] = this.testLoc;
-    data['apprv_booking'] = this.apprvBooking;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['row_key'] = this.rowKey;
-    data['lastupload'] = this.lastupload;
-    data['deleted'] = this.deleted;
-    data['di_code'] = this.diCode;
-    data['test_type_value'] = this.testTypeValue;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ic_no'] = icNo;
+    data['nric'] = nric;
+    data['stu_no'] = stuNo;
+    data['ds_code'] = dsCode;
+    data['class'] = classes;
+    data['test_date'] = testDate;
+    data['test_type'] = testType;
+    data['group_id'] = groupId;
+    data['hrs_agree'] = hrsAgree;
+    data['card_no'] = cardNo;
+    data['sijil_no'] = sijilNo;
+    data['table_no'] = tableNo;
+    data['time'] = time;
+    data['no_correct'] = noCorrect;
+    data['part_ii'] = partIi;
+    data['part_i'] = partI;
+    data['part_iii'] = partIii;
+    data['result'] = result;
+    data['part_iv'] = partIv;
+    data['test_part'] = testPart;
+    data['repeat'] = repeat;
+    data['amount'] = amount;
+    data['pas_crt_no'] = pasCrtNo;
+    data['remark'] = remark;
+    data['rec_no'] = recNo;
+    data['sm4_no'] = sm4No;
+    data['attempt'] = attempt;
+    data['cancel'] = cancel;
+    data['closed'] = closed;
+    data['book_no'] = bookNo;
+    data['ctrl_no'] = ctrlNo;
+    data['ereq_code'] = ereqCode;
+    data['ereq_id'] = ereqId;
+    data['ebook_date'] = ebookDate;
+    data['etest_time'] = etestTime;
+    data['eattempt'] = eattempt;
+    data['ereq_recp'] = ereqRecp;
+    data['ereq_bookid'] = ereqBookid;
+    data['ereq_amtpd'] = ereqAmtpd;
+    data['eref_no'] = erefNo;
+    data['esent'] = esent;
+    data['eaccept'] = eaccept;
+    data['erej_reason'] = erejReason;
+    data['site_code'] = siteCode;
+    data['transtamp'] = transtamp;
+    data['class_code'] = classCode;
+    data['recp_no'] = recpNo;
+    data['card_date'] = cardDate;
+    data['aprv_date'] = aprvDate;
+    data['p_remark'] = pRemark;
+    data['p_amount'] = pAmount;
+    data['sesi'] = sesi;
+    data['test_loc'] = testLoc;
+    data['apprv_booking'] = apprvBooking;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['row_key'] = rowKey;
+    data['lastupload'] = lastupload;
+    data['deleted'] = deleted;
+    data['di_code'] = diCode;
+    data['test_type_value'] = testTypeValue;
     return data;
   }
 }
@@ -1221,18 +1221,18 @@ class GetCollectionDetailByRecpNoResponse {
 
   GetCollectionDetailByRecpNoResponse.fromJson(Map<String, dynamic> json) {
     if (json['CollectDetail'] != null) {
-      collectDetail = new List<CollectDetail>.empty(growable: true);
+      collectDetail = List<CollectDetail>.empty(growable: true);
       json['CollectDetail'].forEach((v) {
-        collectDetail!.add(new CollectDetail.fromJson(v));
+        collectDetail!.add(CollectDetail.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.collectDetail != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (collectDetail != null) {
       data['CollectDetail'] =
-          this.collectDetail!.map((v) => v.toJson()).toList();
+          collectDetail!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1369,48 +1369,48 @@ class CollectDetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['ctrl_no'] = this.ctrlNo;
-    data['job_no'] = this.jobNo;
-    data['recp_no'] = this.recpNo;
-    data['book_no'] = this.bookNo;
-    data['trandate'] = this.trandate;
-    data['trantime'] = this.trantime;
-    data['veh_no'] = this.vehNo;
-    data['ic_no'] = this.icNo;
-    data['group_id'] = this.groupId;
-    data['grp_desc'] = this.grpDesc;
-    data['tran_categ'] = this.tranCateg;
-    data['package_code'] = this.packageCode;
-    data['package_desc'] = this.packageDesc;
-    data['item_qty'] = this.itemQty;
-    data['item_price'] = this.itemPrice;
-    data['tax_code'] = this.taxCode;
-    data['tax_rate'] = this.taxRate;
-    data['tax_amt'] = this.taxAmt;
-    data['price_include_gst'] = this.priceIncludeGst;
-    data['defa_amt'] = this.defaAmt;
-    data['unit_hand_chrg'] = this.unitHandChrg;
-    data['hand_chrg'] = this.handChrg;
-    data['unit_serv_chrg'] = this.unitServChrg;
-    data['serv_chrg'] = this.servChrg;
-    data['unit_serv_tax'] = this.unitServTax;
-    data['serv_tax'] = this.servTax;
-    data['tran_total'] = this.tranTotal;
-    data['nett_amt'] = this.nettAmt;
-    data['unit_comm_amt'] = this.unitCommAmt;
-    data['transtamp'] = this.transtamp;
-    data['comm_amt'] = this.commAmt;
-    data['unit_agent_comm'] = this.unitAgentComm;
-    data['agent_comm_amt'] = this.agentCommAmt;
-    data['trn_code'] = this.trnCode;
-    data['trn_desc'] = this.trnDesc;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['lastupload'] = this.lastupload;
-    data['deleted'] = this.deleted;
-    data['di_code'] = this.diCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['ctrl_no'] = ctrlNo;
+    data['job_no'] = jobNo;
+    data['recp_no'] = recpNo;
+    data['book_no'] = bookNo;
+    data['trandate'] = trandate;
+    data['trantime'] = trantime;
+    data['veh_no'] = vehNo;
+    data['ic_no'] = icNo;
+    data['group_id'] = groupId;
+    data['grp_desc'] = grpDesc;
+    data['tran_categ'] = tranCateg;
+    data['package_code'] = packageCode;
+    data['package_desc'] = packageDesc;
+    data['item_qty'] = itemQty;
+    data['item_price'] = itemPrice;
+    data['tax_code'] = taxCode;
+    data['tax_rate'] = taxRate;
+    data['tax_amt'] = taxAmt;
+    data['price_include_gst'] = priceIncludeGst;
+    data['defa_amt'] = defaAmt;
+    data['unit_hand_chrg'] = unitHandChrg;
+    data['hand_chrg'] = handChrg;
+    data['unit_serv_chrg'] = unitServChrg;
+    data['serv_chrg'] = servChrg;
+    data['unit_serv_tax'] = unitServTax;
+    data['serv_tax'] = servTax;
+    data['tran_total'] = tranTotal;
+    data['nett_amt'] = nettAmt;
+    data['unit_comm_amt'] = unitCommAmt;
+    data['transtamp'] = transtamp;
+    data['comm_amt'] = commAmt;
+    data['unit_agent_comm'] = unitAgentComm;
+    data['agent_comm_amt'] = agentCommAmt;
+    data['trn_code'] = trnCode;
+    data['trn_desc'] = trnDesc;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['lastupload'] = lastupload;
+    data['deleted'] = deleted;
+    data['di_code'] = diCode;
     return data;
   }
 }
@@ -1423,18 +1423,18 @@ class GetCourseSectionListResponse {
 
   GetCourseSectionListResponse.fromJson(Map<String, dynamic> json) {
     if (json['CourseSection'] != null) {
-      courseSection = new List<CourseSection>.empty(growable: true);
+      courseSection = List<CourseSection>.empty(growable: true);
       json['CourseSection'].forEach((v) {
-        courseSection!.add(new CourseSection.fromJson(v));
+        courseSection!.add(CourseSection.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.courseSection != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (courseSection != null) {
       data['CourseSection'] =
-          this.courseSection!.map((v) => v.toJson()).toList();
+          courseSection!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1481,18 +1481,18 @@ class CourseSection {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['group_id'] = this.groupId;
-    data['course_code'] = this.courseCode;
-    data['section'] = this.section;
-    data['section_desc'] = this.sectionDesc;
-    data['create_user'] = this.createUser;
-    data['edit_user'] = this.editUser;
-    data['transtamp'] = this.transtamp;
-    data['deleted'] = this.deleted;
-    data['last_edited_by'] = this.lastEditedBy;
-    data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['group_id'] = groupId;
+    data['course_code'] = courseCode;
+    data['section'] = section;
+    data['section_desc'] = sectionDesc;
+    data['create_user'] = createUser;
+    data['edit_user'] = editUser;
+    data['transtamp'] = transtamp;
+    data['deleted'] = deleted;
+    data['last_edited_by'] = lastEditedBy;
+    data['created_by'] = createdBy;
     return data;
   }
 }
@@ -1505,17 +1505,17 @@ class GetTestListGroupIdResponse {
 
   GetTestListGroupIdResponse.fromJson(Map<String, dynamic> json) {
     if (json['Test'] != null) {
-      test = new List<GroupIdTest>.empty(growable: true);
+      test = List<GroupIdTest>.empty(growable: true);
       json['Test'].forEach((v) {
-        test!.add(new GroupIdTest.fromJson(v));
+        test!.add(GroupIdTest.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.test != null) {
-      data['Test'] = this.test!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (test != null) {
+      data['Test'] = test!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1571,21 +1571,21 @@ class GroupIdTest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['di_code'] = this.diCode;
-    data['group_id'] = this.groupId;
-    data['test_type'] = this.testType;
-    data['test_date'] = this.testDate;
-    data['test_time'] = this.testTime;
-    data['tl_quota'] = this.tlQuota;
-    data['online_quota'] = this.onlineQuota;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['di_code'] = diCode;
+    data['group_id'] = groupId;
+    data['test_type'] = testType;
+    data['test_date'] = testDate;
+    data['test_time'] = testTime;
+    data['tl_quota'] = tlQuota;
+    data['online_quota'] = onlineQuota;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -1598,17 +1598,17 @@ class GetTestListTestTypeResponse {
 
   GetTestListTestTypeResponse.fromJson(Map<String, dynamic> json) {
     if (json['Test'] != null) {
-      test = new List<TestTypeTest>.empty(growable: true);
+      test = List<TestTypeTest>.empty(growable: true);
       json['Test'].forEach((v) {
-        test!.add(new TestTypeTest.fromJson(v));
+        test!.add(TestTypeTest.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.test != null) {
-      data['Test'] = this.test!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (test != null) {
+      data['Test'] = test!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1664,21 +1664,21 @@ class TestTypeTest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['di_code'] = this.diCode;
-    data['group_id'] = this.groupId;
-    data['test_type'] = this.testType;
-    data['test_date'] = this.testDate;
-    data['test_time'] = this.testTime;
-    data['tl_quota'] = this.tlQuota;
-    data['online_quota'] = this.onlineQuota;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['di_code'] = diCode;
+    data['group_id'] = groupId;
+    data['test_type'] = testType;
+    data['test_date'] = testDate;
+    data['test_time'] = testTime;
+    data['tl_quota'] = tlQuota;
+    data['online_quota'] = onlineQuota;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -1691,17 +1691,17 @@ class GetTestListResponse {
 
   GetTestListResponse.fromJson(Map<String, dynamic> json) {
     if (json['Test'] != null) {
-      test = new List<Test>.empty(growable: true);
+      test = List<Test>.empty(growable: true);
       json['Test'].forEach((v) {
-        test!.add(new Test.fromJson(v));
+        test!.add(Test.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.test != null) {
-      data['Test'] = this.test!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (test != null) {
+      data['Test'] = test!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1763,23 +1763,23 @@ class Test {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['di_code'] = this.diCode;
-    data['group_id'] = this.groupId;
-    data['test_type'] = this.testType;
-    data['test_date'] = this.testDate;
-    data['test_time'] = this.testTime;
-    data['tl_quota'] = this.tlQuota;
-    data['online_quota'] = this.onlineQuota;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['deleted'] = this.deleted;
-    data['last_edited_by'] = this.lastEditedBy;
-    data['created_by'] = this.createdBy;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['di_code'] = diCode;
+    data['group_id'] = groupId;
+    data['test_type'] = testType;
+    data['test_date'] = testDate;
+    data['test_time'] = testTime;
+    data['tl_quota'] = tlQuota;
+    data['online_quota'] = onlineQuota;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['deleted'] = deleted;
+    data['last_edited_by'] = lastEditedBy;
+    data['created_by'] = createdBy;
     return data;
   }
 }
@@ -1824,17 +1824,17 @@ class SaveBookingTestRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['groupId'] = this.groupId;
-    data['testType'] = this.testType;
-    data['testDate'] = this.testDate;
-    data['courseSection'] = this.courseSection;
-    data['icNo'] = this.icNo;
-    data['userId'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['groupId'] = groupId;
+    data['testType'] = testType;
+    data['testDate'] = testDate;
+    data['courseSection'] = courseSection;
+    data['icNo'] = icNo;
+    data['userId'] = userId;
     return data;
   }
 }
@@ -1846,17 +1846,17 @@ class GetJpjTestCheckInResponse {
 
   GetJpjTestCheckInResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<GetJpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<GetJpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new GetJpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(GetJpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -1978,43 +1978,43 @@ class GetJpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -2026,17 +2026,17 @@ class GetLastJpjTestCheckInByIntervalResponse {
 
   GetLastJpjTestCheckInByIntervalResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<GetJpjTestTrnByInterval>.empty(growable: true);
+      jpjTestTrn = List<GetJpjTestTrnByInterval>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new GetJpjTestTrnByInterval.fromJson(v));
+        jpjTestTrn!.add(GetJpjTestTrnByInterval.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -2158,43 +2158,43 @@ class GetJpjTestTrnByInterval {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -2228,14 +2228,14 @@ class VerifyScanCodeRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['icNo'] = this.icNo;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['qrcodeJson'] = this.qrcodeJson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['icNo'] = icNo;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['qrcodeJson'] = qrcodeJson;
     return data;
   }
 }
@@ -2247,17 +2247,17 @@ class VerifyScanCodeResponse {
 
   VerifyScanCodeResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<JpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<JpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new JpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(JpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -2379,43 +2379,43 @@ class JpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -2449,14 +2449,14 @@ class GetScanCodeByActionRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['icNo'] = this.icNo;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['action'] = this.action;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['icNo'] = icNo;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['action'] = action;
     return data;
   }
 }
@@ -2468,17 +2468,17 @@ class GetScanCodeByActionResponse {
 
   GetScanCodeByActionResponse.fromJson(Map<String, dynamic> json) {
     if (json['Table1'] != null) {
-      table1 = new List<Table1>.empty(growable: true);
+      table1 = List<Table1>.empty(growable: true);
       json['Table1'].forEach((v) {
-        table1!.add(new Table1.fromJson(v));
+        table1!.add(Table1.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.table1 != null) {
-      data['Table1'] = this.table1!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (table1 != null) {
+      data['Table1'] = table1!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -2498,10 +2498,10 @@ class Table1 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['merchant_no'] = this.merchantNo;
-    data['action'] = this.action;
-    data['datetime'] = this.datetime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['merchant_no'] = merchantNo;
+    data['action'] = action;
+    data['datetime'] = datetime;
     return data;
   }
 }
@@ -2513,17 +2513,17 @@ class GetLastCallingJpjTestQueueNumberResponse {
 
   GetLastCallingJpjTestQueueNumberResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<LastCallingQueueJpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<LastCallingQueueJpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new LastCallingQueueJpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(LastCallingQueueJpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -2645,43 +2645,43 @@ class LastCallingQueueJpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -2695,17 +2695,17 @@ class GetPart3AvailableToCallJpjTestListResponse {
       Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
       jpjTestTrn =
-          new List<GetPart3AvailableToCallJpjTestTrn>.empty(growable: true);
+          List<GetPart3AvailableToCallJpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new GetPart3AvailableToCallJpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(GetPart3AvailableToCallJpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -2719,17 +2719,17 @@ class GetRpkAvailableToCallJpjTestListResponse {
   GetRpkAvailableToCallJpjTestListResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
       jpjTestTrn =
-          new List<GetPart3AvailableToCallJpjTestTrn>.empty(growable: true);
+          List<GetPart3AvailableToCallJpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new GetPart3AvailableToCallJpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(GetPart3AvailableToCallJpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -3151,143 +3151,143 @@ class GetPart3AvailableToCallJpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['book_no'] = this.bookNo;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['sesi'] = this.sesi;
-    data['part'] = this.part;
-    data['trn_nric_no'] = this.trnNricNo;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['progress_status'] = this.progressStatus;
-    data['queue_no'] = this.queueNo;
-    data['queue_printed'] = this.queuePrinted;
-    data['queue_prn_count'] = this.queuePrnCount;
-    data['queue_print_log'] = this.queuePrintLog;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['queue_status'] = this.queueStatus;
-    data['waiting'] = this.waiting;
-    data['first_wait_datetime'] = this.firstWaitDatetime;
-    data['wait_datetime'] = this.waitDatetime;
-    data['wait_count'] = this.waitCount;
-    data['standby'] = this.standby;
-    data['first_standby_datetime'] = this.firstStandbyDatetime;
-    data['standby_datetime'] = this.standbyDatetime;
-    data['standby_count'] = this.standbyCount;
-    data['insert_wait'] = this.insertWait;
-    data['calling'] = this.calling;
-    data['car_no'] = this.carNo;
-    data['plate_no1'] = this.plateNo1;
-    data['plate_no2'] = this.plateNo2;
-    data['first_call_datetime'] = this.firstCallDatetime;
-    data['called_datetime'] = this.calledDatetime;
-    data['call_count'] = this.callCount;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['total_time'] = this.totalTime;
-    data['check_out_time'] = this.checkOutTime;
-    data['fail_time'] = this.failTime;
-    data['fail_element_code'] = this.failElementCode;
-    data['fail_rule_code'] = this.failRuleCode;
-    data['fail_rule_desc'] = this.failRuleDesc;
-    data['mysikap_fail_element_code'] = this.mysikapFailElementCode;
-    data['mysikap_fail_rule_desc'] = this.mysikapFailRuleDesc;
-    data['mysikap_fail_rule_full_desc'] = this.mysikapFailRuleFullDesc;
-    data['emergency_start_datetime'] = this.emergencyStartDatetime;
-    data['emergency_end_datetime'] = this.emergencyEndDatetime;
-    data['resume'] = this.resume;
-    data['change_car'] = this.changeCar;
-    data['result'] = this.result;
-    data['total_score'] = this.totalScore;
-    data['mysikap_result'] = this.mysikapResult;
-    data['mysikap_total_score'] = this.mysikapTotalScore;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['rpk_waiting'] = this.rpkWaiting;
-    data['rpk_first_wait_datetime'] = this.rpkFirstWaitDatetime;
-    data['rpk_wait_datetime'] = this.rpkWaitDatetime;
-    data['rpk_wait_count'] = this.rpkWaitCount;
-    data['rpk_standby'] = this.rpkStandby;
-    data['rpk_first_standby_datetime'] = this.rpkFirstStandbyDatetime;
-    data['rpk_standby_datetime'] = this.rpkStandbyDatetime;
-    data['rpk_standby_count'] = this.rpkStandbyCount;
-    data['rpk_insert_wait'] = this.rpkInsertWait;
-    data['rpk_calling'] = this.rpkCalling;
-    data['rpk_car_no'] = this.rpkCarNo;
-    data['rpk_plate_no'] = this.rpkPlateNo;
-    data['rpk_first_call_datetime'] = this.rpkFirstCallDatetime;
-    data['rpk_called_datetime'] = this.rpkCalledDatetime;
-    data['rpk_call_count'] = this.rpkCallCount;
-    data['rpk_start_date'] = this.rpkStartDate;
-    data['rpk_start_time'] = this.rpkStartTime;
-    data['rpk_end_time'] = this.rpkEndTime;
-    data['rpk_total_time'] = this.rpkTotalTime;
-    data['rpk_user_id'] = this.rpkUserId;
-    data['road_waiting'] = this.roadWaiting;
-    data['road_first_wait_datetime'] = this.roadFirstWaitDatetime;
-    data['road_wait_datetime'] = this.roadWaitDatetime;
-    data['road_wait_count'] = this.roadWaitCount;
-    data['road_standby'] = this.roadStandby;
-    data['road_first_standby_datetime'] = this.roadFirstStandbyDatetime;
-    data['road_standby_datetime'] = this.roadStandbyDatetime;
-    data['road_standby_count'] = this.roadStandbyCount;
-    data['road_insert_wait'] = this.roadInsertWait;
-    data['road_calling'] = this.roadCalling;
-    data['road_car_no'] = this.roadCarNo;
-    data['road_plate_no'] = this.roadPlateNo;
-    data['road_first_call_datetime'] = this.roadFirstCallDatetime;
-    data['road_called_datetime'] = this.roadCalledDatetime;
-    data['road_call_count'] = this.roadCallCount;
-    data['road_start_date'] = this.roadStartDate;
-    data['road_start_time'] = this.roadStartTime;
-    data['road_end_time'] = this.roadEndTime;
-    data['road_total_time'] = this.roadTotalTime;
-    data['road_user_id'] = this.roadUserId;
-    data['road_check_out_time'] = this.roadCheckOutTime;
-    data['road_result'] = this.roadResult;
-    data['road_total_score'] = this.roadTotalScore;
-    data['mysikap_road_result'] = this.mysikapRoadResult;
-    data['mysikap_road_total_score'] = this.mysikapRoadTotalScore;
-    data['mysikap_road_fail_element_code'] = this.mysikapRoadFailElementCode;
-    data['mysikap_road_fail_rule_desc'] = this.mysikapRoadFailRuleDesc;
-    data['mysikap_road_fail_rule_full_desc'] = this.mysikapRoadFailRuleFullDesc;
-    data['overall_result'] = this.overallResult;
-    data['mysikap_overall_result'] = this.mysikapOverallResult;
-    data['part2_practical_id'] = this.part2PracticalId;
-    data['part3_practical_id'] = this.part3PracticalId;
-    data['confirm'] = this.confirm;
-    data['part3_printed'] = this.part3Printed;
-    data['part3_prn_count'] = this.part3PrnCount;
-    data['part3_print_log'] = this.part3PrintLog;
-    data['accident_user_id'] = this.accidentUserId;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
-    data['ic_photo_filename'] = this.icPhotoFilename;
-    data['owner_cat'] = this.ownerCat;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['book_no'] = bookNo;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['sesi'] = sesi;
+    data['part'] = part;
+    data['trn_nric_no'] = trnNricNo;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['progress_status'] = progressStatus;
+    data['queue_no'] = queueNo;
+    data['queue_printed'] = queuePrinted;
+    data['queue_prn_count'] = queuePrnCount;
+    data['queue_print_log'] = queuePrintLog;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['queue_status'] = queueStatus;
+    data['waiting'] = waiting;
+    data['first_wait_datetime'] = firstWaitDatetime;
+    data['wait_datetime'] = waitDatetime;
+    data['wait_count'] = waitCount;
+    data['standby'] = standby;
+    data['first_standby_datetime'] = firstStandbyDatetime;
+    data['standby_datetime'] = standbyDatetime;
+    data['standby_count'] = standbyCount;
+    data['insert_wait'] = insertWait;
+    data['calling'] = calling;
+    data['car_no'] = carNo;
+    data['plate_no1'] = plateNo1;
+    data['plate_no2'] = plateNo2;
+    data['first_call_datetime'] = firstCallDatetime;
+    data['called_datetime'] = calledDatetime;
+    data['call_count'] = callCount;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['total_time'] = totalTime;
+    data['check_out_time'] = checkOutTime;
+    data['fail_time'] = failTime;
+    data['fail_element_code'] = failElementCode;
+    data['fail_rule_code'] = failRuleCode;
+    data['fail_rule_desc'] = failRuleDesc;
+    data['mysikap_fail_element_code'] = mysikapFailElementCode;
+    data['mysikap_fail_rule_desc'] = mysikapFailRuleDesc;
+    data['mysikap_fail_rule_full_desc'] = mysikapFailRuleFullDesc;
+    data['emergency_start_datetime'] = emergencyStartDatetime;
+    data['emergency_end_datetime'] = emergencyEndDatetime;
+    data['resume'] = resume;
+    data['change_car'] = changeCar;
+    data['result'] = result;
+    data['total_score'] = totalScore;
+    data['mysikap_result'] = mysikapResult;
+    data['mysikap_total_score'] = mysikapTotalScore;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['rpk_waiting'] = rpkWaiting;
+    data['rpk_first_wait_datetime'] = rpkFirstWaitDatetime;
+    data['rpk_wait_datetime'] = rpkWaitDatetime;
+    data['rpk_wait_count'] = rpkWaitCount;
+    data['rpk_standby'] = rpkStandby;
+    data['rpk_first_standby_datetime'] = rpkFirstStandbyDatetime;
+    data['rpk_standby_datetime'] = rpkStandbyDatetime;
+    data['rpk_standby_count'] = rpkStandbyCount;
+    data['rpk_insert_wait'] = rpkInsertWait;
+    data['rpk_calling'] = rpkCalling;
+    data['rpk_car_no'] = rpkCarNo;
+    data['rpk_plate_no'] = rpkPlateNo;
+    data['rpk_first_call_datetime'] = rpkFirstCallDatetime;
+    data['rpk_called_datetime'] = rpkCalledDatetime;
+    data['rpk_call_count'] = rpkCallCount;
+    data['rpk_start_date'] = rpkStartDate;
+    data['rpk_start_time'] = rpkStartTime;
+    data['rpk_end_time'] = rpkEndTime;
+    data['rpk_total_time'] = rpkTotalTime;
+    data['rpk_user_id'] = rpkUserId;
+    data['road_waiting'] = roadWaiting;
+    data['road_first_wait_datetime'] = roadFirstWaitDatetime;
+    data['road_wait_datetime'] = roadWaitDatetime;
+    data['road_wait_count'] = roadWaitCount;
+    data['road_standby'] = roadStandby;
+    data['road_first_standby_datetime'] = roadFirstStandbyDatetime;
+    data['road_standby_datetime'] = roadStandbyDatetime;
+    data['road_standby_count'] = roadStandbyCount;
+    data['road_insert_wait'] = roadInsertWait;
+    data['road_calling'] = roadCalling;
+    data['road_car_no'] = roadCarNo;
+    data['road_plate_no'] = roadPlateNo;
+    data['road_first_call_datetime'] = roadFirstCallDatetime;
+    data['road_called_datetime'] = roadCalledDatetime;
+    data['road_call_count'] = roadCallCount;
+    data['road_start_date'] = roadStartDate;
+    data['road_start_time'] = roadStartTime;
+    data['road_end_time'] = roadEndTime;
+    data['road_total_time'] = roadTotalTime;
+    data['road_user_id'] = roadUserId;
+    data['road_check_out_time'] = roadCheckOutTime;
+    data['road_result'] = roadResult;
+    data['road_total_score'] = roadTotalScore;
+    data['mysikap_road_result'] = mysikapRoadResult;
+    data['mysikap_road_total_score'] = mysikapRoadTotalScore;
+    data['mysikap_road_fail_element_code'] = mysikapRoadFailElementCode;
+    data['mysikap_road_fail_rule_desc'] = mysikapRoadFailRuleDesc;
+    data['mysikap_road_fail_rule_full_desc'] = mysikapRoadFailRuleFullDesc;
+    data['overall_result'] = overallResult;
+    data['mysikap_overall_result'] = mysikapOverallResult;
+    data['part2_practical_id'] = part2PracticalId;
+    data['part3_practical_id'] = part3PracticalId;
+    data['confirm'] = confirm;
+    data['part3_printed'] = part3Printed;
+    data['part3_prn_count'] = part3PrnCount;
+    data['part3_print_log'] = part3PrintLog;
+    data['accident_user_id'] = accidentUserId;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
+    data['ic_photo_filename'] = icPhotoFilename;
+    data['owner_cat'] = ownerCat;
     return data;
   }
 }
@@ -3334,18 +3334,18 @@ class CallPart3JpjTestRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['vehNo'] = this.vehNo;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
-    data['courseCode'] = this.courseCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['vehNo'] = vehNo;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
+    data['courseCode'] = courseCode;
     return data;
   }
 }
@@ -3392,18 +3392,18 @@ class CallRpkJpjTestRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['vehNo'] = this.vehNo;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
-    data['courseCode'] = this.courseCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['vehNo'] = vehNo;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
+    data['courseCode'] = courseCode;
     return data;
   }
 }
@@ -3415,17 +3415,17 @@ class CallPart3JpjTestResponse {
 
   CallPart3JpjTestResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<CallPart3JpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<CallPart3JpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new CallPart3JpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(CallPart3JpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -3438,17 +3438,17 @@ class CallRpkJpjTestResponse {
 
   CallRpkJpjTestResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<CallPart3JpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<CallPart3JpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new CallPart3JpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(CallPart3JpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -3570,43 +3570,43 @@ class CallPart3JpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -3727,43 +3727,43 @@ class CallRpkJpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -3803,16 +3803,16 @@ class CancelCallPart3JpjTestRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
     return data;
   }
 }
@@ -3852,16 +3852,16 @@ class CancelCallRpkJpjTestRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
     return data;
   }
 }
@@ -3873,17 +3873,17 @@ class CancelCallPart3JpjTestResponse {
 
   CancelCallPart3JpjTestResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<CancelCallRpkJpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<CancelCallRpkJpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new CancelCallRpkJpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(CancelCallRpkJpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -3896,17 +3896,17 @@ class CancelCallRpkJpjTestResponse {
 
   CancelCallRpkJpjTestResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestTrn'] != null) {
-      jpjTestTrn = new List<CancelCallPart3JpjTestTrn>.empty(growable: true);
+      jpjTestTrn = List<CancelCallPart3JpjTestTrn>.empty(growable: true);
       json['JpjTestTrn'].forEach((v) {
-        jpjTestTrn!.add(new CancelCallPart3JpjTestTrn.fromJson(v));
+        jpjTestTrn!.add(CancelCallPart3JpjTestTrn.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestTrn != null) {
-      data['JpjTestTrn'] = this.jpjTestTrn!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestTrn != null) {
+      data['JpjTestTrn'] = jpjTestTrn!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -4028,43 +4028,43 @@ class CancelCallPart3JpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -4185,43 +4185,43 @@ class CancelCallRpkJpjTestTrn {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['test_date'] = this.testDate;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['sex'] = this.sex;
-    data['race'] = this.race;
-    data['nationality'] = this.nationality;
-    data['birth_date'] = this.birthDate;
-    data['add1'] = this.add1;
-    data['add2'] = this.add2;
-    data['add3'] = this.add3;
-    data['postcode'] = this.postcode;
-    data['city_name'] = this.cityName;
-    data['state_name'] = this.stateName;
-    data['ic_photo'] = this.icPhoto;
-    data['queue_no'] = this.queueNo;
-    data['reg_date'] = this.regDate;
-    data['register_photo'] = this.registerPhoto;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['printed'] = this.printed;
-    data['prn_count'] = this.prnCount;
-    data['print_log'] = this.printLog;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
-    data['lastupload'] = this.lastupload;
-    data['comp_code'] = this.compCode;
-    data['branch_code'] = this.branchCode;
-    data['deleted'] = this.deleted;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['test_date'] = testDate;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['sex'] = sex;
+    data['race'] = race;
+    data['nationality'] = nationality;
+    data['birth_date'] = birthDate;
+    data['add1'] = add1;
+    data['add2'] = add2;
+    data['add3'] = add3;
+    data['postcode'] = postcode;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
+    data['ic_photo'] = icPhoto;
+    data['queue_no'] = queueNo;
+    data['reg_date'] = regDate;
+    data['register_photo'] = registerPhoto;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['printed'] = printed;
+    data['prn_count'] = prnCount;
+    data['print_log'] = printLog;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
+    data['lastupload'] = lastupload;
+    data['comp_code'] = compCode;
+    data['branch_code'] = branchCode;
+    data['deleted'] = deleted;
     return data;
   }
 }
@@ -4267,18 +4267,18 @@ class UpdatePart3JpjTestResultRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['vehNo'] = this.vehNo;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
-    data['resultJson'] = this.resultJson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['vehNo'] = vehNo;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
+    data['resultJson'] = resultJson;
     return data;
   }
 }
@@ -4324,18 +4324,18 @@ class UpdateRpkJpjTestResultRequest {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['wsCodeCrypt'] = this.wsCodeCrypt;
-    data['caUid'] = this.caUid;
-    data['caPwd'] = this.caPwd;
-    data['diCode'] = this.diCode;
-    data['userId'] = this.userId;
-    data['vehNo'] = this.vehNo;
-    data['part3Type'] = this.part3Type;
-    data['groupId'] = this.groupId;
-    data['nricNo'] = this.nricNo;
-    data['testCode'] = this.testCode;
-    data['resultJson'] = this.resultJson;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['vehNo'] = vehNo;
+    data['part3Type'] = part3Type;
+    data['groupId'] = groupId;
+    data['nricNo'] = nricNo;
+    data['testCode'] = testCode;
+    data['resultJson'] = resultJson;
     return data;
   }
 }
@@ -4347,17 +4347,17 @@ class UpdatePart3JpjTestResultRpkResponse {
 
   UpdatePart3JpjTestResultRpkResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestRpk'] != null) {
-      jpjTestRpk = new List<JpjTestRpk>.empty(growable: true);
+      jpjTestRpk = List<JpjTestRpk>.empty(growable: true);
       json['JpjTestRpk'].forEach((v) {
-        jpjTestRpk!.add(new JpjTestRpk.fromJson(v));
+        jpjTestRpk!.add(JpjTestRpk.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestRpk != null) {
-      data['JpjTestRpk'] = this.jpjTestRpk!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestRpk != null) {
+      data['JpjTestRpk'] = jpjTestRpk!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -4370,17 +4370,17 @@ class UpdateRpkJpjTestResultResponse {
 
   UpdateRpkJpjTestResultResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestRpk'] != null) {
-      jpjTestRpk = new List<JpjTestRpk>.empty(growable: true);
+      jpjTestRpk = List<JpjTestRpk>.empty(growable: true);
       json['JpjTestRpk'].forEach((v) {
-        jpjTestRpk!.add(new JpjTestRpk.fromJson(v));
+        jpjTestRpk!.add(JpjTestRpk.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestRpk != null) {
-      data['JpjTestRpk'] = this.jpjTestRpk!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestRpk != null) {
+      data['JpjTestRpk'] = jpjTestRpk!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -4445,24 +4445,24 @@ class JpjTestRpk {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['rpk01'] = this.rpk01;
-    data['rpk02'] = this.rpk02;
-    data['rpk03'] = this.rpk03;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['rpk01'] = rpk01;
+    data['rpk02'] = rpk02;
+    data['rpk03'] = rpk03;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
     return data;
   }
 }
@@ -4474,17 +4474,17 @@ class UpdatePart3JpjTestResultJrResponse {
 
   UpdatePart3JpjTestResultJrResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestDdtl'] != null) {
-      jpjTestDdtl = new List<JpjTestDdtl>.empty(growable: true);
+      jpjTestDdtl = List<JpjTestDdtl>.empty(growable: true);
       json['JpjTestDdtl'].forEach((v) {
-        jpjTestDdtl!.add(new JpjTestDdtl.fromJson(v));
+        jpjTestDdtl!.add(JpjTestDdtl.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestDdtl != null) {
-      data['JpjTestDdtl'] = this.jpjTestDdtl!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestDdtl != null) {
+      data['JpjTestDdtl'] = jpjTestDdtl!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -4497,17 +4497,17 @@ class UpdateRpkJpjTestResultJrResponse {
 
   UpdateRpkJpjTestResultJrResponse.fromJson(Map<String, dynamic> json) {
     if (json['JpjTestDdtl'] != null) {
-      jpjTestDdtl = new List<JpjTestDdtl>.empty(growable: true);
+      jpjTestDdtl = List<JpjTestDdtl>.empty(growable: true);
       json['JpjTestDdtl'].forEach((v) {
-        jpjTestDdtl!.add(new JpjTestDdtl.fromJson(v));
+        jpjTestDdtl!.add(JpjTestDdtl.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jpjTestDdtl != null) {
-      data['JpjTestDdtl'] = this.jpjTestDdtl!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (jpjTestDdtl != null) {
+      data['JpjTestDdtl'] = jpjTestDdtl!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -4572,24 +4572,24 @@ class JpjTestDdtl {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ID'] = this.iD;
-    data['course_code'] = this.courseCode;
-    data['group_id'] = this.groupId;
-    data['nric_no'] = this.nricNo;
-    data['fullname'] = this.fullname;
-    data['test_code'] = this.testCode;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['a01'] = this.a01;
-    data['b01'] = this.b01;
-    data['c01'] = this.c01;
-    data['create_user'] = this.createUser;
-    data['create_date'] = this.createDate;
-    data['edit_user'] = this.editUser;
-    data['edit_date'] = this.editDate;
-    data['transtamp'] = this.transtamp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['course_code'] = courseCode;
+    data['group_id'] = groupId;
+    data['nric_no'] = nricNo;
+    data['fullname'] = fullname;
+    data['test_code'] = testCode;
+    data['start_date'] = startDate;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['a01'] = a01;
+    data['b01'] = b01;
+    data['c01'] = c01;
+    data['create_user'] = createUser;
+    data['create_date'] = createDate;
+    data['edit_user'] = editUser;
+    data['edit_date'] = editDate;
+    data['transtamp'] = transtamp;
     return data;
   }
 }

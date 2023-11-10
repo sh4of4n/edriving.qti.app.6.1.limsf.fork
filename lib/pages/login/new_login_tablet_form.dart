@@ -16,6 +16,8 @@ import '../../common_library/utils/uppercase_formatter.dart';
 import '../../router.gr.dart';
 
 class NewLoginTabletForm extends StatefulWidget {
+  const NewLoginTabletForm({super.key});
+
   @override
   _NewLoginTabletFormState createState() => _NewLoginTabletFormState();
 }
@@ -46,8 +48,8 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
   // var _height = ScreenUtil.screenHeight / 4.5;
 
   Location location = Location();
-  String _latitude = '';
-  String _longitude = '';
+  final String _latitude = '';
+  final String _longitude = '';
 
   DeviceInfo deviceInfo = DeviceInfo();
   // String _deviceModel = '';
@@ -100,7 +102,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             offset: Offset(0.0, 15.0),
@@ -140,9 +142,9 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                   labelText: 'IC/NO',
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.account_circle, size: 32),
+                  prefixIcon: const Icon(Icons.account_circle, size: 32),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -173,7 +175,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                   labelText: 'Permit Code',
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.lock, size: 32),
+                  prefixIcon: const Icon(Icons.lock, size: 32),
                   suffixIcon: IconButton(
                     icon: Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility),
@@ -186,7 +188,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                     },
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -234,11 +236,11 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
                               maxWidth: 800.w,
                               child: Text(
                                 _loginMessage!,
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                                 textAlign: TextAlign.center,
                               ),
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       _loginButton(),
                       // SizedBox(
                       //   height: 40.h,
@@ -284,7 +286,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
               minWidth: 250.w,
               padding: EdgeInsets.symmetric(vertical: 20.h),
               buttonColor: primaryColor,
-              shape: StadiumBorder(),
+              shape: const StadiumBorder(),
               child: ElevatedButton(
                 onPressed: _submitLogin, // () => localStorage.reset(),
                 style: ButtonStyle(
@@ -303,7 +305,7 @@ class _NewLoginTabletFormState extends State<NewLoginTabletForm>
 
   _submitLogin() async {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       setState(() {
         // _height = ScreenUtil().setHeight(1300);

@@ -10,6 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ForgotPasswordTabletForm extends StatefulWidget {
+  const ForgotPasswordTabletForm({super.key});
+
   @override
   _ForgotPasswordTabletFormState createState() =>
       _ForgotPasswordTabletFormState();
@@ -39,14 +41,14 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
       curve: Curves.elasticOut,
       width: double.infinity,
       // height: _height,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             offset: Offset(0.0, 15.0),
@@ -74,7 +76,7 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
                 focusNode: _phoneFocus,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 16.0),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
                   hintStyle: TextStyle(
                     color: primaryColor,
                   ),
@@ -82,9 +84,9 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
                       AppLocalizations.of(context)!.translate('phone_lbl'),
                   fillColor: Colors.grey.withOpacity(.25),
                   filled: true,
-                  prefixIcon: Icon(Icons.account_circle),
+                  prefixIcon: const Icon(Icons.account_circle),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   border: OutlineInputBorder(
@@ -176,14 +178,14 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
               minWidth: 200.w,
               padding: EdgeInsets.symmetric(vertical: 20.h),
               buttonColor: primaryColor,
-              shape: StadiumBorder(),
+              shape: const StadiumBorder(),
               child: ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.grey[300],
-                  minimumSize: Size(88, 36),
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  minimumSize: const Size(88, 36),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(2)),
                   ),
@@ -202,7 +204,7 @@ class _ForgotPasswordTabletFormState extends State<ForgotPasswordTabletForm>
   _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      FocusScope.of(context).requestFocus(new FocusNode());
+      FocusScope.of(context).requestFocus(FocusNode());
 
       setState(() {
         // _height = ScreenUtil().setHeight(1200);

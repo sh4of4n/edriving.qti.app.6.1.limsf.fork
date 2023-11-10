@@ -39,9 +39,9 @@ class Location {
   }
 
   Future<double> getDistance({required double locLatitude, double? locLongitude}) async {
-    double? _savedLatitude =
+    double? savedLatitude =
         double.tryParse(await (localStorage.getUserLatitude() as FutureOr<String>));
-    double? _savedLongitude =
+    double? savedLongitude =
         double.tryParse(await (localStorage.getUserLongitude() as FutureOr<String>));
 
     double distance;
@@ -51,7 +51,7 @@ class Location {
         locLongitude! > -180 &&
         locLongitude < 180) {
       distanceInMeters = Geolocator.distanceBetween(
-          _savedLatitude!, _savedLongitude!, locLatitude, locLongitude);
+          savedLatitude!, savedLongitude!, locLatitude, locLongitude);
 
       distance = distanceInMeters;
 

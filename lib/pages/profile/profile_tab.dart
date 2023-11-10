@@ -13,7 +13,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import '../../router.gr.dart';
 
+@RoutePage(name: 'ProfileTab')
 class ProfileTab extends StatefulWidget {
+  const ProfileTab({super.key});
+
   @override
   _ProfileTabState createState() => _ProfileTabState();
 }
@@ -23,8 +26,8 @@ class _ProfileTabState extends State<ProfileTab>
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin<ProfileTab> {
   final List<Tab> myTabs = <Tab>[
-    Tab(
-      icon: new Icon(
+    const Tab(
+      icon: Icon(
         Icons.account_circle,
         size: 28.0,
       ),
@@ -35,8 +38,8 @@ class _ProfileTabState extends State<ProfileTab>
         size: 28.0,
       ),
     ), */
-    Tab(
-      icon: new Icon(
+    const Tab(
+      icon: Icon(
         Icons.settings,
         size: 28.0,
       ),
@@ -119,10 +122,11 @@ class _ProfileTabState extends State<ProfileTab>
         localStorage.saveRace(result.data[0].race ?? '');
         localStorage.saveNationality(result.data[0].nationality ?? '');
         localStorage.saveGender(result.data[0].gender ?? '');
-        if (result.data[0].picturePath != null)
+        if (result.data[0].picturePath != null) {
           localStorage.saveProfilePic(result.data[0].picturePath
               .replaceAll(removeBracket, '')
               .split('\r\n')[0]);
+        }
       } else {
         _getUserInfo();
         /* customDialog.show(
@@ -139,33 +143,33 @@ class _ProfileTabState extends State<ProfileTab>
   }
 
   _getUserInfo() async {
-    String? _getName = await localStorage.getName();
-    String? _getNickName = await localStorage.getNickName();
-    String? _getEmail = await localStorage.getEmail();
-    String? _getPhone = await localStorage.getUserPhone();
-    String? _getCountry = await localStorage.getCountry();
-    String? _getState = await localStorage.getState();
-    String? _getStudentIc = await localStorage.getStudentIc();
+    String? getName = await localStorage.getName();
+    String? getNickName = await localStorage.getNickName();
+    String? getEmail = await localStorage.getEmail();
+    String? getPhone = await localStorage.getUserPhone();
+    String? getCountry = await localStorage.getCountry();
+    String? getState = await localStorage.getState();
+    String? getStudentIc = await localStorage.getStudentIc();
 
-    String? _getBirthDate = await localStorage.getBirthDate();
-    String? _getRace = await localStorage.getRace();
-    String? _getNationality = await localStorage.getNationality();
-    String? _getProfilePic = await localStorage.getProfilePic();
+    String? getBirthDate = await localStorage.getBirthDate();
+    String? getRace = await localStorage.getRace();
+    String? getNationality = await localStorage.getNationality();
+    String? getProfilePic = await localStorage.getProfilePic();
 
     setState(() {
       userProfile = UserProfile(
-        name: _getName,
-        nickName: _getNickName,
-        eMail: _getEmail,
-        phone: _getPhone,
-        countryName: _getCountry,
-        stateName: _getState,
-        icNo: _getStudentIc,
-        birthDate: _getBirthDate,
-        race: _getRace,
-        nationality: _getNationality,
-        picturePath: _getProfilePic != null && _getProfilePic.isNotEmpty
-            ? _getProfilePic.replaceAll(removeBracket, '').split('\r\n')[0]
+        name: getName,
+        nickName: getNickName,
+        eMail: getEmail,
+        phone: getPhone,
+        countryName: getCountry,
+        stateName: getState,
+        icNo: getStudentIc,
+        birthDate: getBirthDate,
+        race: getRace,
+        nationality: getNationality,
+        picturePath: getProfilePic != null && getProfilePic.isNotEmpty
+            ? getProfilePic.replaceAll(removeBracket, '').split('\r\n')[0]
             : '',
       );
     });
@@ -218,17 +222,17 @@ class _ProfileTabState extends State<ProfileTab>
         // shape: StadiumBorder(),
         style: OutlinedButton.styleFrom(
           foregroundColor: Colors.black87,
-          minimumSize: Size(88, 36),
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          shape: StadiumBorder(),
-          side: BorderSide(
+          minimumSize: const Size(88, 36),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          shape: const StadiumBorder(),
+          side: const BorderSide(
             color: Colors.blue,
             width: 1.5,
           ),
         ),
         onPressed: () async {
           await context.router
-              .push(UpdateProfile())
+              .push(const UpdateProfile())
               .then((value) => _getUserInfo());
         },
         child: Text(AppLocalizations.of(context)!.translate('edit_profile')),
@@ -246,7 +250,7 @@ class _ProfileTabState extends State<ProfileTab>
         decoration: BoxDecoration(
           gradient: RadialGradient(
             colors: [Colors.amber.shade300, primaryColor],
-            stops: [0.5, 1],
+            stops: const [0.5, 1],
             radius: 0.9,
           ),
         ),
@@ -264,10 +268,10 @@ class _ProfileTabState extends State<ProfileTab>
               isLoading: isLoading,
             ),
             // Edompet(),
-            SettingsPage.Settings(),
+            const SettingsPage.Settings(),
           ]),
           bottomNavigationBar: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),

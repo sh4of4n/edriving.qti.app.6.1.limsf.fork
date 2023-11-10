@@ -11,7 +11,7 @@ final localStorage = LocalStorage();
 // ignore: must_be_immutable
 class SessionB extends StatefulWidget {
   final Function()? notifyParent;
-  SessionB({Key? key, this.notifyParent}) : super(key: key);
+  const SessionB({super.key, this.notifyParent});
 
   @override
   _SessionBState createState() => _SessionBState();
@@ -50,7 +50,7 @@ class _SessionBState extends State<SessionB> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_b'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           headerBackgroundColor: ColorConstant.primaryColor,
           children: <Widget>[
@@ -75,7 +75,7 @@ class _SessionBState extends State<SessionB> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -132,7 +132,7 @@ class _SessionBState extends State<SessionB> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -289,7 +289,7 @@ class _SessionBState extends State<SessionB> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part2_session_b_bold_lbl1'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -704,7 +704,7 @@ class _SessionBState extends State<SessionB> {
                 child: Text(
                   AppLocalizations.of(context)!
                       .translate('part2_session_b_bold_lbl2'),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -1314,7 +1314,7 @@ class _SessionBState extends State<SessionB> {
               child: Text(
                 '$countSessionB/20',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -1326,7 +1326,7 @@ class _SessionBState extends State<SessionB> {
 
 class SessionC extends StatefulWidget {
   final Function()? notifyParent;
-  SessionC({Key? key, this.notifyParent}) : super(key: key);
+  const SessionC({super.key, this.notifyParent});
 
   @override
   _SessionCState createState() => _SessionCState();
@@ -1356,14 +1356,14 @@ class _SessionCState extends State<SessionC> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_c'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           headerBackgroundColor: ColorConstant.primaryColor,
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -1392,7 +1392,7 @@ class _SessionCState extends State<SessionC> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -1769,7 +1769,7 @@ class _SessionCState extends State<SessionC> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_c7_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -1828,7 +1828,7 @@ class _SessionCState extends State<SessionC> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_c8_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -1887,7 +1887,7 @@ class _SessionCState extends State<SessionC> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_c9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -1946,7 +1946,7 @@ class _SessionCState extends State<SessionC> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_c10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -2042,7 +2042,7 @@ class _SessionCState extends State<SessionC> {
               child: Text(
                 '$countSessionC/10',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -2054,7 +2054,7 @@ class _SessionCState extends State<SessionC> {
 
 class SessionD extends StatefulWidget {
   final Function()? notifyParent;
-  SessionD({Key? key, this.notifyParent}) : super(key: key);
+  const SessionD({super.key, this.notifyParent});
 
   @override
   _SessionDState createState() => _SessionDState();
@@ -2084,13 +2084,13 @@ class _SessionDState extends State<SessionD> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_d'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -2115,7 +2115,7 @@ class _SessionDState extends State<SessionD> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -2476,7 +2476,7 @@ class _SessionDState extends State<SessionD> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_d7_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -2535,7 +2535,7 @@ class _SessionDState extends State<SessionD> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_d8_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -2594,7 +2594,7 @@ class _SessionDState extends State<SessionD> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_d9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -2653,7 +2653,7 @@ class _SessionDState extends State<SessionD> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_d10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -2749,7 +2749,7 @@ class _SessionDState extends State<SessionD> {
               child: Text(
                 '$countSessionD/10',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -2761,7 +2761,7 @@ class _SessionDState extends State<SessionD> {
 
 class SessionE extends StatefulWidget {
   final Function()? notifyParent;
-  SessionE({Key? key, this.notifyParent}) : super(key: key);
+  const SessionE({super.key, this.notifyParent});
 
   @override
   _SessionEState createState() => _SessionEState();
@@ -2793,13 +2793,13 @@ class _SessionEState extends State<SessionE> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_e'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -2829,7 +2829,7 @@ class _SessionEState extends State<SessionE> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -3214,7 +3214,7 @@ class _SessionEState extends State<SessionE> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_e7_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -3278,7 +3278,7 @@ class _SessionEState extends State<SessionE> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_e8_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -3341,7 +3341,7 @@ class _SessionEState extends State<SessionE> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_e9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -3404,7 +3404,7 @@ class _SessionEState extends State<SessionE> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_e10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -3469,7 +3469,7 @@ class _SessionEState extends State<SessionE> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_e11_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -3568,7 +3568,7 @@ class _SessionEState extends State<SessionE> {
               child: Text(
                 '$countSessionE/11',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -3580,7 +3580,7 @@ class _SessionEState extends State<SessionE> {
 
 class SessionF extends StatefulWidget {
   final Function()? notifyParent;
-  SessionF({Key? key, this.notifyParent}) : super(key: key);
+  const SessionF({super.key, this.notifyParent});
   @override
   _SessionFState createState() => _SessionFState();
 }
@@ -3613,13 +3613,13 @@ class _SessionFState extends State<SessionF> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_f'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -3649,7 +3649,7 @@ class _SessionFState extends State<SessionF> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -4157,7 +4157,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_f9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -4220,7 +4220,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_f10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -4284,7 +4284,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_f11_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -4348,7 +4348,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_f12_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -4412,7 +4412,7 @@ class _SessionFState extends State<SessionF> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_f13_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -4514,7 +4514,7 @@ class _SessionFState extends State<SessionF> {
               child: Text(
                 '$countSessionF/13',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -4526,7 +4526,7 @@ class _SessionFState extends State<SessionF> {
 
 class RsmSessionG extends StatefulWidget {
   final Function()? notifyParent;
-  RsmSessionG({Key? key, this.notifyParent}) : super(key: key);
+  const RsmSessionG({super.key, this.notifyParent});
 
   @override
   _RsmSessionGState createState() => _RsmSessionGState();
@@ -4559,13 +4559,13 @@ class _RsmSessionGState extends State<RsmSessionG> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_g'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -4590,7 +4590,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -4894,7 +4894,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g6_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -4962,7 +4962,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g7_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5026,7 +5026,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g8_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5090,7 +5090,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                                 AppLocalizations.of(context)!
                                     .translate('part2_session_g9_bold'),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(fontWeight: FontWeight.bold)),
                           )),
                     ),
                     Padding(
@@ -5153,7 +5153,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g10_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5217,7 +5217,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g11_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5281,7 +5281,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_g12_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5381,7 +5381,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
               child: Text(
                 '$countSessionG/12',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -5393,7 +5393,7 @@ class _RsmSessionGState extends State<RsmSessionG> {
 
 class RsmSessionH extends StatefulWidget {
   final Function()? notifyParent;
-  RsmSessionH({Key? key, this.notifyParent}) : super(key: key);
+  const RsmSessionH({super.key, this.notifyParent});
 
   @override
   _RsmSessionHState createState() => _RsmSessionHState();
@@ -5414,13 +5414,13 @@ class _RsmSessionHState extends State<RsmSessionH> {
           title: Text(
             AppLocalizations.of(context)!.translate('part2_session_h'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -5450,7 +5450,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -5465,7 +5465,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_h1_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5529,7 +5529,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_h2_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5593,7 +5593,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_h3_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5657,7 +5657,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_h4_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5722,7 +5722,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part2_session_h5_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -5800,7 +5800,7 @@ class _RsmSessionHState extends State<RsmSessionH> {
               child: Text(
                 '$countSessionH/5',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),

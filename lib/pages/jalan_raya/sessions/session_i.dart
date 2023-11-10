@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class SessionI extends StatefulWidget {
   final Function()? notifyParent;
-  SessionI({Key? key, this.notifyParent}) : super(key: key);
+  const SessionI({super.key, this.notifyParent});
 
   @override
   _SessionIState createState() => _SessionIState();
@@ -33,13 +33,13 @@ class _SessionIState extends State<SessionI> {
           title: Text(
             AppLocalizations.of(context)!.translate('jr_session_i'),
             style:
-                (TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                (const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           ),
           children: <Widget>[
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5),
                 //child: Text('Pemeriksaan Luar Kenderaan(Calon Maklum Ada/Tiada)', style: TextStyle(fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
               ),
             ),
@@ -58,7 +58,7 @@ class _SessionIState extends State<SessionI> {
                 });
               },
               child: Table(
-                columnWidths: {
+                columnWidths: const {
                   0: FlexColumnWidth(10.0),
                   1: FlexColumnWidth(1.5),
                 },
@@ -73,7 +73,7 @@ class _SessionIState extends State<SessionI> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_i1_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -127,7 +127,7 @@ class _SessionIState extends State<SessionI> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_i2_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -181,7 +181,7 @@ class _SessionIState extends State<SessionI> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_i3_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -235,7 +235,7 @@ class _SessionIState extends State<SessionI> {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .translate('part3_session_i4_bold'),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                     ),
@@ -317,7 +317,7 @@ class _SessionIState extends State<SessionI> {
               child: Text(
                 '$iMandatoryMark/4',
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ),
