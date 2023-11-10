@@ -41,19 +41,10 @@ void main() async {
   //     'http://192.168.168.2:88/etesting.mainservice/_wsver_/mainservice.svc'
   //         .replaceAll('_wsver_', AppConfig().wsVer));
 
-  runZonedGuarded(() async {
-    await SentryFlutter.init(
-      (options) {
-        options.dsn = kDebugMode
-            ? ''
-            : 'https://56a93727ddd3442f9acc49762a68b78b@o354605.ingest.sentry.io/6749453';
-      },
-    );
-
-    getIt.registerSingleton<AppRouter>(AppRouter());
-    getIt.registerSingleton<NavigatorState>(NavigatorState());
-
-    runApp(
+  getIt.registerSingleton<AppRouter>(AppRouter());
+  getIt.registerSingleton<NavigatorState>(NavigatorState());
+  setupSentry(
+    () => runApp(
       MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -66,13 +57,38 @@ void main() async {
             create: (context) => RpkSessionModel(),
           ),
         ],
-        child: const MyApp(),
+        child: SentryScreenshotWidget(
+          child: SentryUserInteractionWidget(
+            child: DefaultAssetBundle(
+              bundle: SentryAssetBundle(),
+              child: const MyApp(),
+            ),
+          ),
+        ),
       ),
-    );
-  }, (exception, stackTrace) async {
-    await Sentry.captureException(exception, stackTrace: stackTrace);
-    await EasyLoading.dismiss();
-  });
+    ),
+  );
+}
+
+Future<void> setupSentry(AppRunner appRunner,
+    {bool isIntegrationTest = false,
+    BeforeSendCallback? beforeSendCallback}) async {
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://56a93727ddd3442f9acc49762a68b78b@o354605.ingest.sentry.io/6749453';
+    options.tracesSampleRate = 1.0;
+    options.attachThreads = true;
+    options.enableWindowMetricBreadcrumbs = true;
+    options.sendDefaultPii = true;
+    options.reportSilentFlutterErrors = true;
+    options.attachScreenshot = true;
+    options.screenshotQuality = SentryScreenshotQuality.low;
+    options.attachViewHierarchy = true;
+    options.maxRequestBodySize = MaxRequestBodySize.always;
+    options.maxResponseBodySize = MaxResponseBodySize.always;
+  },
+      // Init your App.
+      appRunner: appRunner);
 }
 
 class MyApp extends StatefulWidget {

@@ -89,7 +89,7 @@ class _GetVehicleInfoState extends State<GetVehicleInfo> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       localStorage
-          .saveEnrolledGroupId(_formKey.currentState?.fields['groupId']?.value);
+          .saveEnrolledGroupId(_formKey.currentState?.fields['groupId']?.value ?? '');
       localStorage.saveCarNo(
           (_formKey.currentState?.fields['carNo']?.value ?? '')
               .replaceAll(' ', ''));

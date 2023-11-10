@@ -102,7 +102,7 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
                 width: ScreenUtil().setWidth(1000),
                 child: ElevatedButton(
                   onPressed: () {
-                    context.router.push(const RpkDrawer());
+                    context.router.push(RpkDrawer());
                     //Navigator.pushNamed(context, RsmRpkTab);
                   },
                   child: Text(
@@ -139,7 +139,7 @@ class _OperatorScanQRState extends State<OperatorScanQR> {
                         color: Colors.grey[300],
                         child: IconButton(
                           onPressed: () {
-                            context.router.push(const RpkDrawer());
+                            context.router.push(RpkDrawer());
                             //Navigator.pushNamed(context, RsmRpkTab);
                           },
                           icon: const Icon(Icons.arrow_forward),

@@ -1,3 +1,9 @@
+10/11/2023 V.6.1.14
+ePandu ws 6.1.219.0
+Enhanced
+
+- Added read mykad and verify fingerprint
+
 05/05/2023 V.6.1.13
 ePandu ws 6.1.200.0
 Enhanced

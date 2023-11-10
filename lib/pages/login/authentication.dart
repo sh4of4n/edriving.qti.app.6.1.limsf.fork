@@ -14,6 +14,7 @@ import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
@@ -115,8 +116,15 @@ class _AuthenticationState extends State<Authentication> {
     String? carNo = await localStorage.getCarNo();
     String? plateNo = await localStorage.getPlateNo();
     String? type = await localStorage.getType();
+    String? mySikapId = await localStorage.getMySikapId();
     if (mounted) {
       if (userId != null && userId.isNotEmpty) {
+        await Sentry.configureScope(
+          (scope) => scope.setUser(SentryUser(
+            id: mySikapId,
+          )),
+        );
+        if (!mounted) return;
         if (groupId != null &&
             groupId.isNotEmpty &&
             carNo != null &&
@@ -130,7 +138,7 @@ class _AuthenticationState extends State<Authentication> {
           }
         } else {
           // context.router.replace(GetVehicleInfo());
-          context.router.replace(HomeSelect());
+          context.router.replace(const HomeSelect());
         }
       } else {
         context.router.replace(const Login());
