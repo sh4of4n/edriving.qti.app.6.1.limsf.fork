@@ -61,9 +61,17 @@ class _CheckListPageState extends State<CheckListPage> {
   Future getMySikapVehicleListByStatus() async {
     var result = await etestingRepo.getMySikapVehicleListByStatus(status: '');
     if (mounted) {
-      setState(() {
-        vehicleArr = result.data;
-      });
+      if (result.isSuccess) {
+        setState(() {
+          vehicleArr = result.data;
+        });
+      } else {
+        customDialog.show(
+          context: context,
+          content: result.message,
+          type: DialogType.SUCCESS,
+        );
+      }
     }
 
     return result;
@@ -138,6 +146,7 @@ class _CheckListPageState extends State<CheckListPage> {
         EasyLoading.dismiss();
 
         if (isUntickMandatory) {
+          if (!mounted) return;
           await showDialog(
             context: context,
             barrierDismissible: true, // user must tap button!
@@ -191,7 +200,7 @@ class _CheckListPageState extends State<CheckListPage> {
             skimCheck = true;
           }
         });
-
+        if (!mounted) return;
         customDialog.show(
             context: context,
             content: AppLocalizations.of(context)!
@@ -258,6 +267,7 @@ class _CheckListPageState extends State<CheckListPage> {
       }
 
       if (isUntickMandatory) {
+        if (!mounted) return;
         await showDialog(
           context: context,
           barrierDismissible: true, // user must tap button!
@@ -285,7 +295,7 @@ class _CheckListPageState extends State<CheckListPage> {
           },
         );
       }
-
+      if (!mounted) return;
       customDialog.show(
           context: context,
           content: AppLocalizations.of(context)!
@@ -351,6 +361,7 @@ class _CheckListPageState extends State<CheckListPage> {
       }
 
       if (isUntickMandatory) {
+        if (!mounted) return;
         await showDialog(
           context: context,
           barrierDismissible: true, // user must tap button!
@@ -379,7 +390,7 @@ class _CheckListPageState extends State<CheckListPage> {
           },
         );
       }
-
+      if (!mounted) return;
       customDialog.show(
           context: context,
           content: AppLocalizations.of(context)!
@@ -432,7 +443,7 @@ class _CheckListPageState extends State<CheckListPage> {
           actions: [
             IconButton(
               onPressed: () {
-                context.router.push(ChecklistResultRoute());
+                context.router.push(const ChecklistResultRoute());
               },
               icon: const Icon(
                 Icons.history,
@@ -604,7 +615,7 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         isSelected) {
                                                       return Container(
                                                         margin: const EdgeInsets
-                                                                .symmetric(
+                                                            .symmetric(
                                                             horizontal: 8),
                                                         decoration: !isSelected
                                                             ? null

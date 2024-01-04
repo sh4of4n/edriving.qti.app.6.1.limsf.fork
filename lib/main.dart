@@ -165,7 +165,9 @@ class _MyAppState extends State<MyApp> {
       // initialRoute: AUTH,
       // onGenerateRoute: RouteGenerator.generateRoute,
       builder: EasyLoading.init(),
-      routerConfig: _appRouter.config(),
+      routerConfig: _appRouter.config(
+        navigatorObservers: () => [SentryNavigatorObserver()],
+      ),
     );
   }
 

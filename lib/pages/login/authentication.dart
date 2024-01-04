@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
@@ -74,6 +75,22 @@ class _AuthenticationState extends State<Authentication> {
           // );
           // navigatorKey.currentState!.showSnackBar(snackBar);
         }
+      } else {
+        SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.red,
+          content: const Text(
+            'Please Make Sure There is Connection on This Device',
+          ),
+          behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            label: 'Setting',
+            textColor: Colors.yellow,
+            onPressed: () {
+              AppSettings.openAppSettings(type: AppSettingsType.wifi);
+            },
+          ),
+        );
+        navigatorKey.currentState!.showSnackBar(snackBar);
       }
     }
   }

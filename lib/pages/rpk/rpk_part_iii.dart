@@ -81,6 +81,7 @@ class _Part3MainState extends State<RpkPartIII> {
         minutes: 7,
       ),
       onEnd: () async {
+        if (!mounted) return;
         await showDialog(
           context: context,
           barrierDismissible: false, // user must tap button!
