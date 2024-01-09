@@ -18,5 +18,5 @@ class AppConfig {
   String appCode = 'EPANDU';
   String appId = 'eDriving.QTI.APP';
 
-  String wsVer = '6_1';
+  String wsVer = '6_3';
 }

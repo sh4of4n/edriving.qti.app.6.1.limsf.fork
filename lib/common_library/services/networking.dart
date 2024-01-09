@@ -63,7 +63,7 @@ class Networking extends BaseRepo {
 
         response = await client
             .get(uri)
-            .timeout(Duration(milliseconds: milliseconds ?? 30000));
+            .timeout(Duration(milliseconds: milliseconds ?? 60000));
       }
       await transaction.finish(status: const SpanStatus.ok());
       if (response.statusCode == 200) {
@@ -130,7 +130,7 @@ class Networking extends BaseRepo {
 
       http.Response response = await client
           .post(uri, body: body, headers: headers)
-          .timeout(const Duration(seconds: 30));
+          .timeout(const Duration(seconds: 60));
       await transaction.finish(status: const SpanStatus.ok());
       if (response.statusCode == 200) {
         print(response.body);

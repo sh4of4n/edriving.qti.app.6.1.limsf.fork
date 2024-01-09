@@ -352,7 +352,7 @@ class _ClientAccountTabletFormState extends State<ClientAccountTabletForm>
     if (urlController.text.isNotEmpty) {
       await Hive.box('ws_url').put(
         'userDefinedUrl',
-        urlController.text.replaceAll('_wsver_', '6_1'),
+        urlController.text.replaceAll('_wsver_', '6_3'),
       );
 
       await Hive.box('ws_url').put(
