@@ -80,9 +80,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     // _getCurrentLocation();
     _getDeviceInfo();
     _getCategory();
-    setState(() {
-      icController.text = '660418106595';
-    });
     localStorage.getPermitCode().then((value) {
       _formKey.currentState?.fields['permitCode']?.didChange(value);
     });
