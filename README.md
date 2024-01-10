@@ -1,6 +1,6 @@
-9/1/2024
+10/1/2024 V.6.3.0
 etesting WS v6.3.1.0
-Added fingerprint function
+- Added fingerprint function in login page
 
 10/11/2023 V.6.1.14
 ePandu ws 6.1.219.0
