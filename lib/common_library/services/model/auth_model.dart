@@ -4650,6 +4650,51 @@ class AcceptOrderSlsTrn {
   }
 }
 
+class LoginBOResponse{
+  List<BOResult>? result;
+
+  LoginBOResponse({this.result});
+
+  LoginBOResponse.fromJson(Map<String, dynamic> json){
+    if (json['Result'] != null) {
+      result = <BOResult>[];
+      json['Result'].forEach((v) {
+        result!.add(BOResult.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (result != null) {
+      data['Result'] = result!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class BOResult{
+  String? result;
+  String? userId;
+  String? description;
+
+  BOResult({this.result, this.userId, this.description});
+
+  BOResult.fromJson(Map<String, dynamic> json) {
+    result = json['result'];
+    userId = json['user_id'];
+    description = json['description'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['result'] = result;
+    data['user_id'] = userId;
+    data['description'] = description;
+    return data;
+  }
+}
+
 class ResultResponse {
   List<Result>? result;
 

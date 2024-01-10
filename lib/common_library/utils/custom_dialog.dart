@@ -85,7 +85,7 @@ class CustomDialog {
         title = Center(
           child: Icon(
             Icons.cancel,
-            color: Colors.blue,
+            color: Colors.red,
             size: _defIconSize,
           ),
         );
