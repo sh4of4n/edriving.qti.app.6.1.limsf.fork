@@ -358,7 +358,7 @@ class EtestingRepo {
     return Response(false, message: response.message, data: []);
   }
 
-  Future<Response<bool>> isSkipFingerPrint({
+  Future<Response<String>> isSkipFingerPrint({
     required String cardNo,
   }) async {
     String? caUid = await localStorage.getCaUid();
@@ -375,7 +375,7 @@ class EtestingRepo {
       return Response(true, data: response.data);
     }
 
-    return Response(false, message: response.message, data: false);
+    return Response(false, message: response.message, data: 'False');
   }
 
   Future<Response<String?>> getFingerPrintByCardNo({

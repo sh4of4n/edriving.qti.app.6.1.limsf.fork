@@ -710,21 +710,22 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
           NfcManager.instance.stopSession();
           cardNo = utf8.decode(textBytes);
           print(cardNo);
-          showCalonInfo();
+          // showCalonInfo();
+
+          Response<String> isSkipFingerPrintResult =
+              await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
+          if (isSkipFingerPrintResult.data! == 'False') {
+            Response<String?> getFingerPrintByCardNoResult =
+                await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
+            print('object2');
+          }
+          print('object');
         },
         onError: (dynamic error) {
           print('Error during NFC session: $error');
           return error;
         },
       );
-
-      Response<bool> isSkipFingerPrintResult =
-          await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
-      if (!isSkipFingerPrintResult.data!) {
-        Response<String?> getFingerPrintByCardNoResult =
-            await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
-      }
-      print('object');
     } else {
       try {
         await MyCardVerify().onCreate();

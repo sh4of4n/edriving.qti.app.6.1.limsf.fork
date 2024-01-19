@@ -111,22 +111,22 @@ class _ProfileTabState extends State<ProfileTab>
           );
         });
 
-        localStorage.saveName(result.data[0].name ?? '');
-        localStorage.saveNickName(result.data[0].nickName ?? '');
-        localStorage.saveEmail(result.data[0].eMail ?? '');
-        localStorage.saveUserPhone(result.data[0].phone ?? '');
-        localStorage.saveCountry(result.data[0].countryName ?? '');
-        localStorage.saveState(result.data[0].stateName ?? '');
-        localStorage.saveStudentIc(result.data[0].icNo ?? '');
-        localStorage.saveBirthDate(result.data[0].birthDate ?? '');
-        localStorage.saveRace(result.data[0].race ?? '');
-        localStorage.saveNationality(result.data[0].nationality ?? '');
-        localStorage.saveGender(result.data[0].gender ?? '');
-        if (result.data[0].picturePath != null) {
-          localStorage.saveProfilePic(result.data[0].picturePath
-              .replaceAll(removeBracket, '')
-              .split('\r\n')[0]);
-        }
+        // localStorage.saveName(result.data[0].user_id ?? '');
+        // localStorage.saveNickName(result.data[0].nickName ?? '');
+        // localStorage.saveEmail(result.data[0].eMail ?? '');
+        // localStorage.saveUserPhone(result.data[0].phone ?? '');
+        // localStorage.saveCountry(result.data[0].countryName ?? '');
+        // localStorage.saveState(result.data[0].stateName ?? '');
+        // localStorage.saveStudentIc(result.data[0].icNo ?? '');
+        // localStorage.saveBirthDate(result.data[0].birthDate ?? '');
+        // localStorage.saveRace(result.data[0].race ?? '');
+        // localStorage.saveNationality(result.data[0].nationality ?? '');
+        // localStorage.saveGender(result.data[0].gender ?? '');
+        // if (result.data[0].picturePath != null) {
+        //   localStorage.saveProfilePic(result.data[0].picturePath
+        //       .replaceAll(removeBracket, '')
+        //       .split('\r\n')[0]);
+        // }
       } else {
         _getUserInfo();
         /* customDialog.show(

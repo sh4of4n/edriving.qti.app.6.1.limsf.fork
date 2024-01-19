@@ -660,9 +660,9 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
         },
       );
 
-      Response<bool> isSkipFingerPrintResult =
+      Response<String> isSkipFingerPrintResult =
           await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
-      if (!isSkipFingerPrintResult.data!) {
+      if (isSkipFingerPrintResult.data! != 'False') {
         Response<String?> getFingerPrintByCardNoResult =
             await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
         
