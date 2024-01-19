@@ -75,7 +75,7 @@ Future<void> setupSentry(AppRunner appRunner,
     BeforeSendCallback? beforeSendCallback}) async {
   await SentryFlutter.init((options) {
     options.dsn =
-        'https://7b6a3117979f2a63edcab4d89912bd90@o4506590293786624.ingest.sentry.io/4506590294704128';
+        'https://ca44b910b3c1744938c24b5329a190a9@o4506596043325440.ingest.sentry.io/4506596047192064';
     options.tracesSampleRate = 1.0;
     options.attachThreads = true;
     options.enableWindowMetricBreadcrumbs = true;

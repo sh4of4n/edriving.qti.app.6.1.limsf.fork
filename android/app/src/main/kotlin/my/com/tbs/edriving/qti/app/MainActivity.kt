@@ -477,7 +477,8 @@ class MainActivity : FlutterActivity(), Observer {
 //                }
             }
             else if (call.method == "morphoDeviceVerifyWithFile") {
-                result.success(ma.morphoDeviceVerifyWithFile(this))
+                val fingerprintData: String? = call.argument("fingerprintData")
+                result.success(ma.morphoDeviceVerifyWithFile(this, fingerprintData))
 //                try {
 //                    val fingerPrintString =
 //                        "AjwAXFL/gIC9ksOgzKy6pqSnsJGgl6eTSqpWo0CpZ5B1jI+Mm4ldik2PSnpdemNTiYO7hMNgOYlAZ09XYWNvdHNavlp7ZoRppnOdZqZnt3Q5d6RatW2NrWadmZIpoISQSYpjWGCAeIZNYGppbH3Dcth3c28obY9jml7SjcSM053LXjMnKhAQEf//e50kKNX9"
