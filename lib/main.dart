@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
   //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   // String _homeScreenText = "Waiting for token...";
   final customDialog = CustomDialog();
-  final _appRouter = AppRouter();
+  // final _appRouter = AppRouter();
   final router = getIt<AppRouter>();
   @override
   void initState() {
@@ -165,7 +165,7 @@ class _MyAppState extends State<MyApp> {
       // initialRoute: AUTH,
       // onGenerateRoute: RouteGenerator.generateRoute,
       builder: EasyLoading.init(),
-      routerConfig: _appRouter.config(
+      routerConfig: router.config(
         navigatorObservers: () => [SentryNavigatorObserver()],
       ),
     );

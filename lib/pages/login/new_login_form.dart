@@ -94,8 +94,8 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   Future verifyWithMyKad() async {
     Response<List<VerifyWithMyKad>> result = await authRepo.verifyWithMyKad(
         diCode: _formKey.currentState?.fields['permitCode']?.value ?? '');
+    isCallVerifyWithMyKad = true;
     if (result.data![0].mykadLogin == 'false') {
-      isCallVerifyWithMyKad = true;
       setState(() {
         isKeyInIC = true;
       });
@@ -304,7 +304,8 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                         if (_formKey
                                 .currentState?.fields['permitCode']?.value! ==
                             '') {
-                          _formKey.currentState?.fields['permitCode']?.invalidate('');
+                          _formKey.currentState?.fields['permitCode']
+                              ?.invalidate('');
                           return;
                         }
                         if (!isCallVerifyWithMyKad) {

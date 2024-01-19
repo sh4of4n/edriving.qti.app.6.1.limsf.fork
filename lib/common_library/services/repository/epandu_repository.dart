@@ -1065,7 +1065,7 @@ class EpanduRepo {
       diCode: diCode,
       userId: userId,
       vehNo: vehNo,
-      courseCode: 'JPJ',
+      courseCode: 'QTI',
     );
 
     String body = jsonEncode(verifyScanCodeRequest);
@@ -1105,7 +1105,7 @@ class EpanduRepo {
       diCode: diCode,
       userId: userId,
       vehNo: vehNo,
-      courseCode: 'JPJ',
+      courseCode: 'QTI',
     );
 
     String body = jsonEncode(verifyScanCodeRequest);

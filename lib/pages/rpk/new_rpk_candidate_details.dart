@@ -120,7 +120,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
       vehNo: (await localStorage.getPlateNo() ?? ''),
     );
 
-    EasyLoading.dismiss();
+    await EasyLoading.dismiss();
     if (result.isSuccess) {
       getSelectedCandidateInfo(result.data[0]);
     } else {
@@ -647,6 +647,8 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         ],
         type: DialogType.GENERAL,
       );
+    } finally {
+      await EasyLoading.dismiss();
     }
 
     if (!mounted) return;
@@ -823,7 +825,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
 
   showCalonInfo() {
     setState(
-      () async {
+      () {
         iconVisible = true;
         if (qNo!.isNotEmpty) {
           compareCandidateInfo(

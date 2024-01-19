@@ -1,3 +1,12 @@
+19/1/2024 V.6.3.0 -------------
+etesting WS v6.3.1.0
+- Can key in IC or read IC using mykad reader in login page
+- Can auto logout if session expired
+- NFC verify added
+- Finger template verify added
+- RPK Calling Page - Auto assign calon
+
+
 10/1/2024 V.6.3.0
 etesting WS v6.3.1.0
 - Added fingerprint function in login page

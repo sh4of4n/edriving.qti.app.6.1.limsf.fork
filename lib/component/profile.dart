@@ -22,7 +22,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Future<void> loadInfo() async {
     firstName = (await localStorage.getName())!;
     icNo = (await localStorage.getMySikapId())!;
-    loginTime = ((await localStorage.getLoginTime())!).substring(0, 19);
+    loginTime = (await localStorage.getLoginTime())!.isNotEmpty ? ((await localStorage.getLoginTime())!).substring(0, 19) : '';
     setState(() {});
   }
 
