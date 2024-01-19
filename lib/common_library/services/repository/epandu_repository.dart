@@ -1047,4 +1047,85 @@ class EpanduRepo {
             ? 'Tiada data.'
             : response.message!.replaceAll(r'\u000d\u000a', ''));
   }
+
+  
+  Future<Response> autoCallRpkJpjTestByCourseCode({
+    required String vehNo,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? userId = await localStorage.getUserId();
+
+    AutoCallRpkJpjTestByCourseCodeRequest verifyScanCodeRequest =
+        AutoCallRpkJpjTestByCourseCodeRequest(
+      wsCodeCrypt: appConfig.wsCodeCrypt,
+      caUid: caUid,
+      caPwd: caPwd,
+      diCode: diCode,
+      userId: userId,
+      vehNo: vehNo,
+      courseCode: 'JPJ',
+    );
+
+    String body = jsonEncode(verifyScanCodeRequest);
+    String api = 'AutoCallRpkJpjTestByCourseCode';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+
+    var response =
+        await networking.postData(api: api, body: body, headers: headers);
+
+    if (response.isSuccess && response.data != null) {
+      GetRpkAvailableToCallJpjTestListResponse verifyScanCodeResponse =
+          GetRpkAvailableToCallJpjTestListResponse.fromJson(response.data);
+
+      return Response(true, data: verifyScanCodeResponse.jpjTestTrn);
+    }
+
+    return Response(
+      false,
+      message: response.message,
+      data: [],
+    );
+  }
+
+  Future<Response> autoCallPart3JpjTestByCourseCode({
+    required String vehNo,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String? userId = await localStorage.getUserId();
+
+    AutoCallRpkJpjTestByCourseCodeRequest verifyScanCodeRequest =
+        AutoCallRpkJpjTestByCourseCodeRequest(
+      wsCodeCrypt: appConfig.wsCodeCrypt,
+      caUid: caUid,
+      caPwd: caPwd,
+      diCode: diCode,
+      userId: userId,
+      vehNo: vehNo,
+      courseCode: 'JPJ',
+    );
+
+    String body = jsonEncode(verifyScanCodeRequest);
+    String api = 'AutoCallPart3JpjTestByCourseCode';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+
+    var response =
+        await networking.postData(api: api, body: body, headers: headers);
+
+    if (response.isSuccess && response.data != null) {
+      GetRpkAvailableToCallJpjTestListResponse verifyScanCodeResponse =
+          GetRpkAvailableToCallJpjTestListResponse.fromJson(response.data);
+
+      return Response(true, data: verifyScanCodeResponse.jpjTestTrn);
+    }
+
+    return Response(
+      false,
+      message: response.message,
+      data: [],
+    );
+  }
 }

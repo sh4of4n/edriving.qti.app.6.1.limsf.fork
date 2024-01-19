@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="my.com.tbs.edriving.qti.app">
+    <uses-permission android:name="android.permission.NFC" />
    <application
         android:label="eDriving QTI"
         android:name="${applicationName}"

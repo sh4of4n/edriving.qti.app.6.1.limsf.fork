@@ -50,9 +50,9 @@ class AuthRepo {
     String params =
         'LoginPub?wsCodeCrypt=$wsCodeCrypt&acctUid=$acctUid&acctPwd=${Uri.encodeQueryComponent(acctPwd)}&loginType=$loginType&misc=';
 
-    var response = await Networking(
-            customUrl: wsUrl, milliseconds: milliseconds ?? 2000)
-        .getData(path: params);
+    var response =
+        await Networking(customUrl: wsUrl, milliseconds: milliseconds ?? 2000)
+            .getData(path: params);
 
     if (response.isSuccess && response.data != null) {
       RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
@@ -282,7 +282,8 @@ class AuthRepo {
     );
 
     if (response.isSuccess && response.data != null) {
-      ResultResponse loginResponse = ResultResponse.fromJson(response.data);
+      JpjQtiLoginWithMySikapResponse loginResponse =
+          JpjQtiLoginWithMySikapResponse.fromJson(response.data);
       var responseData = loginResponse.result![0];
 
       if (responseData.result == 'True') {
@@ -296,7 +297,7 @@ class AuthRepo {
     return Response(false, message: response.message);
   }
 
-  Future<Response> jpjQtiLoginWithMySikap({
+  Future<Response<List<Result>>> jpjQtiLoginWithMySikap({
     required String mySikapId,
     required String permitCode,
   }) async {
@@ -312,28 +313,37 @@ class AuthRepo {
       path: 'JpjQtiLoginWithMySikap?$path',
     );
 
+    // if (response.isSuccess && response.data != null) {
+    //   JpjQtiLoginWithMySikapResponse  loginResponse = JpjQtiLoginWithMySikapResponse .fromJson(response.data);
+    //   var responseData = loginResponse.result![0];
+
+    //   if (responseData.result == 'True') {
+    //     localStorage.saveUserId(responseData.userId!);
+    //     localStorage.saveDiCode(permitCode);
+    //     localStorage.saveMerchantDbCode(permitCode);
+    //     localStorage.saveMySikapId(mySikapId);
+    //     return response.data;
+    //   }else{
+    //     return response.data;
+    //   }
+    // }
+
+    // return Response(false, message: response.message);
+
     if (response.isSuccess && response.data != null) {
-      ResultResponse loginResponse = ResultResponse.fromJson(response.data);
-      var responseData = loginResponse.result![0];
+      JpjQtiLoginWithMySikapResponse ruleResponse =
+          JpjQtiLoginWithMySikapResponse.fromJson(response.data);
 
-      if (responseData.result == 'True') {
-        localStorage.saveUserId(responseData.userId!);
-        localStorage.saveDiCode(permitCode);
-        localStorage.saveMerchantDbCode(permitCode);
-        localStorage.saveMySikapId(mySikapId);
-        return response;
-      }
+      return Response(true, data: ruleResponse.result);
     }
-
-    return Response(false, message: response.message);
+    return Response(false, message: response.message, data: []);
   }
 
-  Future<Response> getLoginBO({
-    required String idCategory,
-    required String mySikapId,
-    required String permitCode,
-    required String skipThumbPrint
-  }) async {
+  Future<Response> getLoginBO(
+      {required String idCategory,
+      required String mySikapId,
+      required String permitCode,
+      required String skipThumbPrint}) async {
     final String? caUid = await localStorage.getCaUid();
     final String? caPwdUrlEncode = await localStorage.getCaPwdEncode();
     String appId = appConfig.appId;
@@ -341,7 +351,7 @@ class AuthRepo {
 
     String path =
         'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwdUrlEncode&appId=$appId&permitCode=$permitCode&mySikapId=$mySikapId&appVersion=$appVersion&idCategory=$idCategory&skipThumbPrint=$skipThumbPrint';
-    
+
     var response = await networking.getData(
       path: 'JpjQtiLoginBO?$path',
     );
@@ -1597,7 +1607,8 @@ class AuthRepo {
     String? merchantNo = await localStorage.getMerchantDbCode();
     String? deviceId = await localStorage.getLoginDeviceId();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&merchantNo=$merchantNo&userId=$userId&appCode=${appConfig.appCode}&appId=${appConfig.appId}&deviceId=$deviceId';
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&merchantNo=$merchantNo&userId=$userId&appCode=${appConfig.appCode}&appId=${appConfig.appId}&deviceId=$deviceId';
 
     var response = await networking.getData(
       path: 'GetAuthorizationStatusList?$path',
@@ -1631,7 +1642,8 @@ class AuthRepo {
     // String phone = await localStorage.getUserPhone();
     // String loginId = (phoneCountryCode + phone).replaceAll('+6', '');
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&merchantNo=$merchantNo&userId=$userId&appCode=${appConfig.appCode}&appId=${appConfig.appId}&deviceId=$deviceId&searchMerchantNo=$merchantNo&searchUserId=&searchAppCode=&searchAppId=&searchDeviceId=&searchAuthzStatus=$authzStatus&searchLoginId=$phone&startIndex=$startIndex&noOfRecords=$noOfRecords';
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&merchantNo=$merchantNo&userId=$userId&appCode=${appConfig.appCode}&appId=${appConfig.appId}&deviceId=$deviceId&searchMerchantNo=$merchantNo&searchUserId=&searchAppCode=&searchAppId=&searchDeviceId=&searchAuthzStatus=$authzStatus&searchLoginId=$phone&startIndex=$startIndex&noOfRecords=$noOfRecords';
 
     var response = await networking.getData(
       path: 'GetDeviceRequestList?$path',
@@ -1711,7 +1723,8 @@ class AuthRepo {
     String? userId = await localStorage.getUserId();
     String? merchantNo = await localStorage.getMerchantDbCode();
 
-    String path = 'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$merchantNo&userId=$userId&dateFromString=$dateFromString&dateToString=$dateToString&orderNo=${orderNo ?? ''}&icNo=${icNo ?? ''}&orderStatus=$orderStatus&paymentStatus=$paymentStatus&startIndex=$startIndex&noOfRecords=$noOfRecords';
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$merchantNo&userId=$userId&dateFromString=$dateFromString&dateToString=$dateToString&orderNo=${orderNo ?? ''}&icNo=${icNo ?? ''}&orderStatus=$orderStatus&paymentStatus=$paymentStatus&startIndex=$startIndex&noOfRecords=$noOfRecords';
 
     var response = await networking.getData(
       path: 'GetOrderListByDateRange?$path',
@@ -1774,5 +1787,28 @@ class AuthRepo {
     }
 
     return Response(false, message: response.message, data: '');
+  }
+
+  Future<Response<List<VerifyWithMyKad>>> verifyWithMyKad({
+    required String diCode,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode';
+
+    var response = await networking.getData(
+      path: 'VerifyWithMyKad?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      VerifyWithMyKadResponse getOrderListByDateRangeResponse =
+          VerifyWithMyKadResponse.fromJson(response.data);
+
+      return Response(true, data: getOrderListByDateRangeResponse.result);
+    }
+
+    return Response(false, message: response.message, data: []);
   }
 }

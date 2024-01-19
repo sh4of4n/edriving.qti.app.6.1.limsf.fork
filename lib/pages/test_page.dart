@@ -98,6 +98,68 @@ class _TestState extends State<Test> {
             },
             child: const Text('onFingerprintVerify'),
           ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                final result = await platform.invokeMethod<String>('onCreate2');
+                setState(() {
+                  batteryLevel0 = result.toString();
+                });
+              } on PlatformException catch (e) {
+                setState(() {
+                  batteryLevel0 = "'${e.message}'.";
+                });
+              }
+            },
+            child: const Text('onCreate2'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                final result = await platform.invokeMethod<String>('enumerate');
+                setState(() {
+                  batteryLevel0 = result.toString();
+                });
+              } on PlatformException catch (e) {
+                setState(() {
+                  batteryLevel0 = "'${e.message}'.";
+                });
+              }
+            },
+            child: const Text('enumerate'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                final result =
+                    await platform.invokeMethod<String>('connection');
+                setState(() {
+                  batteryLevel0 = result.toString();
+                });
+              } on PlatformException catch (e) {
+                setState(() {
+                  batteryLevel0 = "'${e.message}'.";
+                });
+              }
+            },
+            child: const Text('connection'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                final result =
+                    await platform.invokeMethod<String>('morphoDeviceVerifyWithFile');
+                setState(() {
+                  batteryLevel0 = result.toString();
+                });
+              } on PlatformException catch (e) {
+                setState(() {
+                  batteryLevel0 = "'${e.message}'.";
+                });
+              }
+            },
+            child: const Text('morphoDeviceVerifyWithFile'),
+          ),
         ],
       ),
     );

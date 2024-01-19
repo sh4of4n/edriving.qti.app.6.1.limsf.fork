@@ -1,7 +1,7 @@
-class Response {
+class Response<T> {
   bool isSuccess;
   String? message;
-  dynamic data;
+  T? data;
 
   Response(this.isSuccess, {this.message, this.data});
 }

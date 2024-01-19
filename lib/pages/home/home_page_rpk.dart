@@ -241,7 +241,7 @@ class _HomePageRpkState extends State<HomePageRpk> {
                   height: 16.0,
                 ),
                 HomeIcon(
-                  component: const RpkCandidateDetails(),
+                  component: const NewRpkCandidateDetails(),
                   image: imageConstant.kppIcon,
                   name: 'RPK',
                 ),

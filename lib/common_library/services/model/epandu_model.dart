@@ -4593,3 +4593,45 @@ class JpjTestDdtl {
     return data;
   }
 }
+
+
+class AutoCallRpkJpjTestByCourseCodeRequest {
+  String? wsCodeCrypt;
+  String? caUid;
+  String? caPwd;
+  String? diCode;
+  String? userId;
+  String? vehNo;
+  String? courseCode;
+
+  AutoCallRpkJpjTestByCourseCodeRequest(
+      {this.wsCodeCrypt,
+      this.caUid,
+      this.caPwd,
+      this.diCode,
+      this.userId,
+      this.vehNo,
+      this.courseCode});
+
+  AutoCallRpkJpjTestByCourseCodeRequest.fromJson(Map<String, dynamic> json) {
+    wsCodeCrypt = json['wsCodeCrypt'];
+    caUid = json['caUid'];
+    caPwd = json['caPwd'];
+    diCode = json['diCode'];
+    userId = json['userId'];
+    vehNo = json['vehNo'];
+    courseCode = json['courseCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['wsCodeCrypt'] = wsCodeCrypt;
+    data['caUid'] = caUid;
+    data['caPwd'] = caPwd;
+    data['diCode'] = diCode;
+    data['userId'] = userId;
+    data['vehNo'] = vehNo;
+    data['courseCode'] = courseCode;
+    return data;
+  }
+}

@@ -9,7 +9,7 @@ class AppRouter extends $AppRouter {
   RouteType get defaultRouteType => const RouteType.material();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(page: Authentication.page, path: '/'),
+    // AutoRoute(page: Authentication.page, path: '/'),
     AutoRoute(page: ClientAccount.page),
     AutoRoute(page: Login.page),
     AutoRoute(page: ForgotPassword.page),
@@ -47,6 +47,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ChecklistResultRoute.page),
     AutoRoute(page: RuleRoute.page),
     AutoRoute(page: QrScannerRoute.page),
-    //  AutoRoute(page: Test.page, path: '/'),
+     AutoRoute(page: Test.page, path: '/'),
+    AutoRoute(page: NewRpkCandidateDetails.page),
   ];
 }

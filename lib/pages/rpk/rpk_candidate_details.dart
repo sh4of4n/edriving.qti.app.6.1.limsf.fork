@@ -16,6 +16,7 @@ import 'package:edriving_qti_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../common_library/services/response.dart';
 import '../../router.gr.dart';
@@ -25,7 +26,7 @@ class RpkCandidateDetails extends StatefulWidget {
   const RpkCandidateDetails({super.key});
 
   @override
-  _RpkCandidateDetailsState createState() => _RpkCandidateDetailsState();
+  State<RpkCandidateDetails> createState() => _RpkCandidateDetailsState();
 }
 
 class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
@@ -61,6 +62,9 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
 
   bool isLoading = false;
   int success = 0;
+
+  ValueNotifier<dynamic> nfcResult = ValueNotifier(null);
+  String cardNo = '';
 
   final RegExp removeBracket =
       RegExp("\\[(.*?)\\]", multiLine: true, caseSensitive: true);
@@ -587,120 +591,204 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
       );
     }
 
-    try {
-      await MyCardVerify().onCreate();
-      await EasyLoading.dismiss();
+    await EasyLoading.dismiss();
+
+    if (!mounted) return;
+    String? verifyType = await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text('Verify By'),
+          children: [
+            ListTile(
+              title: const Text('NFC'),
+              onTap: () {
+                context.router.pop('NFC');
+              },
+            ),
+            ListTile(
+              title: const Text('MyKad with fingerprint'),
+              onTap: () {
+                context.router.pop('MyKad');
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (verifyType! == 'NFC') {
+      bool nfcAvailable = await NfcManager.instance.isAvailable();
+      if (!nfcAvailable) {
+        return;
+      }
       if (!mounted) return;
-      bool? dialogResult = await showDialog<bool>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context2) {
-              return AlertDialog(
-                title: const Text('MyKad Authentication'),
-                content: const Text('Please insert student MyKad.'),
-                actions: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'MyKad is inserted',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Ready to Scan'),
+            content: const Text('Hold your device near the item'),
+            actions: [
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+
+      await NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
+          nfcResult.value = tag.data;
+
+          Ndef? ndef = Ndef.from(tag);
+          final languageCodeLength =
+              ndef!.cachedMessage!.records[0].payload.first;
+          final textBytes = ndef.cachedMessage!.records[0].payload
+              .sublist(1 + languageCodeLength);
+          NfcManager.instance.stopSession();
+          cardNo = utf8.decode(textBytes);
+          print(cardNo);
+          showCalonInfo();
+        },
+        onError: (dynamic error) {
+          print('Error during NFC session: $error');
+          return error;
+        },
+      );
+
+      Response<bool> isSkipFingerPrintResult =
+          await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
+      if (!isSkipFingerPrintResult.data!) {
+        Response<String?> getFingerPrintByCardNoResult =
+            await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
+        
+      }
+      print('object');
+    } else {
+      try {
+        await MyCardVerify().onCreate();
+        await EasyLoading.dismiss();
+        if (!mounted) return;
+        bool? dialogResult = await showDialog<bool>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context2) {
+                return AlertDialog(
+                  title: const Text('MyKad Authentication'),
+                  content: const Text('Please insert student MyKad.'),
+                  actions: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'MyKad is inserted',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        onPressed: () async {
-                          try {
-                            await EasyLoading.show(
-                                maskType: EasyLoadingMaskType.black,
-                                status:
-                                    'Reading personal information in MyKad...');
-                            final myKadNric =
-                                await MyCardVerify().onReadMyKad();
-                            if (myKadNric != nric) {
-                              throw PlatformException(
-                                  message: 'Student IC is not same as MyKad IC',
-                                  code: '');
-                            }
-                            await MyCardVerify().onFingerprintVerify();
-                            await EasyLoading.show(
-                                maskType: EasyLoadingMaskType.black,
-                                status:
-                                    'Please place student thumb on the fingerprint reader...');
-                            final fpResult =
-                                await MyCardVerify().onFingerprintVerify2();
-                            if (fpResult ==
-                                'Fingerprint matches fingerprint in MyKad') {
-                              await EasyLoading.dismiss();
+                          onPressed: () async {
+                            try {
+                              await EasyLoading.show(
+                                  maskType: EasyLoadingMaskType.black,
+                                  status:
+                                      'Reading personal information in MyKad...');
+                              final myKadNric =
+                                  await MyCardVerify().onReadMyKad();
+                              if (myKadNric != nric) {
+                                throw PlatformException(
+                                    message:
+                                        'Student IC is not same as MyKad IC',
+                                    code: '');
+                              }
+                              await MyCardVerify().onFingerprintVerify();
+                              await EasyLoading.show(
+                                  maskType: EasyLoadingMaskType.black,
+                                  status:
+                                      'Please place student thumb on the fingerprint reader...');
+                              final fpResult =
+                                  await MyCardVerify().onFingerprintVerify2();
+                              if (fpResult ==
+                                  'Fingerprint matches fingerprint in MyKad') {
+                                await EasyLoading.dismiss();
+                                if (!context2.mounted) return;
+                                context2.router.pop(true);
+                              }
+                            } on PlatformException catch (e) {
+                              if (context2.mounted) {
+                                Navigator.of(context2).pop();
+                              }
+                              SnackBar snackBar = SnackBar(
+                                content: Text(e.message ?? ''),
+                                backgroundColor: Colors.red,
+                              );
                               if (!context2.mounted) return;
-                              context2.router.pop(true);
+                              ScaffoldMessenger.of(context2)
+                                  .showSnackBar(snackBar);
+                            } finally {
+                              await EasyLoading.dismiss();
                             }
-                          } on PlatformException catch (e) {
-                            if (context2.mounted) {
-                              Navigator.of(context2).pop();
-                            }
-                            SnackBar snackBar = SnackBar(
-                              content: Text(e.message ?? ''),
-                              backgroundColor: Colors.red,
-                            );
-                            if (!context2.mounted) return;
-                            ScaffoldMessenger.of(context2)
-                                .showSnackBar(snackBar);
-                          } finally {
-                            await EasyLoading.dismiss();
-                          }
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('Cancel'),
-                        onPressed: () {
-                          Navigator.of(context2).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          ) ??
-          false;
-      if (dialogResult) {
-        setState(
-          () async {
-            iconVisible = true;
-            if (qNo.isNotEmpty) {
-              compareCandidateInfo(
-                groupId: selectedCandidate.groupId,
-                testCode: selectedCandidate.testCode,
-                testDate: selectedCandidate.testDate,
-              );
-            } else {
-              nric = '';
-              groupId = '';
-              testCode = '';
-              customDialog.show(
-                barrierDismissable: false,
-                context: context,
-                content: AppLocalizations.of(context)!.translate('scan_again'),
-                type: DialogType.INFO,
-              );
-            }
-          },
+                          },
+                        ),
+                        TextButton(
+                          child: const Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context2).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ) ??
+            false;
+        if (!dialogResult) {
+          return;
+        }
+      } on PlatformException catch (e) {
+        SnackBar snackBar = SnackBar(
+          content: Text(e.message ?? ''),
+          backgroundColor: Colors.red,
         );
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } finally {
+        await EasyLoading.dismiss();
       }
-    } on PlatformException catch (e) {
-      SnackBar snackBar = SnackBar(
-        content: Text(e.message ?? ''),
-        backgroundColor: Colors.red,
-      );
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    } finally {
-      await EasyLoading.dismiss();
     }
+  }
+
+  showCalonInfo() {
+    setState(
+      () async {
+        iconVisible = true;
+        if (qNo!.isNotEmpty) {
+          compareCandidateInfo(
+            groupId: selectedCandidate.groupId,
+            testCode: selectedCandidate.testCode,
+            testDate: selectedCandidate.testDate,
+          );
+        } else {
+          nric = '';
+          groupId = '';
+          testCode = '';
+          customDialog.show(
+            barrierDismissable: false,
+            context: context,
+            content: AppLocalizations.of(context)!.translate('scan_again'),
+            type: DialogType.INFO,
+          );
+        }
+      },
+    );
   }
 
   bool isJson(String str) {
@@ -814,11 +902,6 @@ class _RpkCandidateDetailsState extends State<RpkCandidateDetails> {
                       },
                     ),
                   ),
-                  // Text(
-                  //   qNo.isNotEmpty ? qNo : 'Q-NO',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: 250.sp),
-                  // ),
                   SizedBox(height: 50.h),
                   icPhoto == ''
                       ? const SizedBox()
