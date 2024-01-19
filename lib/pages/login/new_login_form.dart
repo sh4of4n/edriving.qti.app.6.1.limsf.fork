@@ -67,6 +67,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   DeviceInfo deviceInfo = DeviceInfo();
   // String _deviceModel = '';
   bool isKeyInIC = false;
+  bool isCallVerifyWithMyKad = false;
 
   final etestingRepo = EtestingRepo();
 
@@ -90,11 +91,14 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     });
   }
 
-  verifyWithMyKad() async {
+  Future verifyWithMyKad() async {
     Response<List<VerifyWithMyKad>> result = await authRepo.verifyWithMyKad(
         diCode: _formKey.currentState?.fields['permitCode']?.value ?? '');
     if (result.data![0].mykadLogin == 'false') {
-      isKeyInIC = true;
+      isCallVerifyWithMyKad = true;
+      setState(() {
+        isKeyInIC = true;
+      });
     }
   }
 
@@ -294,9 +298,27 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                         hintStyle: TextStyle(
                           color: primaryColor,
                         ),
-                        labelText: ' Click to read IC',
+                        labelText: 'Click to read IC',
                       ),
-                      onTap: () {
+                      onTap: () async {
+                        if (_formKey
+                                .currentState?.fields['permitCode']?.value! ==
+                            '') {
+                          _formKey.currentState?.fields['permitCode']?.invalidate('');
+                          return;
+                        }
+                        if (!isCallVerifyWithMyKad) {
+                          await EasyLoading.show(
+                            maskType: EasyLoadingMaskType.black,
+                          );
+                          await verifyWithMyKad();
+                          await EasyLoading.dismiss();
+                          if (isKeyInIC) {
+                            _formKey.currentState?.fields['ic']?.focus();
+                            return;
+                          }
+                        }
+
                         readIc();
                       },
                       validator: (value) {
