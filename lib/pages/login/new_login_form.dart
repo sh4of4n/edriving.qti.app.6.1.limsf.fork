@@ -165,9 +165,40 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                 content: 'IC number read will be $readMyKad',
                 barrierDismissable: false,
                 type: DialogType.SUCCESS,
-                onPressed: () {
-                  icController.text = readMyKad;
+                onPressed: () async {
                   context.router.pop();
+                  try {
+                    final result = await platform
+                        .invokeMethod<String>('onFingerprintVerify');
+                    setState(() {
+                      fingerPrintVerify = result.toString();
+                    });
+                    EasyLoading.show(
+                      status: fingerPrintVerify,
+                      maskType: EasyLoadingMaskType.black,
+                    );
+                    if (result ==
+                        'Please place your thumb on the fingerprint reader...') {
+                      final result =
+                          await platform.invokeMethod<String>(
+                              'onFingerprintVerify2');
+                      setState(() {
+                        fingerPrintVerify = result.toString();
+                      });
+                    }
+                    if (fingerPrintVerify ==
+                        "Fingerprint matches fingerprint in MyKad") {
+                      await EasyLoading.dismiss();
+                      icController.text = readMyKad;
+                      await _showCategory();
+                    } else {
+                      await EasyLoading.dismiss();
+                    }
+                  } on PlatformException catch (e) {
+                    setState(() {
+                      fingerPrintVerify = "${e.message}";
+                    });
+                  }
                 },
               );
             } else {
@@ -624,101 +655,13 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         );
         return result.message;
       }
-      var message;
       if (result.data![0].result == 'False') {
         if (isKeyInIC) {
           if (!mounted) return;
-          message = await _showCategory();
+          await _showCategory();
           print('object');
         } else {
-          EasyLoading.show(
-            status: 'Connecting to device',
-            maskType: EasyLoadingMaskType.black,
-          );
-          try {
-            final result2 = await platform.invokeMethod<String>('onCreate');
-            setState(() {
-              status = result2.toString();
-            });
-          } on PlatformException catch (e) {
-            setState(() {
-              status = "'${e.message}'.";
-            });
-          }
-          if (status == "Connect success") {
-            await EasyLoading.dismiss();
-            // loginFail(result.message!);
-            if (!context.mounted) return;
-            setState(() {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Fingerprint verify'),
-                    content: Text(fingerPrintVerify),
-                    actions: [
-                      TextButton(
-                          onPressed: () async {
-                            try {
-                              final result = await platform
-                                  .invokeMethod<String>('onFingerprintVerify');
-                              setState(() {
-                                fingerPrintVerify = result.toString();
-                              });
-                              EasyLoading.show(
-                                status: fingerPrintVerify,
-                                maskType: EasyLoadingMaskType.black,
-                              );
-                              if (result ==
-                                  'Please place your thumb on the fingerprint reader...') {
-                                final result =
-                                    await platform.invokeMethod<String>(
-                                        'onFingerprintVerify2');
-                                setState(() {
-                                  fingerPrintVerify = result.toString();
-                                });
-                              }
-                              if (fingerPrintVerify ==
-                                  "Fingerprint matches fingerprint in MyKad") {
-                                await EasyLoading.dismiss();
-                                if (!context.mounted) return;
-                                Navigator.of(context).pop();
-                                await _showCategory();
-                              } else {
-                                await EasyLoading.dismiss();
-                              }
-                            } on PlatformException catch (e) {
-                              setState(() {
-                                fingerPrintVerify = "${e.message}";
-                              });
-                            }
-                          },
-                          child: const Text('Scan')),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            });
-          } else {
-            if (!context.mounted) return;
-            setState(() {
-              _isLoading = false;
-            });
-            await EasyLoading.dismiss();
-            if (!mounted) return;
-            await customDialog.show(
-              context: context,
-              content: 'Fail to connect device',
-              onPressed: () => Navigator.pop(context),
-              type: DialogType.ERROR,
-            );
-          }
+          return;
         }
       } else {
         await localStorage.saveUserId(result.data![0].userId ?? '');

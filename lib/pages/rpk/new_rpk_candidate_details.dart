@@ -181,12 +181,17 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     }
     if (status == "enumerate success") {
       await EasyLoading.dismiss();
+      if (!mounted) return;
+      await context.router.pop();
+      connection();
     } else {
       await EasyLoading.dismiss();
+      if (!mounted) return;
+      await context.router.pop();
       if (!context.mounted) return;
       await customDialog.show(
         context: context,
-        content: 'Fail to enumerate',
+        content: 'Fail to connect device',
         onPressed: () => Navigator.pop(context),
         type: DialogType.ERROR,
       );
@@ -210,12 +215,13 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     }
     if (status == "connection success 2") {
       await EasyLoading.dismiss();
+      morphoDeviceVerifyWithFile();
     } else {
       await EasyLoading.dismiss();
       if (!context.mounted) return;
       await customDialog.show(
         context: context,
-        content: 'Fail to connect',
+        content: 'Fail to connect device',
         onPressed: () => Navigator.pop(context),
         type: DialogType.ERROR,
       );
@@ -254,6 +260,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         type: DialogType.SUCCESS,
         onPressed: () {
           Navigator.pop(context);
+          showCalonInfo();
         },
       );
     } else {
@@ -796,7 +803,8 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
           children: [
             ListTile(
               title: const Text('NFC'),
-              onTap: () {
+              onTap: () async {
+                await onCreate2();
                 context.router.pop('NFC');
               },
             ),
@@ -852,7 +860,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
           NfcManager.instance.stopSession();
           cardNo = utf8.decode(textBytes);
           // cardNo = '3633608430';
-          print(cardNo);
+          // print(cardNo);
           // showCalonInfo();
 
           Response<String> isSkipFingerPrintResult =
@@ -861,31 +869,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
              getFingerPrintByCardNoResult =
                 await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
             print(getFingerPrintByCardNoResult);
-            if (!mounted) return;
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Create'),
-                  content: const Text('On Create'),
-                  actions: [
-                    TextButton(
-                      child: const Text('Cancel'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    TextButton(
-                      child: const Text('On Create'),
-                      onPressed: () async {
-                        await onCreate2();
-                        await enumerate();
-                        await connection();
-                        await morphoDeviceVerifyWithFile();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
+            await enumerate();
           }
           print('object');
         },
@@ -946,6 +930,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
                                 await EasyLoading.dismiss();
                                 if (!context2.mounted) return;
                                 context2.router.pop(true);
+                                showCalonInfo();
                               }
                             } on PlatformException catch (e) {
                               if (context2.mounted) {
