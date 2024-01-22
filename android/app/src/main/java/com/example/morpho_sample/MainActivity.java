@@ -394,11 +394,11 @@ public class MainActivity extends FlutterActivity implements Observer {
         return "connection error";
     }
 
-    public String morphoDeviceVerifyWithFile(Context context)
+    public String morphoDeviceVerifyWithFile(Context context, String fingerprintData)
     {
         try
         {
-            String fingerPrintString = "AjwAXFL/gIC9ksOgzKy6pqSnsJGgl6eTSqpWo0CpZ5B1jI+Mm4ldik2PSnpdemNTiYO7hMNgOYlAZ09XYWNvdHNavlp7ZoRppnOdZqZnt3Q5d6RatW2NrWadmZIpoISQSYpjWGCAeIZNYGppbH3Dcth3c28obY9jml7SjcSM053LXjMnKhAQEf//e50kKNX9";
+            String fingerPrintString = fingerprintData;
             TemplateList templateList = new TemplateList();
             final byte[] buffer = Base64.getDecoder().decode(fingerPrintString);//fingerPrintString.getBytes(StandardCharsets.UTF_8);
             Template template = new Template();

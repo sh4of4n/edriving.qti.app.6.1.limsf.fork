@@ -1,3 +1,7 @@
+22/1/2024 V 6.3.0
+etesting WS v6.3.4
+- Modified flow of Login, NFC and MyKad
+
 19/1/2024 V.6.3.0 -------------
 etesting WS v6.3.1.0
 - Can key in IC or read IC using mykad reader in login page

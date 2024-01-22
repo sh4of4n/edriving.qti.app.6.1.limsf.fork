@@ -42,7 +42,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     fontSize: 80.sp,
     color: Colors.black,
   );
-
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   bool iconVisible = true;
   String? qNo = '';
@@ -55,8 +55,10 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
   String? vehNo = '';
   String? merchantNo = '';
   String icPhoto = '';
+  String status = '';
   var owners;
   List<dynamic>? candidateList = [];
+  late Response<String?> getFingerPrintByCardNoResult;
   var selectedCandidate;
 
   ValueNotifier<dynamic> nfcResult = ValueNotifier(null);
@@ -129,6 +131,146 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         context: context,
         content: result.message,
         type: DialogType.INFO,
+      );
+    }
+  }
+
+  onCreate2() async {
+    EasyLoading.show(
+      status: 'Connecting',
+      maskType: EasyLoadingMaskType.black,
+    );
+    try {
+      final result = await platform.invokeMethod<String>('onCreate2');
+      setState(() {
+        status = result.toString();
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        status = "'${e.message}'.";
+      });
+    }
+    if (status == "oncreate success") {
+      await EasyLoading.dismiss();
+    } else {
+      await EasyLoading.dismiss();
+      if (!context.mounted) return;
+      await customDialog.show(
+        context: context,
+        content: 'Fail to connect device',
+        onPressed: () => Navigator.pop(context),
+        type: DialogType.ERROR,
+      );
+    }
+  }
+
+  enumerate() async {
+    EasyLoading.show(
+      status: 'Enumerate',
+      maskType: EasyLoadingMaskType.black,
+    );
+    try {
+      final result = await platform.invokeMethod<String>('enumerate');
+      setState(() {
+        status = result.toString();
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        status = "'${e.message}'.";
+      });
+    }
+    if (status == "enumerate success") {
+      await EasyLoading.dismiss();
+      if (!mounted) return;
+      await context.router.pop();
+      connection();
+    } else {
+      await EasyLoading.dismiss();
+      if (!mounted) return;
+      await context.router.pop();
+      if (!context.mounted) return;
+      await customDialog.show(
+        context: context,
+        content: 'Fail to connect device',
+        onPressed: () => Navigator.pop(context),
+        type: DialogType.ERROR,
+      );
+    }
+  }
+
+  connection() async {
+    EasyLoading.show(
+      status: 'Connection..',
+      maskType: EasyLoadingMaskType.black,
+    );
+    try {
+      final result = await platform.invokeMethod<String>('connection');
+      setState(() {
+        status = result.toString();
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        status = "'${e.message}'.";
+      });
+    }
+    if (status == "connection success 2") {
+      await EasyLoading.dismiss();
+      morphoDeviceVerifyWithFile();
+    } else {
+      await EasyLoading.dismiss();
+      if (!context.mounted) return;
+      await customDialog.show(
+        context: context,
+        content: 'Fail to connect device',
+        onPressed: () => Navigator.pop(context),
+        type: DialogType.ERROR,
+      );
+    }
+  }
+
+  morphoDeviceVerifyWithFile() async {
+    EasyLoading.show(
+      status: 'Please verify your fingerprint..',
+      maskType: EasyLoadingMaskType.black,
+    );
+    try {
+      final result = await platform.invokeMethod<String>('morphoDeviceVerifyWithFile', {'fingerprintData': getFingerPrintByCardNoResult.data});
+      setState(() {
+        status = result.toString();
+      });
+    } on PlatformException catch (e) {
+      setState(() {
+        status = "'${e.message}'.";
+      });
+    }
+    if (status == "morphoDeviceVerifyWithFile success") {
+      EasyLoading.dismiss();
+      if (!context.mounted) return;
+      await customDialog.show(
+        context: context,
+        content: 'Success',
+        title: const Center(
+          child: Icon(
+            Icons.check_circle_outline,
+            color: Colors.green,
+            size: 120,
+          ),
+        ),
+        barrierDismissable: false,
+        type: DialogType.SUCCESS,
+        onPressed: () {
+          Navigator.pop(context);
+          showCalonInfo();
+        },
+      );
+    } else {
+      await EasyLoading.dismiss();
+      if (!context.mounted) return;
+      await customDialog.show(
+        context: context,
+        content: 'Fail to verify',
+        onPressed: () => Navigator.pop(context),
+        type: DialogType.ERROR,
       );
     }
   }
@@ -661,7 +803,8 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
           children: [
             ListTile(
               title: const Text('NFC'),
-              onTap: () {
+              onTap: () async {
+                await onCreate2();
                 context.router.pop('NFC');
               },
             ),
@@ -679,6 +822,13 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     if (verifyType! == 'NFC') {
       bool nfcAvailable = await NfcManager.instance.isAvailable();
       if (!nfcAvailable) {
+        if (!mounted) return;
+        await customDialog.show(
+          context: context,
+          content: 'This device do not have NFC function',
+          onPressed: () => Navigator.pop(context),
+          type: DialogType.ERROR,
+        );
         return;
       }
       if (!mounted) return;
@@ -709,15 +859,17 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
               .sublist(1 + languageCodeLength);
           NfcManager.instance.stopSession();
           cardNo = utf8.decode(textBytes);
-          print(cardNo);
+          // cardNo = '3633608430';
+          // print(cardNo);
           // showCalonInfo();
 
           Response<String> isSkipFingerPrintResult =
               await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
           if (isSkipFingerPrintResult.data! == 'False') {
-            Response<String?> getFingerPrintByCardNoResult =
+             getFingerPrintByCardNoResult =
                 await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
-            print('object2');
+            print(getFingerPrintByCardNoResult);
+            await enumerate();
           }
           print('object');
         },
@@ -778,6 +930,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
                                 await EasyLoading.dismiss();
                                 if (!context2.mounted) return;
                                 context2.router.pop(true);
+                                showCalonInfo();
                               }
                             } on PlatformException catch (e) {
                               if (context2.mounted) {

@@ -74,7 +74,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await EasyLoading.show(
         maskType: EasyLoadingMaskType.black,
@@ -95,6 +94,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     Response<List<VerifyWithMyKad>> result = await authRepo.verifyWithMyKad(
         diCode: _formKey.currentState?.fields['permitCode']?.value ?? '');
     isCallVerifyWithMyKad = true;
+    isKeyInIC = true;
     if (result.data![0].mykadLogin == 'false') {
       setState(() {
         isKeyInIC = true;
@@ -165,9 +165,40 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                 content: 'IC number read will be $readMyKad',
                 barrierDismissable: false,
                 type: DialogType.SUCCESS,
-                onPressed: () {
-                  icController.text = readMyKad;
+                onPressed: () async {
                   context.router.pop();
+                  try {
+                    final result = await platform
+                        .invokeMethod<String>('onFingerprintVerify');
+                    setState(() {
+                      fingerPrintVerify = result.toString();
+                    });
+                    EasyLoading.show(
+                      status: fingerPrintVerify,
+                      maskType: EasyLoadingMaskType.black,
+                    );
+                    if (result ==
+                        'Please place your thumb on the fingerprint reader...') {
+                      final result =
+                          await platform.invokeMethod<String>(
+                              'onFingerprintVerify2');
+                      setState(() {
+                        fingerPrintVerify = result.toString();
+                      });
+                    }
+                    if (fingerPrintVerify ==
+                        "Fingerprint matches fingerprint in MyKad") {
+                      await EasyLoading.dismiss();
+                      icController.text = readMyKad;
+                      await _showCategory();
+                    } else {
+                      await EasyLoading.dismiss();
+                    }
+                  } on PlatformException catch (e) {
+                    setState(() {
+                      fingerPrintVerify = "${e.message}";
+                    });
+                  }
                 },
               );
             } else {
@@ -460,7 +491,9 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               buttonColor: primaryColor,
               shape: const StadiumBorder(),
               child: ElevatedButton(
-                onPressed: _submitLogin, // () => localStorage.reset(),
+                onPressed: () {
+                  _submitLogin();
+                }, // () => localStorage.reset(),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
@@ -516,7 +549,8 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     return result.message;
   }
 
-  Future _showCategory() async {
+  Future<String?> _showCategory() async {
+    String? message = '';
     final String? selected = await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -526,41 +560,26 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               title: "Select Category");
         });
     if (selected != null) {
-      if (!context.mounted) return;
-      // Navigator.of(context).pop();
       var results = ownerCategoryList.firstWhere(
         (item) => item['owner_cat_desc'] == selected,
         orElse: () => {'owner_cat_desc': '', 'owner_cat': ''},
       );
       setState(() {
         selectedCategory = results['owner_cat_desc'];
+        _isLoading = false;
       });
-      await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Selected Category'),
-              content: Text(selectedCategory),
-              actions: [
-                TextButton(
-                  onPressed: () async {
-                    setState(() {
-                      _isLoading = false;
-                    });
-
-                    await _jpjQTIloginBO(results['owner_cat']);
-                    if (!mounted) return;
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          });
+      message = await _jpjQTIloginBO(results['owner_cat']);
+      // if (!mounted) return;
+      // Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
+    return message;
   }
 
-  Future _jpjQTIloginBO(String id) async {
+  Future<String?> _jpjQTIloginBO(String id) async {
     EasyLoading.show(
       status: 'Checking jpjQTIloginBO',
       maskType: EasyLoadingMaskType.black,
@@ -576,7 +595,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
 
     if (result.isSuccess) {
       await EasyLoading.dismiss();
-      if (!context.mounted) return;
+      if (!context.mounted) return '';
       await customDialog.show(
         context: context,
         title: const Center(
@@ -590,14 +609,14 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         barrierDismissable: false,
         onPressed: () {
           Navigator.of(context).pop();
-          return;
+          _submitLogin();
         },
         type: DialogType.SUCCESS,
       );
       return result.data;
     } else {
       await EasyLoading.dismiss();
-      if (!context.mounted) return;
+      if (!context.mounted) return '';
       await customDialog.show(
         context: context,
         content: result.message,
@@ -623,183 +642,54 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
             : icController.text,
         permitCode: _formKey.currentState?.fields['permitCode']?.value!,
       );
-
+      if(result.message != null){
+        setState(() {
+          _isLoading = false;
+        });
+        if (!context.mounted) return;
+        await customDialog.show(
+          context: context,
+          content: result.message,
+          onPressed: () => Navigator.pop(context),
+          type: DialogType.ERROR,
+        );
+        return result.message;
+      }
       if (result.data![0].result == 'False') {
         if (isKeyInIC) {
           if (!mounted) return;
-          bool? categoryResult = await showDialog<bool>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Choose Category'),
-                content: ElevatedButton(
-                  onPressed: () async {
-                    await _showCategory();
-                    if (!mounted) return;
-                    Navigator.of(context).pop(true);
-                    print('object');
-                  },
-                  child: const Text('Category'),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLoading = false;
-                      });
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text('Cancel'),
-                  ),
-                ],
-              );
-            },
-          );
-          if (!categoryResult!) {
-            return;
-          }
-          print('object2');
+          await _showCategory();
+          print('object');
         } else {
-          EasyLoading.show(
-            status: 'Connecting to device',
-            maskType: EasyLoadingMaskType.black,
-          );
-          try {
-            final result2 = await platform.invokeMethod<String>('onCreate');
-            setState(() {
-              status = result2.toString();
-            });
-          } on PlatformException catch (e) {
-            setState(() {
-              status = "'${e.message}'.";
-            });
-          }
-          if (status == "Connect success") {
-            await EasyLoading.dismiss();
-            // loginFail(result.message!);
-            if (!context.mounted) return;
-            setState(() {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Fingerprint verify'),
-                    content: Text(fingerPrintVerify),
-                    actions: [
-                      TextButton(
-                          onPressed: () async {
-                            try {
-                              final result = await platform
-                                  .invokeMethod<String>('onFingerprintVerify');
-                              setState(() {
-                                fingerPrintVerify = result.toString();
-                              });
-                              EasyLoading.show(
-                                status: fingerPrintVerify,
-                                maskType: EasyLoadingMaskType.black,
-                              );
-                              if (result ==
-                                  'Please place your thumb on the fingerprint reader...') {
-                                final result =
-                                    await platform.invokeMethod<String>(
-                                        'onFingerprintVerify2');
-                                setState(() {
-                                  fingerPrintVerify = result.toString();
-                                });
-                              }
-                              if (fingerPrintVerify ==
-                                  "Fingerprint matches fingerprint in MyKad") {
-                                await EasyLoading.dismiss();
-                                if (!context.mounted) return;
-                                Navigator.of(context).pop();
-                                await showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Choose Category'),
-                                      content: ElevatedButton(
-                                        onPressed: () async {
-                                          await _showCategory();
-                                        },
-                                        child: const Text('Category'),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('OK'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                await EasyLoading.dismiss();
-                              }
-                            } on PlatformException catch (e) {
-                              setState(() {
-                                fingerPrintVerify = "${e.message}";
-                              });
-                            }
-                          },
-                          child: const Text('Scan')),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            });
-          } else {
-            if (!context.mounted) return;
-            setState(() {
-              _isLoading = false;
-            });
-            await EasyLoading.dismiss();
-            if (!mounted) return;
-            await customDialog.show(
-              context: context,
-              content: 'Fail to connect device',
-              onPressed: () => Navigator.pop(context),
-              type: DialogType.ERROR,
-            );
-          }
+          return;
         }
+      } else {
+        await localStorage.saveUserId(result.data![0].userId ?? '');
+        await localStorage
+            .saveDiCode(_formKey.currentState?.fields['permitCode']?.value!);
+        await localStorage.saveMerchantDbCode(
+            _formKey.currentState?.fields['permitCode']?.value!);
+        await localStorage.saveMySikapId(isKeyInIC
+            ? _formKey.currentState?.fields['ic']?.value!
+            : icController.text);
+
+        await localStorage
+            .savePermitCode(_formKey.currentState?.fields['permitCode']?.value!);
+
+        Response<List<Result2>?> result3 =
+            await etestingRepo.getUserIdByMySikapId();
+        if (!result3.isSuccess) {
+          loginFail(result3.message!);
+          return;
+        }
+
+        await localStorage.saveName(result3.data![0].firstName ?? '');
+
+        await localStorage.saveLoginTime(DateTime.now().toString());
+        if (!mounted) return;
+        context.router.replace(const HomeSelect());
       }
-
-      await localStorage.saveUserId(result.data![0].userId ?? '');
-      await localStorage
-          .saveDiCode(_formKey.currentState?.fields['permitCode']?.value!);
-      await localStorage.saveMerchantDbCode(
-          _formKey.currentState?.fields['permitCode']?.value!);
-      await localStorage.saveMySikapId(isKeyInIC
-          ? _formKey.currentState?.fields['ic']?.value!
-          : icController.text);
-
-      await localStorage
-          .savePermitCode(_formKey.currentState?.fields['permitCode']?.value!);
-
-      Response<List<Result2>?> result3 =
-          await etestingRepo.getUserIdByMySikapId();
-      if (!result3.isSuccess) {
-        loginFail(result3.message!);
-        return;
-      }
-
-      await localStorage.saveName(result3.data![0].firstName ?? '');
-
-      await localStorage.saveLoginTime(DateTime.now().toString());
-      if (!mounted) return;
-      context.router.replace(const HomeSelect());
+      
     }
   }
 }
