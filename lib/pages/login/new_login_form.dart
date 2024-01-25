@@ -150,57 +150,68 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               readMyKad = "${e.message}";
             });
           }
-          setState(() {
-            if (readMyKad != 'Fail to power up my kad') {
-              EasyLoading.dismiss();
+          if(readMyKad == 'Failed to power up MyKad'){
+            EasyLoading.dismiss();
+            if (!mounted) return;
               customDialog.show(
                 context: context,
-                title: const Center(
-                  child: Icon(
-                    Icons.check_circle_outline,
-                    color: Colors.green,
-                    size: 120,
-                  ),
-                ),
-                content: 'IC number read will be $readMyKad',
-                barrierDismissable: false,
-                type: DialogType.SUCCESS,
-                onPressed: () async {
-                  context.router.pop();
-                  try {
-                    final result = await platform
-                        .invokeMethod<String>('onFingerprintVerify');
-                    setState(() {
-                      fingerPrintVerify = result.toString();
-                    });
-                    EasyLoading.show(
-                      status: fingerPrintVerify,
-                      maskType: EasyLoadingMaskType.black,
-                    );
-                    if (result ==
-                        'Please place your thumb on the fingerprint reader...') {
-                      final result =
-                          await platform.invokeMethod<String>(
-                              'onFingerprintVerify2');
-                      setState(() {
-                        fingerPrintVerify = result.toString();
-                      });
-                    }
-                    if (fingerPrintVerify ==
-                        "Fingerprint matches fingerprint in MyKad") {
-                      await EasyLoading.dismiss();
-                      icController.text = readMyKad;
-                      await _showCategory();
-                    } else {
-                      await EasyLoading.dismiss();
-                    }
-                  } on PlatformException catch (e) {
-                    setState(() {
-                      fingerPrintVerify = "${e.message}";
-                    });
-                  }
-                },
+                content: readMyKad,
+                onPressed: () => Navigator.pop(context),
+                type: DialogType.ERROR,
               );
+              return;
+          }
+          try{
+            final result = await platform
+                .invokeMethod<String>('onFingerprintVerify');
+            setState(() {
+              fingerPrintVerify = result.toString();
+            });
+            EasyLoading.dismiss();
+            EasyLoading.show(
+              status: fingerPrintVerify,
+              maskType: EasyLoadingMaskType.black,
+            );
+            if (result ==
+                'Please place your thumb on the fingerprint reader...') {
+              final result = await platform
+                  .invokeMethod<String>('onFingerprintVerify2');
+              setState(() {
+                fingerPrintVerify = result.toString();
+              });
+            }
+          } on PlatformException catch (e) {
+            setState(() {
+              fingerPrintVerify = "${e.message}";
+            });
+          }
+          setState(() {
+            if (readMyKad != 'Fail to power up my kad') {
+              if (fingerPrintVerify ==
+                  "Fingerprint matches fingerprint in MyKad") {
+                EasyLoading.dismiss();
+                if (!context.mounted) return;
+                customDialog.show(
+                  context: context, 
+                  title: const Center(
+                    child: Icon(
+                      Icons.check_circle_outline,
+                      color: Colors.green,
+                      size: 120,
+                    ),
+                  ),
+                  content: 'IC number read will be $readMyKad', 
+                  barrierDismissable: false,
+                  type: DialogType.SUCCESS,
+                  onPressed: (){
+                    context.router.pop();
+                  }
+                );
+                icController.text = readMyKad;
+                // _icFieldKey.currentState?.patchValue({'ic': readMyKad});
+              } else {
+                EasyLoading.dismiss();
+              }
             } else {
               EasyLoading.dismiss();
               customDialog.show(

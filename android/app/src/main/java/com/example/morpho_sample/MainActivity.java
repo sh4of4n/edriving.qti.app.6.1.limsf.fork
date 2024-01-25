@@ -451,7 +451,7 @@ public class MainActivity extends FlutterActivity implements Observer {
             final String msg = message;
             final int l_ret = ret;
             final int internalError = morphoDevice.getInternalError();
-            alert(l_ret, internalError, "Verify", msg, true, context);
+            //alert(l_ret, internalError, "Verify", msg, true, context);
             return "morphoDeviceVerifyWithFile success";
             //result.success("morphoDeviceVerifyWithFile success");
         }
