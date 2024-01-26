@@ -1,4 +1,10 @@
+import 'dart:async';
+import 'dart:developer' as developer;
+
+import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
 import 'package:edriving_qti_app/utils/mykad_verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +21,54 @@ class _TestState extends State<Test> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 // Get battery level.
   String batteryLevel0 = 'Unknown battery level.';
+
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  final customDialog = CustomDialog();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool isButtonEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      isButtonEnabled = _connectionStatus == ConnectivityResult.wifi;
+    });
+  }
 
   Future<void> getBatteryLevel() async {
     String batteryLevel;
@@ -36,9 +90,38 @@ class _TestState extends State<Test> {
       appBar: AppBar(),
       body: Column(
         children: [
+          Text('Connection Status: ${_connectionStatus.toString()} \n'),
           ElevatedButton(
             onPressed: () {
-              getBatteryLevel();
+              isButtonEnabled ?
+              getBatteryLevel()
+              : customDialog.show(
+                context: context,
+                content: 'Please connect to wifi before proceed',
+                title: const Center(
+                  child: Icon(
+                    Icons.wifi_off,
+                    color: Colors.red,
+                    size: 140,
+                  ),
+                ),
+                barrierDismissable: false,
+                type: DialogType.GENERAL,
+                customActions: [
+                  TextButton(
+                    onPressed: () {
+                      AppSettings.openAppSettings(type: AppSettingsType.wifi);
+                    },
+                    child: const Text('Settings'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.router.pop();
+                    },
+                    child: const Text('Ok'),
+                  ),
+                ],
+              );
             },
             child: const Text('Get Battery Level'),
           ),

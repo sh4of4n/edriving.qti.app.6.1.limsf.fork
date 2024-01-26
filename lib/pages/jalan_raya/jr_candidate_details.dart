@@ -575,7 +575,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
             barrierDismissible: false,
             builder: (BuildContext context2) {
               return AlertDialog(
-                title: const Text('JPJ QTO APP'),
+                title: const Text('JPJ QTI APP'),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[

@@ -93,7 +93,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('JPJ QTO APP'),
+            title: const Text('JPJ QTI APP'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -296,7 +296,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('JPJ QTO APP'),
+            title: const Text('JPJ QTI APP'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -616,7 +616,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
           barrierDismissible: false, // user must tap button!
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('JPJ QTO'),
+              title: const Text('JPJ QTI'),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -747,7 +747,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
             barrierDismissible: false,
             builder: (BuildContext context2) {
               return AlertDialog(
-                title: const Text('JPJ QTO APP'),
+                title: const Text('JPJ QTI APP'),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
