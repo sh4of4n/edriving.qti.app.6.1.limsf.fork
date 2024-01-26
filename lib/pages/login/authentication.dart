@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer' as developer;
 
 import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/utils/app_localizations.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
@@ -13,6 +15,7 @@ import 'package:edriving_qti_app/utils/app_config.dart';
 import 'package:edriving_qti_app/utils/device_info.dart';
 import 'package:edriving_qti_app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -43,9 +46,17 @@ class _AuthenticationState extends State<Authentication> {
   final etestingRepo = EtestingRepo();
   CheckUrl checkUrl = CheckUrl();
 
+  // ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  // final Connectivity _connectivity = Connectivity();
+  // late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
+    // checkWifiStatus();
+    // _connectivitySubscription =
+    //     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
     timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
       checkUserLoginStatus();
     });
@@ -54,6 +65,37 @@ class _AuthenticationState extends State<Authentication> {
     _setLocale();
     checkUrl.checkUrl('', '').then((value) => _checkExistingLogin());
   }
+
+  // Future<void> checkWifiStatus() async {
+  //   late ConnectivityResult result;
+  //   // Platform messages may fail, so we use a try/catch PlatformException.
+  //   try {
+  //     result = await _connectivity.checkConnectivity();
+  //   } on PlatformException catch (e) {
+  //     developer.log('Couldn\'t check connectivity status', error: e);
+  //     return;
+  //   }
+
+  //   // If the widget was removed from the tree while the asynchronous platform
+  //   // message was in flight, we want to discard the reply rather than calling
+  //   // setState to update our non-existent appearance.
+  //   if (!mounted) {
+  //     return Future.value(null);
+  //   }
+
+  //   return _updateConnectionStatus(result);
+  // }
+
+  // Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+  //   setState(() {
+  //     _connectionStatus = result;
+  //   });
+  //    var snackBar = SnackBar(
+  //           content: Text('Connection Status: ${_connectionStatus.toString()}'),
+  //           behavior: SnackBarBehavior.floating,
+  //         );
+  //   navigatorKey.currentState!.showSnackBar(snackBar);
+  // }
 
   checkUserLoginStatus() async {
     String? userId = await localStorage.getUserId();
@@ -94,6 +136,12 @@ class _AuthenticationState extends State<Authentication> {
       }
     }
   }
+
+  // @override
+  // void dispose() {
+  //   _connectivitySubscription.cancel();
+  //   super.dispose();
+  // }
 
   _getWsUrl() async {
     // final wsUrlBox = Hive.box('ws_url');

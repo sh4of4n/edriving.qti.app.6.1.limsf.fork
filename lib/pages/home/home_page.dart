@@ -261,7 +261,7 @@ class _HomeState extends State<Home> {
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('JPJ QTO APP'),
+                                title: const Text('JPJ QTI APP'),
                                 content: SingleChildScrollView(
                                   child: ListBody(
                                     children: <Widget>[
@@ -320,7 +320,7 @@ class _HomeState extends State<Home> {
                                   barrierDismissible: false,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('JPJ QTO APP'),
+                                      title: const Text('JPJ QTI APP'),
                                       content: SingleChildScrollView(
                                         child: ListBody(
                                           children: <Widget>[
@@ -395,7 +395,7 @@ class _HomeState extends State<Home> {
                                       false, // user must tap button!
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('JPJ QTO'),
+                                      title: const Text('JPJ QTI'),
                                       content: const SingleChildScrollView(
                                         child: ListBody(
                                           children: <Widget>[

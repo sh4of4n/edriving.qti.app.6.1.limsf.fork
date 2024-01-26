@@ -1,8 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as developer;
 
+import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:edriving_qti_app/component/profile.dart';
 import 'package:expandable/expandable.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/countdown_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:edriving_qti_app/common_library/services/model/provider_model.dart';
 import 'package:edriving_qti_app/common_library/services/repository/epandu_repository.dart';
@@ -49,12 +55,16 @@ class _JrPartIIIState extends State<JrPartIII> {
   final epanduRepo = EpanduRepo();
   final customDialog = CustomDialog();
   bool isVisible = false;
+  bool isButtonEnabled = true;
   // int success = 0;
-
+ late CountdownController controller;
   bool checkAll = false;
   bool checkAllB = false;
   Future? ruleFuture;
   final etestingRepo = EtestingRepo();
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   var ruleList = [];
   var ruleJson = {
     'a': [],
@@ -69,12 +79,50 @@ class _JrPartIIIState extends State<JrPartIII> {
   };
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
+
+    checkWifiStatus();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     getRule();
     if (!widget.skipUpdateJrJpjTestStart) {
       updatePart3JpjTestStart();
     }
+  }
+
+  Future<void> checkWifiStatus() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      // Update the button state based on connectivity status
+      isButtonEnabled = _connectionStatus == ConnectivityResult.wifi;
+    });
   }
 
   void getRule() async {
@@ -154,7 +202,7 @@ class _JrPartIIIState extends State<JrPartIII> {
         barrierDismissible: true, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('JPJ QTO APP'),
+            title: const Text('JPJ QTI APP'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -783,7 +831,36 @@ class _JrPartIIIState extends State<JrPartIII> {
                         //   updatePart3JpjTestResult('RPK'),
                         //   updatePart3JpjTestResult('JALAN RAYA'),
                         // ]);
-                        updatePart3JpjTestResult('JALAN RAYA');
+                        isButtonEnabled
+                            ? updatePart3JpjTestResult('JALAN RAYA')
+                            : customDialog.show(
+                                context: context,
+                                content:
+                                    'Please connect to wifi before proceed',
+                                title: const Center(
+                                  child: Icon(
+                                    Icons.wifi_off,
+                                    color: Colors.red,
+                                    size: 140,
+                                  ),
+                                ),
+                                barrierDismissable: false,
+                                type: DialogType.GENERAL,
+                                customActions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      AppSettings.openAppSettings(type: AppSettingsType.wifi);
+                                    },
+                                    child: const Text('Settings'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.router.pop();
+                                    },
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -895,7 +972,7 @@ class _JrPartIIIState extends State<JrPartIII> {
                                       false, // user must tap button!
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text('JPJ QTO APP'),
+                                      title: const Text('JPJ QTI APP'),
                                       content: SingleChildScrollView(
                                         child: ListBody(
                                           children: <Widget>[
