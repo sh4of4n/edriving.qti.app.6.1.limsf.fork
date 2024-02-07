@@ -181,8 +181,6 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     }
     if (status == "enumerate success") {
       await EasyLoading.dismiss();
-      if (!mounted) return;
-      await context.router.pop();
       connection();
     } else {
       await EasyLoading.dismiss();
