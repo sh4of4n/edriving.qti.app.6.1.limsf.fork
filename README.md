@@ -1,3 +1,14 @@
+08/02/2024 V.6.3.4
+ePandu ws 6.3.5.0
+Fixed
+- 'Calon Semasa' button not function when calon already DIUJI but not yet complete ujian
+- Cannot process RPK
+
+06/02/2024 V.6.3.3
+ePandu ws 6.3.4.0
+Fixed
+- Cannot capture fingerprint 
+
 26/1/2024 V 6.3.2
 ePandu ws 6.3.4.0
 Enhanced

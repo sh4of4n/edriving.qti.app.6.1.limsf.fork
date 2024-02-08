@@ -691,7 +691,7 @@ class _Part3MainState extends State<RpkPartIII> {
                   ElevatedButton(
                     onPressed: (){
                       isButtonEnabled
-                            ? updateRpkJpjTestResult
+                            ? updateRpkJpjTestResult()
                             : customDialog.show(
                                 context: context,
                                 content:
