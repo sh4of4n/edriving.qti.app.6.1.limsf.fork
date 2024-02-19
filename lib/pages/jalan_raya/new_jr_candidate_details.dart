@@ -816,6 +816,17 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
       await EasyLoading.dismiss();
     }
 
+    bool nfcAvailable = await NfcManager.instance.isAvailable();
+      if (!nfcAvailable) {
+        if (!mounted) return;
+        await customDialog.show(
+          context: context,
+          content: 'This device do not have NFC function',
+          onPressed: () => Navigator.pop(context),
+          type: DialogType.ERROR,
+        );
+      }
+
     if (!mounted) return;
     String? verifyType = await showDialog<String>(
       context: context,
