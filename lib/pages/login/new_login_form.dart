@@ -140,6 +140,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
           );
           try {
             final result = await platform.invokeMethod<String>('onReadMyKad');
+            EasyLoading.dismiss();
             setState(
               () {
                 readMyKad = result.toString();
@@ -161,67 +162,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               );
               return;
           }
-          try{
-            final result = await platform
-                .invokeMethod<String>('onFingerprintVerify');
-            setState(() {
-              fingerPrintVerify = result.toString();
-            });
-            EasyLoading.dismiss();
-            EasyLoading.show(
-              status: fingerPrintVerify,
-              maskType: EasyLoadingMaskType.black,
-            );
-            if (result ==
-                'Please place your thumb on the fingerprint reader...') {
-              final result = await platform
-                  .invokeMethod<String>('onFingerprintVerify2');
-              setState(() {
-                fingerPrintVerify = result.toString();
-              });
-            }
-          } on PlatformException catch (e) {
-            setState(() {
-              fingerPrintVerify = "${e.message}";
-            });
-          }
-          setState(() {
-            if (readMyKad != 'Fail to power up my kad') {
-              if (fingerPrintVerify ==
-                  "Fingerprint matches fingerprint in MyKad") {
-                EasyLoading.dismiss();
-                if (!context.mounted) return;
-                customDialog.show(
-                  context: context, 
-                  title: const Center(
-                    child: Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.green,
-                      size: 120,
-                    ),
-                  ),
-                  content: 'IC number read will be $readMyKad', 
-                  barrierDismissable: false,
-                  type: DialogType.SUCCESS,
-                  onPressed: (){
-                    context.router.pop();
-                  }
-                );
-                icController.text = readMyKad;
-                // _icFieldKey.currentState?.patchValue({'ic': readMyKad});
-              } else {
-                EasyLoading.dismiss();
-              }
-            } else {
-              EasyLoading.dismiss();
-              customDialog.show(
-                context: context,
-                content: readMyKad,
-                onPressed: () => Navigator.pop(context),
-                type: DialogType.ERROR,
-              );
-            }
-          });
         },
       );
     } else {
@@ -673,7 +613,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
           print('object');
         } else {
           return;
-        }
+      } 
       } else {
         await localStorage.saveUserId(result.data![0].userId ?? '');
         await localStorage
