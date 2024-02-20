@@ -1,3 +1,20 @@
+20/02/2024 V.6.3.5
+ePandu ws 6.3.6.0
+Fixed
+- Calon MyKad unable to do thumb at Bhg III, Message "Failed to Power up MyKad"
+- Calon image shows error in RPK & Bhg III page
+- Button overflowed UI in Senarai Semak
+- BHG III calon semasa failed "Calon ini tidak mengambil ujian'
+- Calon granted to IN/OUT without cap jari unable to test 
+- Parameter read using mykad=false. Login Apps > Insert IC NO system auto kicked out
+- Parameter read using mykad=true. Unable to read MyKad prompt "failed to power up mykad"
+
+Enhanced
+- For Device without NFC QTO & QTI apps at RPK & BHG3
+- Allow to scan QR Code Calon and prompt to Insert Cap jari
+- Calon MyKad and NFC without Cap Jari (refer to t_jpj_test_trn.skip_thumb=1)
+- For QTO & QTI Login page > After read mykad success to log masuk > direct to landing page yang ada message "Data Kenderaan Berjaya di Muat Turun"
+
 08/02/2024 V.6.3.4
 ePandu ws 6.3.5.0
 Fixed

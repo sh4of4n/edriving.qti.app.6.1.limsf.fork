@@ -531,11 +531,15 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         icon: const Icon(
                                                           Icons.check_circle,
                                                         ),
-                                                        label: Text(
-                                                            AppLocalizations.of(
-                                                                    context)!
-                                                                .translate(
-                                                                    'updated')),
+                                                        label: SizedBox(
+                                                          width: 30,
+                                                          child: Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .translate(
+                                                                      'updated'),
+                                                                overflow: TextOverflow.ellipsis,),
+                                                        ),
                                                         style: ElevatedButton
                                                             .styleFrom(
                                                           backgroundColor:
@@ -757,11 +761,14 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         icon: const Icon(
                                                           Icons.check_circle,
                                                         ),
-                                                        label: Text(
-                                                            AppLocalizations.of(
-                                                                    context)!
-                                                                .translate(
-                                                                    'updated')),
+                                                        label: SizedBox(
+                                                          width: 80,
+                                                          child: Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .translate(
+                                                                      'updated'), overflow: TextOverflow.ellipsis,),
+                                                        ),
                                                         style: ElevatedButton
                                                             .styleFrom(
                                                           backgroundColor:
@@ -878,11 +885,14 @@ class _CheckListPageState extends State<CheckListPage> {
                                                         icon: const Icon(
                                                           Icons.check_circle,
                                                         ),
-                                                        label: Text(
-                                                            AppLocalizations.of(
-                                                                    context)!
-                                                                .translate(
-                                                                    'updated')),
+                                                        label: SizedBox(
+                                                          width: 30,
+                                                          child: Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .translate(
+                                                                      'updated'), overflow: TextOverflow.ellipsis,),
+                                                        ),
                                                         style: ElevatedButton
                                                             .styleFrom(
                                                           backgroundColor:

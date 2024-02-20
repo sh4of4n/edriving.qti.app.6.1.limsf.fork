@@ -372,7 +372,7 @@ class _HomeState extends State<Home> {
                             Response result =
                                 await etestingRepo.isCurrentCallingCalon(
                               plateNo: plateNo ?? '',
-                              partType: 'RPK',
+                              partType: 'PART3',
                               nricNo: nricNo,
                             );
                             await EasyLoading.dismiss();
@@ -383,7 +383,7 @@ class _HomeState extends State<Home> {
                               Response result2 =
                                   await etestingRepo.isCurrentInProgressCalon(
                                 plateNo: plateNo ?? '',
-                                partType: 'RPK',
+                                partType: 'PART3',
                                 nricNo: nricNo,
                               );
                               await EasyLoading.dismiss();

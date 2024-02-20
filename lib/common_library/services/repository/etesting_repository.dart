@@ -378,6 +378,26 @@ class EtestingRepo {
     return Response(false, message: response.message, data: 'False');
   }
 
+  Future<Response<String>> isSkipMyKadFingerPrint({
+    required String icNo
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&icNo=$icNo&courseCode=QTI';
+
+    var response = await networking.getData(
+      path: 'IsSkipMyKadFingerPrint?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: 'False');
+  }
+
   Future<Response<String?>> getFingerPrintByCardNo({
     required String cardNo,
   }) async {

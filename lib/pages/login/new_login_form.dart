@@ -78,11 +78,11 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       await EasyLoading.show(
         maskType: EasyLoadingMaskType.black,
       );
-      _getDeviceInfo();
-      _getCategory();
+      await _getDeviceInfo();
       _formKey.currentState?.fields['permitCode']
           ?.didChange(await localStorage.getPermitCode());
       if (_formKey.currentState?.fields['permitCode']?.value != '') {
+        await _getCategory();
         await verifyWithMyKad();
       }
 
@@ -295,6 +295,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
                             maskType: EasyLoadingMaskType.black,
                           );
                           await verifyWithMyKad();
+                          await _getCategory();
                           await EasyLoading.dismiss();
                           if (isKeyInIC) {
                             _formKey.currentState?.fields['ic']?.focus();
@@ -501,6 +502,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
   }
 
   Future<String?> _showCategory() async {
+    await _getCategory();
     String? message = '';
     final String? selected = await showDialog(
         context: context,
@@ -532,7 +534,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
 
   Future<String?> _jpjQTIloginBO(String id) async {
     EasyLoading.show(
-      status: 'Checking jpjQTIloginBO',
       maskType: EasyLoadingMaskType.black,
     );
     var result = await authRepo.getLoginBO(
