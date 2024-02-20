@@ -878,31 +878,31 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                       message:
                                           'Student IC is not same as MyKad IC',
                                       code: '');
-                                }
-
-                                Response<String> isSkipMyKadFingerPrint =
-                                    await etestingRepo.isSkipMyKadFingerPrint(
-                                        icNo: myKadNric);
-                                if (isSkipMyKadFingerPrint.data! == 'False') {
-                                  await MyCardVerify().onFingerprintVerify();
-                                  await EasyLoading.show(
-                                      maskType: EasyLoadingMaskType.black,
-                                      status:
-                                          'Please place student thumb on the fingerprint reader...');
-                                  final fpResult =
-                                      await MyCardVerify().onFingerprintVerify2();
-                                  if (fpResult ==
-                                      'Fingerprint matches fingerprint in MyKad') {
+                                } else {
+                                  Response<String> isSkipMyKadFingerPrint =
+                                      await etestingRepo.isSkipMyKadFingerPrint(
+                                          icNo: myKadNric);
+                                  if (isSkipMyKadFingerPrint.data! == 'False') {
+                                    await MyCardVerify().onFingerprintVerify();
+                                    await EasyLoading.show(
+                                        maskType: EasyLoadingMaskType.black,
+                                        status:
+                                            'Please place student thumb on the fingerprint reader...');
+                                    final fpResult =
+                                        await MyCardVerify().onFingerprintVerify2();
+                                    if (fpResult ==
+                                        'Fingerprint matches fingerprint in MyKad') {
+                                      await EasyLoading.dismiss();
+                                      if (!context2.mounted) return;
+                                      context2.router.pop(true);
+                                      showCalonInfo();
+                                    }
+                                  } else {
                                     await EasyLoading.dismiss();
                                     if (!context2.mounted) return;
                                     context2.router.pop(true);
                                     showCalonInfo();
                                   }
-                                } else {
-                                  await EasyLoading.dismiss();
-                                  if (!context2.mounted) return;
-                                  context2.router.pop(true);
-                                  showCalonInfo();
                                 }
                               } on PlatformException catch (e) {
                                 if (context2.mounted) {
@@ -1065,31 +1065,31 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                                       message:
                                           'Student IC is not same as MyKad IC',
                                       code: '');
-                                }
-
-                                Response<String> isSkipMyKadFingerPrint =
-                                    await etestingRepo.isSkipMyKadFingerPrint(
-                                        icNo: myKadNric);
-                                if (isSkipMyKadFingerPrint.data! == 'False') {
-                                  await MyCardVerify().onFingerprintVerify();
-                                  await EasyLoading.show(
-                                      maskType: EasyLoadingMaskType.black,
-                                      status:
-                                          'Please place student thumb on the fingerprint reader...');
-                                  final fpResult =
-                                      await MyCardVerify().onFingerprintVerify2();
-                                  if (fpResult ==
-                                      'Fingerprint matches fingerprint in MyKad') {
-                                    await EasyLoading.dismiss();
-                                    if (!context2.mounted) return;
-                                    context2.router.pop(true);
-                                    showCalonInfo();
-                                  }
                                 } else {
-                                  await EasyLoading.dismiss();
-                                    if (!context2.mounted) return;
-                                    context2.router.pop(true);
-                                    showCalonInfo();
+                                  Response<String> isSkipMyKadFingerPrint =
+                                      await etestingRepo.isSkipMyKadFingerPrint(
+                                          icNo: myKadNric);
+                                  if (isSkipMyKadFingerPrint.data! == 'False') {
+                                    await MyCardVerify().onFingerprintVerify();
+                                    await EasyLoading.show(
+                                        maskType: EasyLoadingMaskType.black,
+                                        status:
+                                            'Please place student thumb on the fingerprint reader...');
+                                    final fpResult =
+                                        await MyCardVerify().onFingerprintVerify2();
+                                    if (fpResult ==
+                                        'Fingerprint matches fingerprint in MyKad') {
+                                      await EasyLoading.dismiss();
+                                      if (!context2.mounted) return;
+                                      context2.router.pop(true);
+                                      showCalonInfo();
+                                    }
+                                  } else {
+                                    await EasyLoading.dismiss();
+                                      if (!context2.mounted) return;
+                                      context2.router.pop(true);
+                                      showCalonInfo();
+                                  }
                                 }
                               } on PlatformException catch (e) {
                                 if (context2.mounted) {
