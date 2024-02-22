@@ -54,6 +54,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
   String testDate = '';
   String? groupId = '';
   String? testCode = '';
+  String? category = '';
   String? vehNo = '';
   String? merchantNo = '';
   String? kewarganegaraan = '';
@@ -759,6 +760,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         groupId = jsonDecode(scanData.toString())['Table1'][0]['group_id'];
         nric = jsonDecode(scanData.toString())['Table1'][0]['nric_no'];
         testCode = jsonDecode(scanData.toString())['Table1'][0]['test_code'];
+        category = jsonDecode(scanData.toString())['Table1'][0]['owner_cat'];
       } else {
         Response decryptQrcode = await etestingRepo.decryptQrcode(
           qrcodeJson: scanData.toString(),
@@ -796,6 +798,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         groupId = decryptQrcode.data[0].groupId;
         nric = decryptQrcode.data[0].nricNo;
         testCode = decryptQrcode.data[0].testCode;
+        category = decryptQrcode.data[0].category;
       }
     } catch (e) {
       await EasyLoading.dismiss();
@@ -819,6 +822,194 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     }
 
     bool nfcAvailable = await NfcManager.instance.isAvailable();
+    if(category == '9'){
+      if(!nfcAvailable){
+        getFingerPrintByCardNoResult =
+            await etestingRepo.getFingerPrintByIcNo(icNo: nric ?? '');
+        print(getFingerPrintByCardNoResult);
+        EasyLoading.show(
+          status: 'Connecting',
+          maskType: EasyLoadingMaskType.black,
+        );
+        try {
+          final result = await platform.invokeMethod<String>('onCreate2');
+          setState(() {
+            status = result.toString();
+          });
+        } on PlatformException catch (e) {
+          setState(() {
+            status = "'${e.message}'.";
+          });
+        }
+        if (status == "oncreate success"){
+          EasyLoading.show(
+            status: 'Enumerate',
+            maskType: EasyLoadingMaskType.black,
+          );
+          try {
+            final result = await platform.invokeMethod<String>('enumerate');
+            setState(() {
+              status = result.toString();
+            });
+          } on PlatformException catch (e) {
+            setState(() {
+              status = "'${e.message}'.";
+            });
+          }
+        if (status == "enumerate success"){
+          await EasyLoading.dismiss();
+          EasyLoading.show(
+            status: 'Connection..',
+            maskType: EasyLoadingMaskType.black,
+          );
+          try {
+            final result = await platform.invokeMethod<String>('connection');
+            setState(() {
+              status = result.toString();
+            });
+          } on PlatformException catch (e) {
+            setState(() {
+              status = "'${e.message}'.";
+            });
+          }
+          
+          if(status == "connection success 2"){
+            await EasyLoading.dismiss();
+             EasyLoading.show(
+              status: 'Please verify your fingerprint..',
+              maskType: EasyLoadingMaskType.black,
+            );
+            try {
+              final result = await platform.invokeMethod<String>(
+                  'morphoDeviceVerifyWithFile',
+                  {'fingerprintData': getFingerPrintByCardNoResult.data});
+              setState(() {
+                status = result.toString();
+              });
+            } on PlatformException catch (e) {
+              setState(() {
+                status = "'${e.message}'.";
+              });
+            }
+            if (status == "morphoDeviceVerifyWithFile success") {
+              await EasyLoading.dismiss();
+              showCalonInfo();
+            } else {
+              await EasyLoading.dismiss();
+              if (!context.mounted) return;
+              await customDialog.show(
+                context: context,
+                content: 'Fail to verify fingerprint',
+                onPressed: () => Navigator.pop(context),
+                type: DialogType.ERROR,
+              );
+            }
+          } else {
+            await EasyLoading.dismiss();
+            if (!context.mounted) return;
+            await customDialog.show(
+              context: context,
+              content: 'Fail to have connection',
+              onPressed: () => Navigator.pop(context),
+              type: DialogType.ERROR,
+            );
+          }
+        } else {
+          await EasyLoading.dismiss();
+          if (!context.mounted) return;
+          await customDialog.show(
+            context: context,
+            content: 'Fail to enumerate',
+            onPressed: () => Navigator.pop(context),
+            type: DialogType.ERROR,
+          );
+        }
+        } else {
+          await EasyLoading.dismiss();
+          if (!context.mounted) return;
+          await customDialog.show(
+            context: context,
+            content: 'Fail to connect device',
+            onPressed: () => Navigator.pop(context),
+            type: DialogType.ERROR,
+          );
+        }
+        
+      } else {
+        if (!mounted) return;
+        String? verifyType = await showDialog<String>(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return SimpleDialog(
+              title: const Text('Verify By'),
+              children: [
+                ListTile(
+                  title: const Text('NFC'),
+                  onTap: () {
+                    context.router.pop('NFC');
+                  },
+                ),
+              ],
+            );
+          },
+        );
+
+        if (verifyType! == 'NFC') {
+          if (!mounted) return;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Ready to Scan'),
+                content: const Text('Hold your device near the item'),
+                actions: [
+                  TextButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+            },
+          );
+
+          await NfcManager.instance.startSession(
+            onDiscovered: (NfcTag tag) async {
+              nfcResult.value = tag.data;
+
+              Ndef? ndef = Ndef.from(tag);
+              final languageCodeLength =
+                  ndef!.cachedMessage!.records[0].payload.first;
+              final textBytes = ndef.cachedMessage!.records[0].payload
+                  .sublist(1 + languageCodeLength);
+              NfcManager.instance.stopSession();
+              cardNo = utf8.decode(textBytes);
+              // cardNo = '3633608430';
+              // print(cardNo);
+              // showCalonInfo();
+
+              Response<String> isSkipFingerPrintResult =
+                  await etestingRepo.isSkipFingerPrint(cardNo: cardNo);
+              if (isSkipFingerPrintResult.data! == 'False') {
+                getFingerPrintByCardNoResult =
+                    await etestingRepo.getFingerPrintByCardNo(cardNo: cardNo);
+                print(getFingerPrintByCardNoResult);
+                await enumerate();
+              } else {
+                if (!context.mounted) return;
+                context.router.pop();
+                showCalonInfo();
+              }
+              print('object');
+            },
+            onError: (dynamic error) {
+              print('Error during NFC session: $error');
+              return error;
+            },
+          );
+        } 
+      }
+    } else {
     if (!nfcAvailable) {
       if (!mounted) return;
       String? verifyType = await showDialog<String>(
@@ -1135,6 +1326,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
         }
       }
     }
+  }
   }
 
   showCalonInfo() {

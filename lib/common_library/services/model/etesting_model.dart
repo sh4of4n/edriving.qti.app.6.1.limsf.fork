@@ -436,13 +436,15 @@ class Table1 {
   String? merchantNo;
   String? carNo;
   String? plateNo;
+  String? category;
   Table1(
       {this.groupId,
       this.testCode,
       this.nricNo,
       this.merchantNo,
       this.carNo,
-      this.plateNo});
+      this.plateNo,
+      this.category});
   Table1.fromJson(Map<String, dynamic> json) {
     groupId = json['group_id'];
     testCode = json['test_code'];
@@ -450,6 +452,7 @@ class Table1 {
     merchantNo = json['merchant_no'];
     carNo = json['car_no'];
     plateNo = json['plate_no'];
+    category = json['owner_cat'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -459,6 +462,7 @@ class Table1 {
     data['merchant_no'] = merchantNo;
     data['car_no'] = carNo;
     data['plate_no'] = plateNo;
+    data['owner_cat'] = category;
     return data;
   }
 }

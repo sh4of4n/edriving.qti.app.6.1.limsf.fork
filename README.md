@@ -1,3 +1,13 @@
+22/02/2024 V.6.3.6
+ePandu ws 6.3.7.0
+Fixed
+- BHG III calon semasa failed "Calon ini tidak mengambil ujian"
+- Calon granted to IN/OUT without cap jari unable to test
+- Parameter read using mykad=true. Unable to read MyKad prompt "failed to power up MyKad" and prompt thumb
+- Calon MyKad and NFC without Cap Jari (refer to t_jpj_test_trn.skip_thumb=1) not solved, still prompt thumb
+- Added warganegara checking
+- Added qtiUjianLoginBhg2
+
 20/02/2024 V.6.3.5
 ePandu ws 6.3.6.0
 Fixed

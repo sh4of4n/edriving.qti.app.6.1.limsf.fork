@@ -418,15 +418,15 @@ class _HomeState extends State<Home> {
                               } else {
                                 if (!mounted) return;
                                 await context.router.push(
-                                  RpkPartIII(
+                                  JrPartIII(
                                     qNo: result2.data[0].queueNo,
                                     nric: result2.data[0].nricNo,
-                                    rpkName: result2.data[0].fullname,
+                                    jrName: result2.data[0].fullname,
                                     testDate: result2.data[0].testDate,
                                     groupId: result2.data[0].groupId,
                                     testCode: result2.data[0].testCode,
                                     vehNo: await localStorage.getPlateNo(),
-                                    skipUpdateRpkJpjTestStart: true,
+                                    skipUpdateJrJpjTestStart: true,
                                   ),
                                 );
                               }

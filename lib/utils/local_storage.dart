@@ -40,6 +40,7 @@ class LocalStorage {
   static const String kType = '';
   static const String KMysikapVehicle = 'MYSIKAP_VEHICLE';
   static const String kPermitCode = 'PERMIT_CODE';
+  static const String kId = '';
 
   static const String part2MarkSessionB = 'part2MarkB';
   static const String part2MarkSessionC = 'part2MarkC';
@@ -823,6 +824,14 @@ class LocalStorage {
     return Preference.getString(kLoginTime, def: '');
   }
 
+  Future<bool> saveCategory(String id) async {
+    return Preference.setString(kId, id);
+  }
+
+  Future<String?> getCategory() async {
+    return Preference.getString(kId, def: '');
+  }
+
   Future<void> reset() async {
     // await Preference.removeAll();
     await Preference.remove(kWsUrl);
@@ -863,5 +872,6 @@ class LocalStorage {
     await Preference.remove(KMysikapVehicle);
     await Preference.remove(kMySikapId);
     await Preference.remove(kLoginTime);
+    await Preference.remove(kId);
   }
 }

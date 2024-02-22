@@ -225,7 +225,7 @@ class EtestingRepo {
   }
 
   Future<Response> qtiUjianLoginBhg2({
-    required String licenseClass,
+    required String idCategory,
   }) async {
     String? caUid = await localStorage.getCaUid();
     String? caPwd = await localStorage.getCaPwd();
@@ -233,7 +233,7 @@ class EtestingRepo {
     String? appVersion = await localStorage.getAppVersion();
     String? mySikapId = await localStorage.getMySikapId();
     String path =
-        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&appVersion=$appVersion&mySikapId=$mySikapId&licenseClass=$licenseClass&permitCode=$diCode';
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&appId=${appConfig.appId}&appVersion=$appVersion&mySikapId=$mySikapId&idCategory=$idCategory&permitCode=$diCode';
 
     var response = await networking.getData(
       path: 'QtiUjianLoginBhg2?$path',
@@ -409,6 +409,26 @@ class EtestingRepo {
 
     var response = await networking.getData(
       path: 'GetFingerPrintByCardNo?$path',
+    );
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data);
+    }
+
+    return Response(false, message: response.message, data: '');
+  }
+
+  Future<Response<String?>> getFingerPrintByIcNo({
+    required String icNo,
+  }) async {
+    String? caUid = await localStorage.getCaUid();
+    String? caPwd = await localStorage.getCaPwd();
+    String? diCode = await localStorage.getMerchantDbCode();
+    String path =
+        'wsCodeCrypt=${appConfig.wsCodeCrypt}&caUid=$caUid&caPwd=$caPwd&diCode=$diCode&icNo=$icNo';
+
+    var response = await networking.getData(
+      path: 'GetFingerPrintByIcNo?$path',
     );
 
     if (response.isSuccess && response.data != null) {

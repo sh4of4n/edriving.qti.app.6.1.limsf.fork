@@ -3,6 +3,7 @@ import 'package:edriving_qti_app/base/page_base_class.dart';
 import 'package:edriving_qti_app/common_library/services/location.dart';
 import 'package:edriving_qti_app/common_library/services/model/auth_model.dart';
 import 'package:edriving_qti_app/common_library/services/model/etesting_model.dart';
+import 'package:edriving_qti_app/common_library/services/model/etesting_model.dart' as a;
 import 'package:edriving_qti_app/common_library/services/repository/auth_repository.dart';
 import 'package:edriving_qti_app/common_library/services/repository/etesting_repository.dart';
 import 'package:edriving_qti_app/common_library/services/response.dart';
@@ -81,6 +82,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       await _getDeviceInfo();
       _formKey.currentState?.fields['permitCode']
           ?.didChange(await localStorage.getPermitCode());
+      // icController.text = '660418106595';
       if (_formKey.currentState?.fields['permitCode']?.value != '') {
         await _getCategory();
         await verifyWithMyKad();
@@ -144,6 +146,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
             setState(
               () {
                 readMyKad = result.toString();
+                icController.text = readMyKad;
               },
             );
           } on PlatformException catch (e) {
@@ -532,6 +535,119 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     return message;
   }
 
+  Future<String?> _showOtherCategory() async {
+    try {
+        final result = await platform.invokeMethod<String>('onCreate');
+        setState(() {
+          status = result.toString();
+        });
+      } on PlatformException catch (e) {
+        setState(() {
+          status = "'${e.message}'.";
+        });
+      }
+    await _getCategory();
+    String? message = '';
+    final String? selected = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Select(
+              groupId: category,
+              initialSelectedGroup: '',
+              title: "Select Category");
+        });
+    if (selected != null) {
+      var results = ownerCategoryList.firstWhere(
+        (item) => item['owner_cat_desc'] == selected,
+        orElse: () => {'owner_cat_desc': '', 'owner_cat': ''},
+      );
+      setState(() {
+        selectedCategory = results['owner_cat_desc'];
+        _isLoading = false;
+      });
+      if (status == "Connect success")
+      {
+      try{
+            final result = await platform
+                .invokeMethod<String>('onFingerprintVerify');
+            setState(() {
+              fingerPrintVerify = result.toString();
+            });
+            EasyLoading.dismiss();
+            EasyLoading.show(
+              status: fingerPrintVerify,
+              maskType: EasyLoadingMaskType.black,
+            );
+            if (result ==
+                'Please place your thumb on the fingerprint reader...') {
+              final result = await platform
+                  .invokeMethod<String>('onFingerprintVerify2');
+              setState(() {
+                fingerPrintVerify = result.toString();
+              });
+            }
+          } on PlatformException catch (e) {
+            
+            setState(() {
+              fingerPrintVerify = "${e.message}";
+            });
+          }
+          setState(() {
+              if (fingerPrintVerify ==
+                  "Fingerprint matches fingerprint in MyKad") {
+                EasyLoading.dismiss();
+                _jpjQTIloginBO(results['owner_cat']);
+                // if (!context.mounted) return;
+                // customDialog.show(
+                //   context: context, 
+                //   title: const Center(
+                //     child: Icon(
+                //       Icons.check_circle_outline,
+                //       color: Colors.green,
+                //       size: 120,
+                //     ),
+                //   ),
+                //   content: 'IC number read will be $readMyKad', 
+                //   barrierDismissable: false,
+                //   type: DialogType.SUCCESS,
+                //   onPressed: (){
+                //     context.router.pop();
+                //     return;
+                //   }
+                // );
+                // icController.text = readMyKad;
+                // _icFieldKey.currentState?.patchValue({'ic': readMyKad});
+              } else {
+                EasyLoading.dismiss();
+                if (!context.mounted) return;
+            customDialog.show(
+              context: context,
+              content: fingerPrintVerify,
+              onPressed: () => Navigator.pop(context),
+              type: DialogType.ERROR,
+            );
+              }
+          });
+      } else {
+        await EasyLoading.dismiss();
+        await customDialog.show(
+          context: context,
+          content: 'Fail to connect device',
+          onPressed: () => Navigator.pop(context),
+          type: DialogType.ERROR,
+        );
+      }
+      // if (!mounted) return;
+      // Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    
+    return message;
+  }
+
   Future<String?> _jpjQTIloginBO(String id) async {
     EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
@@ -546,6 +662,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
     );
 
     if (result.isSuccess) {
+      localStorage.saveCategory(id);
       await EasyLoading.dismiss();
       if (!context.mounted) return '';
       await customDialog.show(
@@ -562,6 +679,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         onPressed: () {
           Navigator.of(context).pop();
           _submitLogin();
+          return;
         },
         type: DialogType.SUCCESS,
       );
@@ -613,7 +731,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
           await _showCategory();
           print('object');
         } else {
-          return;
+          await _showOtherCategory();
       } 
       } else {
         await localStorage.saveUserId(result.data![0].userId ?? '');
@@ -636,12 +754,21 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         }
 
         await localStorage.saveName(result3.data![0].firstName ?? '');
+        String? id = await localStorage.getCategory();
+        Response result2 = await etestingRepo.qtiUjianLoginBhg2(
+          idCategory: id ?? '',
+        );
+
+        if (!result2.isSuccess) {
+          loginFail(result2.message!);
+          await localStorage.reset();
+          return;
+        }
 
         await localStorage.saveLoginTime(DateTime.now().toString());
         if (!mounted) return;
         context.router.replace(const HomeSelect());
-      }
-      
+      } 
     }
   }
 }
