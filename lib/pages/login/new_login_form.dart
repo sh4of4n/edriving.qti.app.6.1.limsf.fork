@@ -565,6 +565,11 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
         selectedCategory = results['owner_cat_desc'];
         _isLoading = false;
       });
+      Response<String> isSkipFingerPrintResult = 
+        await etestingRepo.isSkipMyKadFingerPrint(icNo: isKeyInIC
+            ? _formKey.currentState?.fields['ic']?.value!
+            : icController.text);
+      if (isSkipFingerPrintResult.data! == 'False') {
       if (status == "Connect success")
       {
       try{
@@ -636,6 +641,10 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
           onPressed: () => Navigator.pop(context),
           type: DialogType.ERROR,
         );
+      }
+      } else {
+        EasyLoading.dismiss();
+        _jpjQTIloginBO(results['owner_cat']);
       }
       // if (!mounted) return;
       // Navigator.of(context).pop();
