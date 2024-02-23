@@ -119,23 +119,7 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       });
     }
     if (status == "Connect success") {
-      if (!context.mounted) return;
       await EasyLoading.dismiss();
-      if (!mounted) return;
-      await customDialog.show(
-        context: context,
-        title: const Center(
-          child: Icon(
-            Icons.check_circle_outline,
-            color: Colors.green,
-            size: 120,
-          ),
-        ),
-        content: 'Connected Success',
-        barrierDismissable: false,
-        type: DialogType.SUCCESS,
-        onPressed: () async {
-          await context.router.pop();
           EasyLoading.show(
             status: 'Reading my kad',
             maskType: EasyLoadingMaskType.black,
@@ -165,8 +149,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
               );
               return;
           }
-        },
-      );
     } else {
       if (!context.mounted) return;
       await EasyLoading.dismiss();
