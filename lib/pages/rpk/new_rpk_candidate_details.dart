@@ -920,7 +920,8 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
               children: [
                 ListTile(
                   title: const Text('NFC'),
-                  onTap: () {
+                  onTap: () async {
+                    await onCreate2();
                     context.router.pop('NFC');
                   },
                 ),
