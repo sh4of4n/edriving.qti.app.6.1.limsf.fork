@@ -1,3 +1,8 @@
+28/02/2024 V.6.3.8
+ePandu ws 6.3.8.0
+Enhanced
+- NFC no need scan QRcode
+
 22/02/2024 V.6.3.6
 ePandu ws 6.3.7.0
 Fixed
