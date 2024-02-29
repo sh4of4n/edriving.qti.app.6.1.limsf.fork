@@ -446,6 +446,7 @@ public class MainActivity extends FlutterActivity implements Observer {
 
             if (ret == ErrorCodes.MORPHO_OK && resultMatching != null) {
                 message = "Matching Score = " + resultMatching.getMatchingScore() + "\nPK Number = " + resultMatching.getMatchingPKNumber();
+                return Integer.toString(resultMatching.getMatchingScore());
             }
 
             final String msg = message;

@@ -545,7 +545,6 @@ class _NewLoginFormState extends State<NewLoginForm> with PageBaseClass {
       );
       setState(() {
         selectedCategory = results['owner_cat_desc'];
-        _isLoading = false;
       });
       Response<String> isSkipFingerPrintResult = 
         await etestingRepo.isSkipMyKadFingerPrint(icNo: isKeyInIC

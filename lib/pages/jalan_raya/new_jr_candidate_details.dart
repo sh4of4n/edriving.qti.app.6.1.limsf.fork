@@ -633,6 +633,13 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
     EasyLoading.dismiss();
   }
 
+  bool isNumeric(String? str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
+
   Future<void> cancelCallPart3JpjTest({type}) async {
     var testCode = selectedCandidate.testCode;
     var groupId = selectedCandidate.groupId;
@@ -891,7 +898,7 @@ class _JrCandidateDetailsState extends State<JrCandidateDetails> {
                 status = "'${e.message}'.";
               });
             }
-            if (status == "morphoDeviceVerifyWithFile success") {
+            if (!isNumeric(status) || int.parse(status!) > 0) {
               await EasyLoading.dismiss();
               showCalonInfo();
             } else {

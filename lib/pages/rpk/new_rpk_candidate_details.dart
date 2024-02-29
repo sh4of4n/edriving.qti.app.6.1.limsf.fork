@@ -78,6 +78,13 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
     getPart3AvailableToCallJpjTestList();
   }
 
+  bool isNumeric(String? str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
+
   autoCallRpkJpjTestByCourseCode() async {
     EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
@@ -244,7 +251,7 @@ class _NewRpkCandidateDetailsState extends State<NewRpkCandidateDetails> {
         status = "'${e.message}'.";
       });
     }
-    if (status == "morphoDeviceVerifyWithFile success") {
+    if (!isNumeric(status) || int.parse(status!) > 0) {
       EasyLoading.dismiss();
       if (!context.mounted) return;
       await customDialog.show(

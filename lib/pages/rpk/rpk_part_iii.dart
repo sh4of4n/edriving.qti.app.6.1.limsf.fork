@@ -333,10 +333,13 @@ class _Part3MainState extends State<RpkPartIII> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Nama: ${widget.rpkName ?? ''}',
-                        style: const TextStyle(
-                          fontSize: 20,
+                      Expanded(
+                        child: Text(
+                          'Nama: ${widget.rpkName ?? ''}',
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ],

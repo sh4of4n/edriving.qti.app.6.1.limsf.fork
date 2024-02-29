@@ -8,6 +8,7 @@ import 'package:edriving_qti_app/common_library/utils/custom_dialog.dart';
 import 'package:edriving_qti_app/utils/mykad_verify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @RoutePage()
 class Test extends StatefulWidget {
@@ -90,6 +91,21 @@ class _TestState extends State<Test> {
       appBar: AppBar(),
       body: Column(
         children: [
+          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  '\n\nNama: MUHAMAD IRFAN ASYRAF BIN USMAN',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 50,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Text('Connection Status: ${_connectionStatus.toString()} \n'),
           ElevatedButton(
             onPressed: () {

@@ -427,10 +427,13 @@ class _JrPartIIIState extends State<JrPartIII> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        'Nama: ${widget.jrName ?? ''}',
-                                        style: const TextStyle(
-                                          fontSize: 20,
+                                      Expanded(
+                                        child: Text(
+                                          'Nama: ${widget.jrName ?? ''}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ],
